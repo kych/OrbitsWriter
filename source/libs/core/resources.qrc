@@ -1,0 +1,31 @@
+<RCC>
+    <qresource prefix="/image">
+        <file alias="app_exit">resources/app_exit.png</file>
+        <file alias="doc_new">resources/doc_new.png</file>
+        <file alias="doc_open">resources/doc_open.png</file>
+        <file alias="doc_save">resources/doc_save.png</file>
+        <file alias="doc_save_as">resources/doc_save_as.png</file>
+        <file alias="copy">resources/copy.png</file>
+        <file alias="cut">resources/cut.png</file>
+        <file alias="paste">resources/paste.png</file>
+        <file alias="redo">resources/redo.png</file>
+        <file alias="undo">resources/undo.png</file>
+        <file alias="about">resources/about.png</file>
+        <file alias="help">resources/help.png</file>
+        <file alias="plugins">resources/plugin.png</file>
+        <file alias="settings">resources/settings.png</file>
+        <file alias="app_icon">resources/orbitswriter.png</file>
+        <file alias="doc_close">resources/doc_close.png</file>
+        <file alias="font">resources/font.png</file>
+        <file alias="align_center">resources/align_center.png</file>
+        <file alias="align_fill">resources/align_fill.png</file>
+        <file alias="align_left">resources/align_left.png</file>
+        <file alias="align_right">resources/align_right.png</file>
+        <file alias="bold">resources/bold.png</file>
+        <file alias="italic">resources/italic.png</file>
+        <file alias="strike">resources/strike.png</file>
+        <file alias="underline">resources/underline.png</file>
+        <file alias="text_background_color">resources/paintcan.png</file>
+        <file alias="text_color">resources/pencil.png</file>
+    </qresource>
+</RCC>
