@@ -24,18 +24,15 @@
 
 #include <QPushButton>
 
-#include <Global>
+#include <DPointer>
 
 namespace GOW
 {
-
-DECLARE_PRIVATE_DATA(ColorButton)
 
 class ColorButton : public QPushButton
 {
     Q_OBJECT
     Q_PROPERTY(bool colorDialog READ colorDialogEnabled WRITE setColorDialogEnabled)
-    PRIVATE_D_POINTER(ColorButton)
 public:
     ColorButton(const QIcon & icon, QWidget *parent = 0, int columns = -1, bool enableColorDialog = true);
     ~ColorButton();
@@ -65,6 +62,9 @@ protected:
 private slots:
     void buttonPressed(bool toggled);
     void popupClosed();
+
+private:
+    D_POINTER
 
 }; // end of class GOW::ColorButton
 

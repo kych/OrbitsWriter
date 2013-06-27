@@ -32,30 +32,6 @@
 #endif
 
 /*!
-  This macro can be used to declare a private data class for \a CLASS.
-
-  The data class will be in \c Internal namespace
-  and its name will be \c CLASSPrivate.
- */
-#define DECLARE_PRIVATE_DATA(CLASS)            \
-namespace Internal                             \
-{                                              \
-    class CLASS##Private;                      \
-}
-
-/*!
-  This macro can be used to declare a private data class for \a CLASS
-  with name \c d .
-
-  This is a D-Pointer declaration. The data class will be a friend class
-  and \c d pointer will be \c const .
- */
-#define PRIVATE_D_POINTER(CLASS)               \
-private:                                       \
-    friend class Internal::CLASS##Private;     \
-    Internal::CLASS##Private * const d;
-
-/*!
   This macro can be used to declare a private data class for \a CLASS
   with name \c q .
 

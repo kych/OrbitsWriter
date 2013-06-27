@@ -38,14 +38,12 @@
 
 namespace GOW {
 
-namespace Internal {
-
-class MainWindowPrivate : public QObject
+class MainWindow::Private : public QObject
 {
     Q_OBJECT
     PRIVATE_Q_POINTER(MainWindow)
 public:
-    MainWindowPrivate(MainWindow *win);
+    Private(MainWindow *win);
 
     void setupMenus();
     void setupToolBars();
@@ -92,15 +90,15 @@ public:
 
 private:
     void createActions();
-}; // end of class GOW::Internal::MainWindowPrivate
+}; // end of class GOW::MainWindow::Private
 
-MainWindowPrivate::MainWindowPrivate(MainWindow *win) :
+MainWindow::Private::Private(MainWindow *win) :
     QObject(win),
     q(win)
 {
 }
 
-void MainWindowPrivate::setupMenus()
+void MainWindow::Private::setupMenus()
 {
     createActions();
 
@@ -161,7 +159,7 @@ void MainWindowPrivate::setupMenus()
     bar->addMenu(helpMenu);
 }
 
-void MainWindowPrivate::setupToolBars()
+void MainWindow::Private::setupToolBars()
 {
     const int SPACING_WIDTH = 4;
 
@@ -206,13 +204,13 @@ void MainWindowPrivate::setupToolBars()
     q->addToolBar(Qt::TopToolBarArea, formatBar);
 }
 
-void MainWindowPrivate::setupStatusBar()
+void MainWindow::Private::setupStatusBar()
 {
     QStatusBar *bar = q->statusBar();
     bar->showMessage(tr("Ready."));
 }
 
-void MainWindowPrivate::setupEditors()
+void MainWindow::Private::setupEditors()
 {
     QTabWidget *editorTabs = new QTabWidget(q);
     editorTabs->setTabPosition(QTabWidget::South);
@@ -246,7 +244,7 @@ void MainWindowPrivate::setupEditors()
     q->setCentralWidget(editorArea);
 }
 
-void MainWindowPrivate::createActions()
+void MainWindow::Private::createActions()
 {
     newDocAction = new QAction(QIcon::fromTheme("document-new", QIcon(":/image/doc_new")), tr("&New"), this);
     newDocAction->setShortcut(QKeySequence::New);
@@ -363,11 +361,10 @@ void MainWindowPrivate::createActions()
     aboutAction->setStatusTip(tr("About OrbitsWriter."));
 }
 
-}
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
-    d(new Internal::MainWindowPrivate(this))
+    d(this)
 {
     setWindowTitle(tr("OrbitsWriter [*]"));
     setWindowIcon(QIcon(":/image/app_icon"));

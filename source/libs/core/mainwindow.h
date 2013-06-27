@@ -24,16 +24,14 @@
 
 #include <QMainWindow>
 
+#include <DPointer>
 #include <Global>
 
 namespace GOW {
 
-DECLARE_PRIVATE_DATA(MainWindow)
-
 class LIBRARY_EXPORT MainWindow : public QMainWindow
 {
     Q_OBJECT
-    PRIVATE_D_POINTER(MainWindow)
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
@@ -41,7 +39,9 @@ public:
 signals:
     
 public slots:
-    
+
+private:
+    D_POINTER
 };
 
 } // end of namespace GOW

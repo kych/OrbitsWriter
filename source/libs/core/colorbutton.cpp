@@ -21,6 +21,7 @@
 
 #include <QApplication>
 #include <QColorDialog>
+#include <QDebug>
 #include <QDesktopWidget>
 #include <QEventLoop>
 #include <QFrame>
@@ -36,9 +37,6 @@
 #include "colorbutton.h"
 
 namespace GOW
-{
-
-namespace Internal
 {
 
 /*
@@ -772,17 +770,16 @@ void ColorPickerButton::paintEvent(QPaintEvent *e)
 
 }
 
-class ColorButtonPrivate
+class ColorButton::Private
 {
 public:
     QIcon originIcon;
-    Internal::ColorPickerPopup *popup;
+    ColorPickerPopup *popup;
     QColor col;
     bool withColorDialog;
     bool dirty;
     bool firstInserted;
 };
-}
 
 /*! \class QtColorPicker
 
@@ -871,10 +868,8 @@ ColorButton::ColorButton(const QIcon &icon,
                          QWidget *parent,
                          int columns,
                          bool enableColorDialog) :
-    QPushButton(parent), d(new Internal::ColorButtonPrivate)
+    QPushButton(parent)//, d(new ColorButtonPrivate)
 {
-    using namespace Internal;
-
     d->originIcon = icon;
     d->popup = 0;
     d->withColorDialog = enableColorDialog;
@@ -908,7 +903,7 @@ ColorButton::ColorButton(const QIcon &icon,
 */
 ColorButton::~ColorButton()
 {
-    delete d;
+    //delete d;
 }
 
 /*!
@@ -1009,7 +1004,7 @@ void ColorButton::setStandardColors()
 */
 QColor ColorButton::getColor(const QPoint &point, bool allowCustomColors)
 {
-    Internal::ColorPickerPopup popup(-1, allowCustomColors);
+    ColorPickerPopup popup(-1, allowCustomColors);
 
     popup.insertColor(Qt::black, tr("Black"), 0);
     popup.insertColor(Qt::white, tr("White"), 1);
@@ -1047,7 +1042,7 @@ void ColorButton::setCurrentColor(const QColor &color)
         return;
     }
 
-    Internal::ColorPickerItem *item = d->popup->find(color);
+    ColorPickerItem *item = d->popup->find(color);
     if (!item) {
         insertColor(color, tr("Custom"));
         item = d->popup->find(color);
@@ -1113,7 +1108,7 @@ void ColorButton::buttonPressed(bool toggled)
     }
     d->popup->move(pos);
 
-    if (Internal::ColorPickerItem *item = d->popup->find(d->col)) {
+    if (ColorPickerItem *item = d->popup->find(d->col)) {
         item->setSelected(true);
     }
 
