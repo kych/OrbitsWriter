@@ -19,14 +19,14 @@
 #
 #-------------------------------------------------
 
-include(../../orbitswriter.pri)
+include(../../OrbitsWriter.pri)
 
 TEMPLATE = app
 TARGET   = $$APPLICATION_TARGET
 DESTDIR  = $$APPLICATION_BIN_PATH
 
 include(../rpath.pri)
-include(../Libs/Extern/QtSingleApplication/qtsingleapplication.pri)
+include(../libs/extern/QtSingleApplication/qtsingleapplication.pri)
 
 QT      *= core gui
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets

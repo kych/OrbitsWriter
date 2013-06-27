@@ -27,6 +27,7 @@
 #include <QGridLayout>
 #include <QKeyEvent>
 #include <QMap>
+#include <qmath.h>
 #include <QMouseEvent>
 #include <QPainter>
 #include <QPen>
@@ -481,8 +482,9 @@ void ColorPickerPopup::regenerateGrid()
     widgetAt.clear();
 
     int columns = cols;
-    if (columns == -1)
-    columns = (int) ceil(sqrt((float) items.count()));
+    if (columns == -1) {
+        columns = qCeil(qSqrt((qreal) items.count()));
+    }
 
     // When the number of columns grows, the number of rows will
     // fall. There's no way to shrink a grid, so we create a new
