@@ -114,7 +114,7 @@ INCLUDEPATH += \
     $$BUILD_TREE/source/components \ # for <Application/Version>
     $$SOURCE_TREE/source/libs/GCF/include
 
-CONFIG += depend_includepath
+CONFIG += depend_includepath c++11
 
 LIBS += -L$$APPLICATION_LIBRARY_PATH
 
@@ -139,6 +139,9 @@ win32-msvc* {
     #Don't warn about sprintf, fopen etc being 'unsafe'
     DEFINES += _CRT_SECURE_NO_WARNINGS
 }
+
+greaterThan(QT_MAJOR_VERSION, 4): CONFIG += c++11
+QMAKE_CXXFLAGS += -std=c++0x
 
 QMAKEFEATURES += $$SOURCE_TREE/libs/GCF/qmake_prf
 
