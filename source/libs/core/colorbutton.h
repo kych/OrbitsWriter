@@ -34,7 +34,7 @@ class ColorButton : public QPushButton
     Q_OBJECT
     Q_PROPERTY(bool colorDialog READ colorDialogEnabled WRITE setColorDialogEnabled)
 public:
-    ColorButton(const QIcon & icon, QWidget *parent = 0, int columns = -1, bool enableColorDialog = true);
+    ColorButton(QWidget *parent = 0, int columns = -1, bool enableColorDialog = true);
     ~ColorButton();
 
     void insertColor(const QColor &color, const QString &text = QString::null, int index = -1);
@@ -49,6 +49,8 @@ public:
     void setStandardColors();
 
     static QColor getColor(const QPoint &point, bool allowCustomColors = true);
+
+    void setTipIcon(const QIcon &icon);
 
 public slots:
     void setCurrentColor(const QColor &color);

@@ -182,11 +182,15 @@ void MainWindow::Private::setupToolBars()
     formatBar->addWidget(fontChooser);
     fontSizeChooser = new FontSizeChooser(q);
     formatBar->addWidget(fontSizeChooser);
-    textColorButton = new ColorButton(QIcon(":/image/text_color"), q);
+    textColorButton = new ColorButton(q);
+    textColorButton->setStandardColors();
+    textColorButton->setTipIcon(QIcon(":/image/text_color"));
     textColorButton->setToolTip(tr("Text Color"));
     formatBar->addWidget(textColorButton);
 //    m_textColorAction->setIcon(m_textColorButton->icon());
-    textBackgroundColorButton = new ColorButton(QIcon(":/image/text_background_color"), q);
+    textBackgroundColorButton = new ColorButton(q);
+    textBackgroundColorButton->setStandardColors();
+    textBackgroundColorButton->setTipIcon(QIcon(":/image/text_background_color"));
     textBackgroundColorButton->setToolTip(tr("Text Background Color"));
     formatBar->addWidget(textBackgroundColorButton);
 //    m_textBackgroundColorAction->setIcon(m_textBackgroundColorButton->icon());
