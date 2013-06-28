@@ -29,4 +29,42 @@ VisualEditor::VisualEditor(QWidget *parent) :
 {
 }
 
+void VisualEditor::textBold(bool bold)
+{
+    QTextCharFormat fmt;
+    fmt.setFontWeight(bold ? QFont::Bold : QFont::Normal);
+    mergeFormatOnWordOrSelection(fmt);
+}
+
+void VisualEditor::textItalic(bool italic)
+{
+    QTextCharFormat fmt;
+    fmt.setFontItalic(italic);
+    mergeFormatOnWordOrSelection(fmt);
+}
+
+void VisualEditor::textUnderline(bool underline)
+{
+    QTextCharFormat fmt;
+    fmt.setFontUnderline(underline);
+    mergeFormatOnWordOrSelection(fmt);
+}
+
+void VisualEditor::textStrikeOut(bool strike)
+{
+    QTextCharFormat fmt;
+    fmt.setFontStrikeOut(strike);
+    mergeFormatOnWordOrSelection(fmt);
+}
+
+void VisualEditor::mergeFormatOnWordOrSelection(const QTextCharFormat &format)
+{
+    QTextCursor cursor = textCursor();
+    if (!cursor.hasSelection()) {
+        cursor.select(QTextCursor::WordUnderCursor);
+    }
+    cursor.mergeCharFormat(format);
+    mergeCurrentCharFormat(format);
+}
+
 }

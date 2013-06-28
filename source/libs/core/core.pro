@@ -34,7 +34,8 @@ HEADERS += \
     fontchooser.h \
     fontsizechooser.h \
     colorbutton.h \
-    dpointer.h
+    dpointer.h \
+    editor.h
 
 SOURCES += \
     mainwindow.cpp \
@@ -44,7 +45,8 @@ SOURCES += \
     fontchooser.cpp \
     fontsizechooser.cpp \
     colorbutton.cpp \
-    dpointer.cpp
+    dpointer.cpp \
+    editor.cpp
 
 RESOURCES += \
     resources.qrc

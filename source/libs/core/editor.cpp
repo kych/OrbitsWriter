@@ -19,34 +19,32 @@
  *
  *-------------------------------------------------*/
 
-#ifndef VISUALEDITOR_H
-#define VISUALEDITOR_H
+/*!
+  \class GOW::Editor
 
-#include <QTextEdit>
+  The editor interface for editors.
+ */
 
-#include <Editor>
+/*!
+  \fn void GOW::Editor::textBold(bool bold)
 
-namespace GOW
-{
+  Toggles text is bold or not.
+ */
 
-class VisualEditor : public QTextEdit, public Editor
-{
-    Q_OBJECT
-public:
-    explicit VisualEditor(QWidget *parent = 0);
-    
-signals:
-    
-public slots:
-    void textBold(bool bold);
-    void textItalic(bool italic);
-    void textUnderline(bool underline);
-    void textStrikeOut(bool strike);
+/*!
+  \fn void GOW::Editor::textItalic(bool bold)
 
-private:
-    void mergeFormatOnWordOrSelection(const QTextCharFormat &format);
-}; // end of class GOW::VisualEditor
+  Toggles text is italic or not.
+ */
 
-} // end of namespace GOW
+/*!
+  \fn void GOW::Editor::textUnderline(bool bold)
 
-#endif // VISUALEDITOR_H
+  Toggles text is underline or not.
+ */
+
+/*!
+  \fn void GOW::Editor::textStrikeOut(bool bold)
+
+  Toggles text is strike out or not.
+ */

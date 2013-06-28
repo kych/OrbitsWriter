@@ -21,6 +21,7 @@
 
 #include <QAction>
 #include <QApplication>
+#include <QDebug>
 #include <QLineEdit>
 #include <QMenu>
 #include <QMenuBar>
@@ -66,7 +67,7 @@ public:
     QAction *textBoldAction;
     QAction *textItalicAction;
     QAction *textUnderlineAction;
-    QAction *textStrikeoutAction;
+    QAction *textStrikeOutAction;
     QAction *textFontAction;
     QAction *textColorAction;
     QAction *textBackgroundColorAction;
@@ -83,10 +84,17 @@ public:
     ColorButton *textColorButton;
     ColorButton *textBackgroundColorButton;
 
+    QTabWidget *editorTabs;
     QLineEdit *titleEditor;
     VisualEditor *visualEditor;
     SourceEditor *sourceEditor;
     Previewer *previewer;
+
+private slots:
+    void textBold();
+    void textItalic();
+    void textStrikeOut();
+    void textUnderline();
 
 private:
     void createActions();
@@ -131,7 +139,7 @@ void MainWindow::Private::setupMenus()
     formatMenu->addAction(textBoldAction);
     formatMenu->addAction(textItalicAction);
     formatMenu->addAction(textUnderlineAction);
-    formatMenu->addAction(textStrikeoutAction);
+    formatMenu->addAction(textStrikeOutAction);
     formatMenu->addSeparator();
     formatMenu->addAction(textFontAction);
     formatMenu->addAction(textColorAction);
@@ -177,7 +185,7 @@ void MainWindow::Private::setupToolBars()
     formatBar->addAction(textBoldAction);
     formatBar->addAction(textItalicAction);
     formatBar->addAction(textUnderlineAction);
-    formatBar->addAction(textStrikeoutAction);
+    formatBar->addAction(textStrikeOutAction);
     fontChooser = new FontChooser(q);
     formatBar->addWidget(fontChooser);
     fontSizeChooser = new FontSizeChooser(q);
@@ -190,6 +198,7 @@ void MainWindow::Private::setupToolBars()
 //    m_textColorAction->setIcon(m_textColorButton->icon());
     textBackgroundColorButton = new ColorButton(q);
     textBackgroundColorButton->setStandardColors();
+    textBackgroundColorButton->setCurrentColor(Qt::white);
     textBackgroundColorButton->setTipIcon(QIcon(":/image/text_background_color"));
     textBackgroundColorButton->setToolTip(tr("Text Background Color"));
     formatBar->addWidget(textBackgroundColorButton);
@@ -216,7 +225,7 @@ void MainWindow::Private::setupStatusBar()
 
 void MainWindow::Private::setupEditors()
 {
-    QTabWidget *editorTabs = new QTabWidget(q);
+    editorTabs = new QTabWidget(q);
     editorTabs->setTabPosition(QTabWidget::South);
 
     visualEditor = new VisualEditor(editorTabs);
@@ -247,6 +256,17 @@ void MainWindow::Private::setupEditors()
     editorAreaLayout->addWidget(editorTabs);
     q->setCentralWidget(editorArea);
 }
+
+#define FORMAT_FUNC(ACTION) \
+    void MainWindow::Private::ACTION() \
+    { \
+        dynamic_cast<GOW::Editor *>(editorTabs->currentWidget())->ACTION(ACTION##Action->isChecked()); \
+    }
+
+FORMAT_FUNC(textBold)
+FORMAT_FUNC(textItalic)
+FORMAT_FUNC(textStrikeOut)
+FORMAT_FUNC(textUnderline)
 
 void MainWindow::Private::createActions()
 {
@@ -305,21 +325,25 @@ void MainWindow::Private::createActions()
     textBoldAction->setShortcut(Qt::CTRL + Qt::Key_B);
     textBoldAction->setStatusTip(tr("Set text bold."));
     textBoldAction->setCheckable(true);
+    connect(textBoldAction, SIGNAL(triggered()), this, SLOT(textBold()));
 
     textItalicAction = new QAction(QIcon::fromTheme("format-text-italic", QIcon(":/image/italic")), tr("Italic"), this);
     textItalicAction->setShortcut(Qt::CTRL + Qt::Key_I);
     textItalicAction->setStatusTip(tr("Set text italic."));
     textItalicAction->setCheckable(true);
+    connect(textItalicAction, SIGNAL(triggered()), this, SLOT(textItalic()));
 
     textUnderlineAction = new QAction(QIcon::fromTheme("format-text-underline", QIcon(":/image/underline")), tr("Underline"), this);
     textUnderlineAction->setShortcut(Qt::CTRL + Qt::Key_U);
     textUnderlineAction->setStatusTip(tr("Add underline."));
     textUnderlineAction->setCheckable(true);
+    connect(textUnderlineAction, SIGNAL(triggered()), this, SLOT(textUnderline()));
 
-    textStrikeoutAction = new QAction(QIcon::fromTheme("format-text-strikethrough", QIcon(":/image/strike")), tr("Strike"), this);
-    textStrikeoutAction->setShortcut(Qt::CTRL + Qt::Key_D);
-    textStrikeoutAction->setStatusTip(tr("Strike out."));
-    textStrikeoutAction->setCheckable(true);
+    textStrikeOutAction = new QAction(QIcon::fromTheme("format-text-strikethrough", QIcon(":/image/strike")), tr("Strike"), this);
+    textStrikeOutAction->setShortcut(Qt::CTRL + Qt::Key_D);
+    textStrikeOutAction->setStatusTip(tr("Strike out."));
+    textStrikeOutAction->setCheckable(true);
+    connect(textStrikeOutAction, SIGNAL(triggered()), this, SLOT(textStrikeOut()));
 
     textFontAction = new QAction(QIcon(":/image/font"), tr("Font..."), this);
     textFontAction->setStatusTip(tr("Set font."));
