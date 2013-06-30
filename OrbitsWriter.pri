@@ -19,7 +19,7 @@
 #
 #-------------------------------------------------
 
-!isEmpty(ORBITSWRITER_PRI_INCLUDED): error("orbitswriter.pri already included")
+!isEmpty(ORBITSWRITER_PRI_INCLUDED): error("OrbitsWriter.pri already included")
 ORBITSWRITER_PRI_INCLUDED = 1
 
 APPLICATION_NAME    = OrbitsWriter
@@ -88,8 +88,8 @@ OUTPUT_PATH = $$BUILD_TREE/output
     APPLICATION_LIBRARY_PATH     = $$BUILD_TREE/$$LIBRARY_BASENAME
     APPLICATION_COMPONENTS_PATH  = $$OUTPUT_PATH/plugins
     #APP_LIBEXEC_PATH            = $$APP_PATH # FIXME
-    #APP_DATA_PATH               = $$APP_BUILD_TREE/share/orbitswriter
-    #APP_DOC_PATH                = $$APP_BUILD_TREE/share/doc/orbitswriter
+    #APP_DATA_PATH               = $$APP_BUILD_TREE/share/OrbitsWriter
+    #APP_DOC_PATH                = $$APP_BUILD_TREE/share/doc/OrbitsWriter
     APPLICATION_BIN_PATH         = $$OUTPUT_PATH
     APPLICATION_GUIXML_PATH      = $$APPLICATION_BIN_PATH
     !isEqual(SOURCE_TREE, $$BUILD_TREE):copydata = 1
@@ -110,9 +110,7 @@ OUTPUT_PATH = $$BUILD_TREE/output
 }
 
 INCLUDEPATH += \
-    $$SOURCE_TREE/source/components \
-    $$BUILD_TREE/source/components \ # for <Application/Version>
-    $$SOURCE_TREE/source/libs/GCF/include
+    $$BUILD_TREE/source/Application # for <Application/Version>
 
 CONFIG += depend_includepath c++11
 
@@ -141,7 +139,5 @@ win32-msvc* {
 } else {
     QMAKE_CXXFLAGS += -std=c++0x
 }
-
-QMAKEFEATURES += $$SOURCE_TREE/libs/GCF/qmake_prf
 
 CONFIG(debug, debug|release):DEFINES += _DEBUG_
