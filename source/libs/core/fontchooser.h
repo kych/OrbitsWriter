@@ -25,6 +25,8 @@
 #include <QComboBox>
 #include <QStyledItemDelegate>
 
+#include <DPointer>
+
 namespace GOW
 {
 
@@ -47,8 +49,14 @@ class FontChooser : public QComboBox
 public:
     explicit FontChooser(QWidget *parent = 0);
     
+signals:
+    void fontFamilyChanged(const QString &family);
+
 protected:
     void showPopup();
+
+private:
+    D_POINTER
 }; // end of class GOW::FontChooser
 
 } // end of namespace GOW

@@ -39,6 +39,8 @@
 
 namespace GOW {
 
+#define currentEditor (dynamic_cast<GOW::Editor *>(editorTabs->currentWidget()))
+
 class MainWindow::Private : public QObject
 {
     Q_OBJECT
@@ -95,9 +97,16 @@ private slots:
     void textItalic();
     void textStrikeOut();
     void textUnderline();
+    void textAlign(QAction *action);
+
+    void cursorPositionChanged();
+    void currentCharFormatChanged(const QTextCharFormat &format);
+
+    void fontFamilyChanged(const QString &family);
 
 private:
     void createActions();
+    void alignmentChanged(Qt::Alignment align);
 }; // end of class GOW::MainWindow::Private
 
 MainWindow::Private::Private(MainWindow *win) :
@@ -188,6 +197,8 @@ void MainWindow::Private::setupToolBars()
     formatBar->addAction(textStrikeOutAction);
     fontChooser = new FontChooser(q);
     formatBar->addWidget(fontChooser);
+    connect(fontChooser, SIGNAL(fontFamilyChanged(QString)),
+            this, SLOT(fontFamilyChanged(QString)));
     fontSizeChooser = new FontSizeChooser(q);
     formatBar->addWidget(fontSizeChooser);
     textColorButton = new ColorButton(q);
@@ -231,6 +242,10 @@ void MainWindow::Private::setupEditors()
     visualEditor = new VisualEditor(editorTabs);
     visualEditor->setStyleSheet("border: 0");
     editorTabs->addTab(visualEditor, tr("Visual"));
+    connect(visualEditor, SIGNAL(cursorPositionChanged()),
+            this, SLOT(cursorPositionChanged()));
+    connect(visualEditor, SIGNAL(currentCharFormatChanged(QTextCharFormat)),
+            this, SLOT(currentCharFormatChanged(QTextCharFormat)));
 
     previewer = new Previewer(editorTabs);
     previewer->setStyleSheet("border: 0");
@@ -260,13 +275,34 @@ void MainWindow::Private::setupEditors()
 #define FORMAT_FUNC(ACTION) \
     void MainWindow::Private::ACTION() \
     { \
-        dynamic_cast<GOW::Editor *>(editorTabs->currentWidget())->ACTION(ACTION##Action->isChecked()); \
+        currentEditor->ACTION(ACTION##Action->isChecked()); \
     }
 
 FORMAT_FUNC(textBold)
 FORMAT_FUNC(textItalic)
 FORMAT_FUNC(textStrikeOut)
 FORMAT_FUNC(textUnderline)
+
+#define SET_TEXT_ALIGN(ALIGNMENT) \
+    currentEditor->textAlign(ALIGNMENT)
+
+void MainWindow::Private::textAlign(QAction *action)
+{
+    if (action == alignCenterAction) {
+        SET_TEXT_ALIGN(AlignCenter);
+    } else if (action == alignLeftAction) {
+        SET_TEXT_ALIGN(AlignLeft);
+    } else if (action == alignRightAction) {
+        SET_TEXT_ALIGN(AlignRight);
+    } else if (action == alignJustifyAction) {
+        SET_TEXT_ALIGN(AlignJustify);
+    }
+}
+
+void MainWindow::Private::cursorPositionChanged()
+{
+    alignmentChanged(visualEditor->alignment());
+}
 
 void MainWindow::Private::createActions()
 {
@@ -355,6 +391,7 @@ void MainWindow::Private::createActions()
     textBackgroundColorAction->setStatusTip(tr("Text background color."));
 
     QActionGroup *alignGroup = new QActionGroup(this);
+    connect(alignGroup, SIGNAL(triggered(QAction*)), this, SLOT(textAlign(QAction*)));
     alignCenterAction = new QAction(QIcon::fromTheme("format-justify-center", QIcon(":/image/align_center")), tr("Center"), this);
     alignCenterAction->setStatusTip(tr("Justify center."));
     alignCenterAction->setShortcut(Qt::CTRL + Qt::Key_E);
@@ -387,6 +424,32 @@ void MainWindow::Private::createActions()
     aboutAction = new QAction(QIcon::fromTheme("help-about", QIcon(":/image/about")), tr("About"), this);
     aboutAction->setMenuRole(QAction::AboutRole);
     aboutAction->setStatusTip(tr("About OrbitsWriter."));
+}
+
+void MainWindow::Private::alignmentChanged(Qt::Alignment align)
+{
+    if (align & Qt::AlignLeft) {
+        alignLeftAction->setChecked(true);
+    } else if (align & Qt::AlignHCenter) {
+        alignCenterAction->setChecked(true);
+    } else if (align & Qt::AlignRight) {
+        alignRightAction->setChecked(true);
+    } else if (align & Qt::AlignJustify) {
+        alignJustifyAction->setChecked(true);
+    }
+}
+
+void MainWindow::Private::currentCharFormatChanged(const QTextCharFormat &format)
+{
+    textBoldAction->setChecked(format.fontWeight() == QFont::Bold);
+    textItalicAction->setChecked(format.fontItalic());
+    textStrikeOutAction->setChecked(format.fontStrikeOut());
+    textUnderlineAction->setChecked(format.fontUnderline());
+}
+
+void MainWindow::Private::fontFamilyChanged(const QString &family)
+{
+    currentEditor->textFont(family);
 }
 
 

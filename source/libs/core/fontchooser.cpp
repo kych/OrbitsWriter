@@ -27,6 +27,11 @@
 namespace GOW
 {
 
+class FontChooser::Private : public QObject
+{
+    Q_OBJECT
+};
+
 FontChooser::FontChooser(QWidget *parent) :
     QComboBox(parent)
 {
@@ -44,6 +49,9 @@ FontChooser::FontChooser(QWidget *parent) :
     addItem(tr("Verdana"), QFont(QLatin1String("Verdana")));
 
     setItemDelegate(new FontChooserItemDelegate(this));
+
+    connect(this, SIGNAL(activated(QString)),
+            this, SIGNAL(fontFamilyChanged(QString)));
 }
 
 void FontChooser::showPopup()
@@ -88,3 +96,5 @@ QSize FontChooserItemDelegate::sizeHint(const QStyleOptionViewItem &,
 }
 
 }
+
+#include "fontchooser.moc"

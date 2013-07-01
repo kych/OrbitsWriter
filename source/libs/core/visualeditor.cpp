@@ -57,6 +57,31 @@ void VisualEditor::textStrikeOut(bool strike)
     mergeFormatOnWordOrSelection(fmt);
 }
 
+void VisualEditor::textAlign(TextAlignment alignment)
+{
+    switch (alignment) {
+    case AlignCenter:
+        setAlignment(Qt::AlignHCenter);
+        break;
+    case AlignJustify:
+        setAlignment(Qt::AlignJustify);
+        break;
+    case AlignLeft:
+        setAlignment(Qt::AlignLeft | Qt::AlignAbsolute);
+        break;
+    case AlignRight:
+        setAlignment(Qt::AlignRight | Qt::AlignAbsolute);
+        break;
+    }
+}
+
+void VisualEditor::textFont(const QString &family)
+{
+    QTextCharFormat fmt;
+    fmt.setFontFamily(family);
+    mergeFormatOnWordOrSelection(fmt);
+}
+
 void VisualEditor::mergeFormatOnWordOrSelection(const QTextCharFormat &format)
 {
     QTextCursor cursor = textCursor();

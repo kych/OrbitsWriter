@@ -20,6 +20,36 @@
  *-------------------------------------------------*/
 
 /*!
+  \enum GOW::TextAlignment
+
+  Text alignment.
+ */
+
+/*!
+  \var GOW::TextAlignment GOW::AlignJustify
+
+  Text alignment jistify.
+ */
+
+/*!
+  \var GOW::TextAlignment GOW::AlignLeft
+
+  Text alignment left.
+ */
+
+/*!
+  \var GOW::TextAlignment GOW::AlignRight
+
+  Text alignment right.
+ */
+
+/*!
+  \var GOW::TextAlignment GOW::AlignCenter
+
+  Text alignment center.
+ */
+
+/*!
   \class GOW::Editor
 
   The editor interface for editors.
@@ -47,4 +77,10 @@
   \fn void GOW::Editor::textStrikeOut(bool bold)
 
   Toggles text is strike out or not.
+ */
+
+/*!
+  \fn void GOW::Editor::textAlign(TextAlignment alignment)
+
+  Sets text alignment to \a alignment.
  */

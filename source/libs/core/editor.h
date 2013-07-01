@@ -22,8 +22,19 @@
 #ifndef EDITOR_H
 #define EDITOR_H
 
+QT_FORWARD_DECLARE_CLASS(QString);
+
 namespace GOW
 {
+
+enum TextAlignment
+{
+    AlignJustify,
+    AlignLeft,
+    AlignRight,
+    AlignCenter
+};
+
 class Editor
 {
 public:
@@ -31,6 +42,9 @@ public:
     virtual void textItalic(bool italic) = 0;
     virtual void textUnderline(bool underline) = 0;
     virtual void textStrikeOut(bool strike) = 0;
+
+    virtual void textAlign(TextAlignment alignment) = 0;
+    virtual void textFont(const QString &family) = 0;
 }; // end of class GOW::Editor
 } // end of namespace GOW
 

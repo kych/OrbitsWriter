@@ -43,6 +43,9 @@ public slots:
     void textUnderline(bool underline);
     void textStrikeOut(bool strike);
 
+    void textAlign(TextAlignment alignment);
+    void textFont(const QString &family);
+
 private:
     void mergeFormatOnWordOrSelection(const QTextCharFormat &format);
 }; // end of class GOW::VisualEditor
