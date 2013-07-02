@@ -31,32 +31,24 @@ class FontChooser::Private : public QObject
 {
     Q_OBJECT
 public:
-    Private(FontChooser *q_ptr);
+    Private(FontChooser *q_ptr): QObject(q_ptr), q(q_ptr) {}
 
     QStringList fontFamilies;
 public slots:
-    void itemActivated(int index);
+    void itemActivated(int index)
+    {
+        QFont &font = q->itemData(index).value<QFont>();
+        emit q->fontFamilyActivated(QFontInfo(font).family());
+    }
 private:
     Q_POINTER(FontChooser)
-};
-
-FontChooser::Private::Private(FontChooser *q_ptr)
-    : QObject(q_ptr),
-      q(q_ptr)
-{
-}
-
-void FontChooser::Private::itemActivated(int index)
-{
-    QFont &font = q->itemData(index).value<QFont>();
-    emit q->fontFamilyChanged(QFontInfo(font).family());
-}
+}; // end of class GOW::FontSize::Private
 
 
 class FontChooserItemDelegate : public QStyledItemDelegate
 {
 public:
-    FontChooserItemDelegate(QObject *parent = 0);
+    FontChooserItemDelegate(QObject *parent = 0) : QStyledItemDelegate(parent) {}
 
 protected:
     void paint(QPainter *painter,
@@ -65,11 +57,6 @@ protected:
     QSize sizeHint(const QStyleOptionViewItem &,
                    const QModelIndex &index) const;
 }; // end of class GOW::FontChooserItemDelegate
-
-FontChooserItemDelegate::FontChooserItemDelegate(QObject *parent) :
-    QStyledItemDelegate(parent)
-{
-}
 
 void FontChooserItemDelegate::paint(QPainter *painter,
                                     const QStyleOptionViewItem &option,

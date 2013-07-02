@@ -24,6 +24,7 @@
 
 #include <QTextEdit>
 
+#include <DPointer>
 #include <Editor>
 
 namespace GOW
@@ -44,10 +45,11 @@ public slots:
     void textStrikeOut(bool strike);
 
     void textAlign(TextAlignment alignment);
-    void textFont(const QString &family);
+    void textFontFamily(const QString &family);
+    void textFontSize(int size);
 
 private:
-    void mergeFormatOnWordOrSelection(const QTextCharFormat &format);
+    D_POINTER
 }; // end of class GOW::VisualEditor
 
 } // end of namespace GOW

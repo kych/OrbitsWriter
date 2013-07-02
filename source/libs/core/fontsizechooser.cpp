@@ -27,31 +27,33 @@
 namespace GOW
 {
 
-FontSizeChooser::FontSizeChooser(QWidget *parent) :
-    QComboBox(parent)
+class FontSizeChooser::Private : public QObject
 {
-    addItem(tr("xx-small"), 5);
-    addItem(tr("x-small"), 7);
-    addItem(tr("small"), 11);
-    addItem(tr("medium"), 16);
-    addItem(tr("large"), 24);
-    addItem(tr("x-large"), 36);
-    addItem(tr("xx-large"), 54);
-    setCurrentIndex(3);
+    Q_OBJECT
+public:
+    Private(FontSizeChooser *q_ptr) : QObject(q_ptr), q(q_ptr) {}
+public slots:
+    void itemActivated(int index)
+    {
+        emit q->fontSizeActivated(q->itemData(index).toInt());
+    }
+private:
+    Q_POINTER(FontSizeChooser)
+}; // end of class GOW::FontSizeChooser::Private
 
-    setItemDelegate(new FontSizeChooserItemDelegate(this));
-}
 
-void FontSizeChooser::showPopup()
+class FontSizeChooserItemDelegate : public QStyledItemDelegate
 {
-    view()->setFixedWidth(220);
-    QComboBox::showPopup();
-}
+public:
+    FontSizeChooserItemDelegate(QObject *parent = 0) : QStyledItemDelegate(parent) {}
 
-FontSizeChooserItemDelegate::FontSizeChooserItemDelegate(QObject *parent) :
-    QStyledItemDelegate(parent)
-{
-}
+protected:
+    void paint(QPainter *painter,
+               const QStyleOptionViewItem &option,
+               const QModelIndex &index) const;
+    QSize sizeHint(const QStyleOptionViewItem &,
+                   const QModelIndex &index) const;
+}; // end of class GOW::FontSizeChooserItemDelegate
 
 void FontSizeChooserItemDelegate::paint(QPainter *painter,
                                         const QStyleOptionViewItem &option,
@@ -86,4 +88,46 @@ QSize FontSizeChooserItemDelegate::sizeHint(const QStyleOptionViewItem &,
     return size;
 }
 
+
+/*!
+  \class GOW::FontSizeChooser
+
+  A font size selector according to HTML standard.
+
+  There are 7 levels of font size with its size in pixel:
+  - xx-small: 5px;
+  - x-small: 7px;
+  - small: 11px;
+  - medium: 16px;
+  - large: 24px;
+  - x-large: 36px;
+  - xx-large: 54px.
+ */
+
+FontSizeChooser::FontSizeChooser(QWidget *parent) :
+    QComboBox(parent),
+    d(this)
+{
+    addItem(tr("xx-small"), 5);
+    addItem(tr("x-small"), 7);
+    addItem(tr("small"), 11);
+    addItem(tr("medium"), 16);
+    addItem(tr("large"), 24);
+    addItem(tr("x-large"), 36);
+    addItem(tr("xx-large"), 54);
+    setCurrentIndex(3);
+
+    setItemDelegate(new FontSizeChooserItemDelegate(this));
+    connect(this, SIGNAL(activated(int)),
+            d.get(), SLOT(itemActivated(int)));
 }
+
+void FontSizeChooser::showPopup()
+{
+    view()->setFixedWidth(220);
+    QComboBox::showPopup();
+}
+
+}
+
+#include "fontsizechooser.moc"

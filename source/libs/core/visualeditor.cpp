@@ -24,37 +24,59 @@
 namespace GOW
 {
 
-VisualEditor::VisualEditor(QWidget *parent) :
-    QTextEdit(parent)
+class VisualEditor::Private : public QObject
 {
+    Q_OBJECT
+public:
+    Private(VisualEditor *q_ptr) : QObject(q_ptr), q(q_ptr) {}
+
+    void mergeFormatOnWordOrSelection(const QTextCharFormat &format)
+    {
+        QTextCursor cursor = q->textCursor();
+        if (!cursor.hasSelection()) {
+            cursor.select(QTextCursor::WordUnderCursor);
+        }
+        cursor.mergeCharFormat(format);
+        q->mergeCurrentCharFormat(format);
+    }
+
+private:
+    Q_POINTER(VisualEditor)
+}; // end of class GOW::VisualEditor::Private
+
+
+VisualEditor::VisualEditor(QWidget *parent) :
+    QTextEdit(parent), d(this)
+{
+
 }
 
 void VisualEditor::textBold(bool bold)
 {
     QTextCharFormat fmt;
     fmt.setFontWeight(bold ? QFont::Bold : QFont::Normal);
-    mergeFormatOnWordOrSelection(fmt);
+    d->mergeFormatOnWordOrSelection(fmt);
 }
 
 void VisualEditor::textItalic(bool italic)
 {
     QTextCharFormat fmt;
     fmt.setFontItalic(italic);
-    mergeFormatOnWordOrSelection(fmt);
+    d->mergeFormatOnWordOrSelection(fmt);
 }
 
 void VisualEditor::textUnderline(bool underline)
 {
     QTextCharFormat fmt;
     fmt.setFontUnderline(underline);
-    mergeFormatOnWordOrSelection(fmt);
+    d->mergeFormatOnWordOrSelection(fmt);
 }
 
 void VisualEditor::textStrikeOut(bool strike)
 {
     QTextCharFormat fmt;
     fmt.setFontStrikeOut(strike);
-    mergeFormatOnWordOrSelection(fmt);
+    d->mergeFormatOnWordOrSelection(fmt);
 }
 
 void VisualEditor::textAlign(TextAlignment alignment)
@@ -75,21 +97,22 @@ void VisualEditor::textAlign(TextAlignment alignment)
     }
 }
 
-void VisualEditor::textFont(const QString &family)
+void VisualEditor::textFontFamily(const QString &family)
 {
     QTextCharFormat fmt;
     fmt.setFontFamily(family);
-    mergeFormatOnWordOrSelection(fmt);
+    d->mergeFormatOnWordOrSelection(fmt);
 }
 
-void VisualEditor::mergeFormatOnWordOrSelection(const QTextCharFormat &format)
+void VisualEditor::textFontSize(int size)
 {
-    QTextCursor cursor = textCursor();
-    if (!cursor.hasSelection()) {
-        cursor.select(QTextCursor::WordUnderCursor);
+    if (size > 0) {
+        QTextCharFormat fmt;
+        fmt.setFontPointSize(size);
+        d->mergeFormatOnWordOrSelection(fmt);
     }
-    cursor.mergeCharFormat(format);
-    mergeCurrentCharFormat(format);
 }
 
 }
+
+#include "visualeditor.moc"

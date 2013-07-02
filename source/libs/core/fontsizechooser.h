@@ -25,30 +25,25 @@
 #include <QComboBox>
 #include <QStyledItemDelegate>
 
+#include <DPointer>
+
 namespace GOW
 {
-
-class FontSizeChooserItemDelegate : public QStyledItemDelegate
-{
-public:
-    FontSizeChooserItemDelegate(QObject *parent = 0);
-
-protected:
-    void paint(QPainter *painter,
-               const QStyleOptionViewItem &option,
-               const QModelIndex &index) const;
-    QSize sizeHint(const QStyleOptionViewItem &,
-                   const QModelIndex &index) const;
-}; // end of class GOW::FontSizeChooserItemDelegate
 
 class FontSizeChooser : public QComboBox
 {
     Q_OBJECT
 public:
     explicit FontSizeChooser(QWidget *parent = 0);
+
+signals:
+    void fontSizeActivated(int size);
     
 protected:
     void showPopup();
+
+private:
+    D_POINTER
 }; // end of class GOW::FontSizeChooser
 
 } // end of namesapce GOW

@@ -44,7 +44,8 @@ public:
     virtual void textStrikeOut(bool strike) = 0;
 
     virtual void textAlign(TextAlignment alignment) = 0;
-    virtual void textFont(const QString &family) = 0;
+    virtual void textFontFamily(const QString &family) = 0;
+    virtual void textFontSize(int size) = 0;
 }; // end of class GOW::Editor
 } // end of namespace GOW
 

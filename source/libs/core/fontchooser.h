@@ -37,7 +37,7 @@ public:
     explicit FontChooser(QWidget *parent = 0);
 
 signals:
-    void fontFamilyChanged(const QString &family);
+    void fontFamilyActivated(const QString &family);
 
 protected:
     void showPopup();

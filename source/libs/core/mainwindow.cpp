@@ -102,7 +102,8 @@ private slots:
     void cursorPositionChanged();
     void currentCharFormatChanged(const QTextCharFormat &format);
 
-    void fontFamilyChanged(const QString &family);
+    void fontFamilyActivated(const QString &family);
+    void fontSizeActivated(int size);
 
 private:
     void createActions();
@@ -198,10 +199,12 @@ void MainWindow::Private::setupToolBars()
     formatBar->addAction(textStrikeOutAction);
     fontChooser = new FontChooser(q);
     formatBar->addWidget(fontChooser);
-    connect(fontChooser, SIGNAL(fontFamilyChanged(QString)),
-            this, SLOT(fontFamilyChanged(QString)));
+    connect(fontChooser, SIGNAL(fontFamilyActivated(QString)),
+            this, SLOT(fontFamilyActivated(QString)));
     fontSizeChooser = new FontSizeChooser(q);
     formatBar->addWidget(fontSizeChooser);
+    connect(fontSizeChooser, SIGNAL(fontSizeActivated(int)),
+            this, SLOT(fontSizeActivated(int)));
     textColorButton = new ColorButton(q);
     textColorButton->setStandardColors();
     textColorButton->setTipIcon(QIcon(":/image/text_color"));
@@ -440,7 +443,7 @@ void MainWindow::Private::alignmentChanged(Qt::Alignment align)
 void MainWindow::Private::fontChanged(const QFont &font)
 {
     fontChooser->setCurrentIndex(fontChooser->findData(QFontInfo(font).family()));
-//    comboSize->setCurrentIndex(comboSize->findText(QString::number(font.pointSize())));
+    fontSizeChooser->setCurrentIndex(fontSizeChooser->findData(QString::number(font.pointSize())));
     textBoldAction->setChecked(font.bold());
     textItalicAction->setChecked(font.italic());
     textStrikeOutAction->setChecked(font.strikeOut());
@@ -452,9 +455,14 @@ void MainWindow::Private::currentCharFormatChanged(const QTextCharFormat &format
     fontChanged(format.font());
 }
 
-void MainWindow::Private::fontFamilyChanged(const QString &family)
+void MainWindow::Private::fontFamilyActivated(const QString &family)
 {
-    currentEditor->textFont(family);
+    currentEditor->textFontFamily(family);
+}
+
+void MainWindow::Private::fontSizeActivated(int size)
+{
+    currentEditor->textFontSize(size);
 }
 
 

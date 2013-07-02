@@ -31,9 +31,7 @@ template <typename T>
 class DPointer
 {
 public:
-    DPointer() : d(new T())
-    {
-    }
+    DPointer() : d(new T()) {}
 
     /*
      * We can implement by variadic templates,
@@ -66,10 +64,7 @@ public:
     {
     }
 
-    ~DPointer()
-    {
-
-    }
+    ~DPointer() {}
 
     T * operator->() const
     {
