@@ -30,35 +30,41 @@ namespace GOW
 class FontChooser::Private : public QObject
 {
     Q_OBJECT
+public:
+    Private(FontChooser *q_ptr);
+
+    QStringList fontFamilies;
+public slots:
+    void itemActivated(int index);
+private:
+    Q_POINTER(FontChooser)
 };
 
-FontChooser::FontChooser(QWidget *parent) :
-    QComboBox(parent)
+FontChooser::Private::Private(FontChooser *q_ptr)
+    : QObject(q_ptr),
+      q(q_ptr)
 {
-    addItem(tr("Song"), QFont(QLatin1String("SimSun")));
-    addItem(tr("New Song"), QFont(QLatin1String("NSimSun")));
-    addItem(tr("FangSong_GB2312"), QFont(QLatin1String("FangSong_GB2312")));
-    addItem(tr("KaiTi_GB2312"), QFont(QLatin1String("KaiTi_GB2312")));
-    addItem(tr("Hei"), QFont(QLatin1String("SimHei")));
-    addItem(tr("Microsoft YaHei"), QFont(QLatin1String("Microsoft YaHei")));
-    addItem(tr("Arial"), QFont(QLatin1String("Arial")));
-    addItem(tr("Arial Black"), QFont(QLatin1String("Arial Black")));
-    addItem(tr("Times New Roman"), QFont(QLatin1String("Times New Roman")));
-    addItem(tr("Courier New"), QFont(QLatin1String("Courier New")));
-    addItem(tr("Tahoma"), QFont(QLatin1String("Tahoma")));
-    addItem(tr("Verdana"), QFont(QLatin1String("Verdana")));
-
-    setItemDelegate(new FontChooserItemDelegate(this));
-
-    connect(this, SIGNAL(activated(QString)),
-            this, SIGNAL(fontFamilyChanged(QString)));
 }
 
-void FontChooser::showPopup()
+void FontChooser::Private::itemActivated(int index)
 {
-    view()->setFixedWidth(200);
-    QComboBox::showPopup();
+    QFont &font = q->itemData(index).value<QFont>();
+    emit q->fontFamilyChanged(QFontInfo(font).family());
 }
+
+
+class FontChooserItemDelegate : public QStyledItemDelegate
+{
+public:
+    FontChooserItemDelegate(QObject *parent = 0);
+
+protected:
+    void paint(QPainter *painter,
+               const QStyleOptionViewItem &option,
+               const QModelIndex &index) const;
+    QSize sizeHint(const QStyleOptionViewItem &,
+                   const QModelIndex &index) const;
+}; // end of class GOW::FontChooserItemDelegate
 
 FontChooserItemDelegate::FontChooserItemDelegate(QObject *parent) :
     QStyledItemDelegate(parent)
@@ -93,6 +99,40 @@ QSize FontChooserItemDelegate::sizeHint(const QStyleOptionViewItem &,
     size.setWidth(m.width(index.model()->data(index).toString()));
     size.setHeight(m.height() + 6);
     return size;
+}
+
+
+FontChooser::FontChooser(QWidget *parent) :
+    QComboBox(parent),
+    d(this)
+{
+    d->fontFamilies.append(QFontInfo(QFont(QLatin1String("SimSun"))).family());
+    d->fontFamilies.append(QFontInfo(QFont(QLatin1String("NSimSun"))).family());
+    d->fontFamilies.append(QFontInfo(QFont(QLatin1String("FangSong_GB2312"))).family());
+    d->fontFamilies.append(QFontInfo(QFont(QLatin1String("KaiTi_GB2312"))).family());
+    d->fontFamilies.append(QFontInfo(QFont(QLatin1String("SimHei"))).family());
+    d->fontFamilies.append(QFontInfo(QFont(QLatin1String("Microsoft YaHei"))).family());
+    d->fontFamilies.append(QFontInfo(QFont(QLatin1String("Arial"))).family());
+    d->fontFamilies.append(QFontInfo(QFont(QLatin1String("Arial Black"))).family());
+    d->fontFamilies.append(QFontInfo(QFont(QLatin1String("Times New Roman"))).family());
+    d->fontFamilies.append(QFontInfo(QFont(QLatin1String("Courier New"))).family());
+    d->fontFamilies.append(QFontInfo(QFont(QLatin1String("Tahoma"))).family());
+    d->fontFamilies.append(QFontInfo(QFont(QLatin1String("Verdana"))).family());
+
+    foreach (QString family, d->fontFamilies) {
+        addItem(family, family);
+    }
+
+    setItemDelegate(new FontChooserItemDelegate(this));
+
+    connect(this, SIGNAL(activated(int)),
+            d.get(), SLOT(itemActivated(int)));
+}
+
+void FontChooser::showPopup()
+{
+    view()->setFixedWidth(200);
+    QComboBox::showPopup();
 }
 
 }

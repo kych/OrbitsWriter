@@ -44,9 +44,9 @@ namespace GOW {
 class MainWindow::Private : public QObject
 {
     Q_OBJECT
-    PRIVATE_Q_POINTER(MainWindow)
+    Q_POINTER(MainWindow)
 public:
-    Private(MainWindow *win);
+    Private(MainWindow *q_ptr);
 
     void setupMenus();
     void setupToolBars();
@@ -107,11 +107,12 @@ private slots:
 private:
     void createActions();
     void alignmentChanged(Qt::Alignment align);
+    void fontChanged(const QFont &font);
 }; // end of class GOW::MainWindow::Private
 
-MainWindow::Private::Private(MainWindow *win) :
-    QObject(win),
-    q(win)
+MainWindow::Private::Private(MainWindow *q_ptr) :
+    QObject(q_ptr),
+    q(q_ptr)
 {
 }
 
@@ -283,19 +284,16 @@ FORMAT_FUNC(textItalic)
 FORMAT_FUNC(textStrikeOut)
 FORMAT_FUNC(textUnderline)
 
-#define SET_TEXT_ALIGN(ALIGNMENT) \
-    currentEditor->textAlign(ALIGNMENT)
-
 void MainWindow::Private::textAlign(QAction *action)
 {
     if (action == alignCenterAction) {
-        SET_TEXT_ALIGN(AlignCenter);
+        currentEditor->textAlign(AlignCenter);
     } else if (action == alignLeftAction) {
-        SET_TEXT_ALIGN(AlignLeft);
+        currentEditor->textAlign(AlignLeft);
     } else if (action == alignRightAction) {
-        SET_TEXT_ALIGN(AlignRight);
+        currentEditor->textAlign(AlignRight);
     } else if (action == alignJustifyAction) {
-        SET_TEXT_ALIGN(AlignJustify);
+        currentEditor->textAlign(AlignJustify);
     }
 }
 
@@ -439,12 +437,19 @@ void MainWindow::Private::alignmentChanged(Qt::Alignment align)
     }
 }
 
+void MainWindow::Private::fontChanged(const QFont &font)
+{
+    fontChooser->setCurrentIndex(fontChooser->findData(QFontInfo(font).family()));
+//    comboSize->setCurrentIndex(comboSize->findText(QString::number(font.pointSize())));
+    textBoldAction->setChecked(font.bold());
+    textItalicAction->setChecked(font.italic());
+    textStrikeOutAction->setChecked(font.strikeOut());
+    textUnderlineAction->setChecked(font.underline());
+}
+
 void MainWindow::Private::currentCharFormatChanged(const QTextCharFormat &format)
 {
-    textBoldAction->setChecked(format.fontWeight() == QFont::Bold);
-    textItalicAction->setChecked(format.fontItalic());
-    textStrikeOutAction->setChecked(format.fontStrikeOut());
-    textUnderlineAction->setChecked(format.fontUnderline());
+    fontChanged(format.font());
 }
 
 void MainWindow::Private::fontFamilyChanged(const QString &family)

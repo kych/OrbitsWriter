@@ -76,6 +76,11 @@ public:
         return d.get();
     }
 
+    T * get() const
+    {
+        return d.get();
+    }
+
 private:
     std::unique_ptr<T> d;
 }; // end of class GOW::DPointer
@@ -85,6 +90,9 @@ private:
     friend class Private;           \
     const GOW::DPointer<Private> d; \
 
+#define Q_POINTER(CLASS)            \
+    friend class CLASS;             \
+    CLASS * const q;
 } // end of namespace GOW
 
 #endif // DPOINTER_H

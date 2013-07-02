@@ -32,18 +32,6 @@
 #endif
 
 /*!
-  This macro can be used to declare a private data class for \a CLASS
-  with name \c q .
-
-  This is a Q-Pointer declaration used in data classes. The Q-Pointer should
-  be the public class to this data.
- */
-#define PRIVATE_Q_POINTER(CLASS)               \
-private:                                       \
-    friend class CLASS;                        \
-    CLASS * const q;
-
-/*!
   This macto can be used to generate the singleton instance getter for
   \a CLASS and the instance pointer name should be
   declared by macro \c DECLARE_SINGLETON(CLASS) .

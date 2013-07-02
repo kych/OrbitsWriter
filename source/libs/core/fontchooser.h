@@ -30,25 +30,12 @@
 namespace GOW
 {
 
-class FontChooserItemDelegate : public QStyledItemDelegate
-{
-public:
-    FontChooserItemDelegate(QObject *parent = 0);
-
-protected:
-    void paint(QPainter *painter,
-               const QStyleOptionViewItem &option,
-               const QModelIndex &index) const;
-    QSize sizeHint(const QStyleOptionViewItem &,
-                   const QModelIndex &index) const;
-}; // end of class GOW::FontChooserItemDelegate
-
 class FontChooser : public QComboBox
 {
     Q_OBJECT
 public:
     explicit FontChooser(QWidget *parent = 0);
-    
+
 signals:
     void fontFamilyChanged(const QString &family);
 
