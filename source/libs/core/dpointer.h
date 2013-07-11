@@ -22,7 +22,7 @@
 #ifndef DPOINTER_H
 #define DPOINTER_H
 
-#include <memory>
+#include <QScopedPointer>
 
 namespace GOW
 {
@@ -68,16 +68,16 @@ public:
 
     T * operator->() const
     {
-        return d.get();
+        return d.data();
     }
 
     T * get() const
     {
-        return d.get();
+        return d.data();
     }
 
 private:
-    std::unique_ptr<T> d;
+    QScopedPointer<T> d;
 }; // end of class GOW::DPointer
 
 #define D_POINTER                   \

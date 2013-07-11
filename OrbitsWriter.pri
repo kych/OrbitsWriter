@@ -86,7 +86,7 @@ OUTPUT_PATH = $$BUILD_TREE/output
     contains(TEMPLATE, vc.*): vcproj = 1
     APPLICATION_TARGET           = OrbitsWriter
     APPLICATION_LIBRARY_PATH     = $$BUILD_TREE/$$LIBRARY_BASENAME
-    APPLICATION_COMPONENTS_PATH  = $$OUTPUT_PATH/plugins
+    APPLICATION_PLUGINS_PATH     = $$OUTPUT_PATH/plugins
     #APP_LIBEXEC_PATH            = $$APP_PATH # FIXME
     #APP_DATA_PATH               = $$APP_BUILD_TREE/share/OrbitsWriter
     #APP_DOC_PATH                = $$APP_BUILD_TREE/share/doc/OrbitsWriter
@@ -94,19 +94,22 @@ OUTPUT_PATH = $$BUILD_TREE/output
     APPLICATION_GUIXML_PATH      = $$APPLICATION_BIN_PATH
     !isEqual(SOURCE_TREE, $$BUILD_TREE):copydata = 1
 } else {
-    #APP_TARGET       = "Orbits Writer"
-    #APP_LIBRARY_PATH = $$APP_PATH/$${APP_TARGET}.app/Contents/PlugIns
-    #APP_PLUGIN_PATH  = $$APP_LIBRARY_PATH
-    #APP_LIBEXEC_PATH = $$APP_PATH/$${APP_TARGET}.app/Contents/Resources
-    #APP_DATA_PATH    = $$APP_PATH/$${APP_TARGET}.app/Contents/Resources
-    #APP_DOC_PATH     = $$APP_DATA_PATH/doc
-    #APP_BIN_PATH     = $$APP_PATH/$${APP_TARGET}.app/Contents/MacOS
-    #copydata = 1
-#    isEmpty(TIGER_COMPAT_MODE):TIGER_COMPAT_MODE=$$(QTC_TIGER_COMPAT)
-    #isEmpty(TIGER_COMPAT_MODE) {
-    #    QMAKE_CXXFLAGS *= -mmacosx-version-min=10.5
-    #    QMAKE_LFLAGS *= -mmacosx-version-min=10.5
-    #}
+    APPLICATION_TARGET           = OrbitsWriter
+    APPLICATION_LIBRARY_PATH     = $$OUTPUT_PATH/$${APPLICATION_TARGET}.app/Contents/PlugIns
+    APPLICATION_PLUGINS_PATH     = $$APPLICATION_LIBRARY_PATH
+    APPLICATION_LIBEXEC_PATH     = $$OUTPUT_PATH/$${APPLICATION_TARGET}.app/Contents/Resources
+    APPLICATION_DATA_PATH        = $$OUTPUT_PATH/$${APPLICATION_TARGET}.app/Contents/Resources
+    APPLICATION_DOC_PATH         = $$APPLICATION_DATA_PATH/doc
+    APPLICATION_BIN_PATH         = $$OUTPUT_PATH/$${APPLICATION_TARGET}.app/Contents/MacOS
+    copydata = 1
+    isEmpty(TIGER_COMPAT_MODE):TIGER_COMPAT_MODE=$$(QTC_TIGER_COMPAT)
+    !isEqual(QT_MAJOR_VERSION, 5) {
+        # Qt5 doesn't support 10.5, and will set the minimum version correctly to 10.6 or 10.7.
+        isEmpty(TIGER_COMPAT_MODE) {
+            QMAKE_CXXFLAGS *= -mmacosx-version-min=10.5
+            QMAKE_LFLAGS *= -mmacosx-version-min=10.5
+        }
+    }
 }
 
 INCLUDEPATH += \

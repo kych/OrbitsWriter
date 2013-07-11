@@ -35,6 +35,7 @@ class FontChooser : public QComboBox
     Q_OBJECT
 public:
     explicit FontChooser(QWidget *parent = 0);
+    ~FontChooser();
 
 signals:
     void fontFamilyActivated(const QString &family);

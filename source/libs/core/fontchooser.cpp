@@ -37,8 +37,7 @@ public:
 public slots:
     void itemActivated(int index)
     {
-        QFont &font = q->itemData(index).value<QFont>();
-        emit q->fontFamilyActivated(QFontInfo(font).family());
+        emit q->fontFamilyActivated(QFontInfo(q->itemData(index).value<QFont>()).family());
     }
 private:
     Q_POINTER(FontChooser)
@@ -114,6 +113,10 @@ FontChooser::FontChooser(QWidget *parent) :
 
     connect(this, SIGNAL(activated(int)),
             d.get(), SLOT(itemActivated(int)));
+}
+
+FontChooser::~FontChooser()
+{
 }
 
 void FontChooser::showPopup()

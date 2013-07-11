@@ -122,6 +122,10 @@ FontSizeChooser::FontSizeChooser(QWidget *parent) :
             d.get(), SLOT(itemActivated(int)));
 }
 
+FontSizeChooser::~FontSizeChooser()
+{
+}
+
 void FontSizeChooser::showPopup()
 {
     view()->setFixedWidth(220);

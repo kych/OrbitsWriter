@@ -35,6 +35,7 @@ class FontSizeChooser : public QComboBox
     Q_OBJECT
 public:
     explicit FontSizeChooser(QWidget *parent = 0);
+    ~FontSizeChooser();
 
 signals:
     void fontSizeActivated(int size);

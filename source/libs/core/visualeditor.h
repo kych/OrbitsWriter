@@ -35,6 +35,7 @@ class VisualEditor : public QTextEdit, public Editor
     Q_OBJECT
 public:
     explicit VisualEditor(QWidget *parent = 0);
+    ~VisualEditor();
     
 signals:
     

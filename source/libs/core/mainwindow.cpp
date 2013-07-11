@@ -241,7 +241,9 @@ void MainWindow::Private::setupStatusBar()
 void MainWindow::Private::setupEditors()
 {
     editorTabs = new QTabWidget(q);
+#ifndef Q_OS_MAC
     editorTabs->setTabPosition(QTabWidget::South);
+#endif
 
     visualEditor = new VisualEditor(editorTabs);
     visualEditor->setStyleSheet("border: 0");

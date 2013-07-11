@@ -51,6 +51,10 @@ VisualEditor::VisualEditor(QWidget *parent) :
 
 }
 
+VisualEditor::~VisualEditor()
+{
+}
+
 void VisualEditor::textBold(bool bold)
 {
     QTextCharFormat fmt;
