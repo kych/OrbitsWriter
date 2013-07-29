@@ -29,7 +29,6 @@ include(../rpath.pri)
 include(../libs/extern/QtSingleApplication/qtsingleapplication.pri)
 
 QT      *= core gui
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 LIBS    *= -l$$libraryName(core)
 
