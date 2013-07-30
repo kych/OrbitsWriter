@@ -80,9 +80,9 @@ isEmpty(BUILD_TREE) {
     BUILD_TREE = $$cleanPath($$OUT_PWD)
     BUILD_TREE ~= s,$$re_escape($$sub_dir)$,,
 }
-OUTPUT_PATH = $$BUILD_TREE/output
 
 !macx {
+    OUTPUT_PATH = $$BUILD_TREE/output
     contains(TEMPLATE, vc.*): vcproj = 1
     APPLICATION_TARGET           = OrbitsWriter
     APPLICATION_LIBRARY_PATH     = $$BUILD_TREE/$$LIBRARY_BASENAME
@@ -94,13 +94,14 @@ OUTPUT_PATH = $$BUILD_TREE/output
     APPLICATION_GUIXML_PATH      = $$APPLICATION_BIN_PATH
     !isEqual(SOURCE_TREE, $$BUILD_TREE):copydata = 1
 } else {
+    OUTPUT_PATH = $$BUILD_TREE
     APPLICATION_TARGET           = OrbitsWriter
     APPLICATION_LIBRARY_PATH     = $$OUTPUT_PATH/$${APPLICATION_TARGET}.app/Contents/PlugIns
     APPLICATION_PLUGINS_PATH     = $$APPLICATION_LIBRARY_PATH
     APPLICATION_LIBEXEC_PATH     = $$OUTPUT_PATH/$${APPLICATION_TARGET}.app/Contents/Resources
     APPLICATION_DATA_PATH        = $$OUTPUT_PATH/$${APPLICATION_TARGET}.app/Contents/Resources
     APPLICATION_DOC_PATH         = $$APPLICATION_DATA_PATH/doc
-    APPLICATION_BIN_PATH         = $$OUTPUT_PATH/$${APPLICATION_TARGET}.app/Contents/MacOS
+    APPLICATION_BIN_PATH         = $$OUTPUT_PATH #/$${APPLICATION_TARGET}.app/Contents/MacOS
     copydata = 1
     isEmpty(TIGER_COMPAT_MODE):TIGER_COMPAT_MODE=$$(QTC_TIGER_COMPAT)
     !isEqual(QT_MAJOR_VERSION, 5) {
