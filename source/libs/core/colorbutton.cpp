@@ -906,7 +906,7 @@ ColorButton::ColorButton(QWidget *parent,
     setCheckable(true);
 
     // Set text
-    setText(tr("Black"));
+//    setText(tr("Black"));
     d->firstInserted = false;
 
     // Create and set icon
@@ -941,7 +941,7 @@ void ColorButton::insertColor(const QColor &color, const QString &text, int inde
     d->popup->insertColor(color, text, index);
     if (!d->firstInserted) {
         d->col = color;
-        setText(text);
+//        setText(text);
         d->firstInserted = true;
     }
 }
@@ -1078,7 +1078,7 @@ void ColorButton::setCurrentColor(const QColor &color)
     }
 
     d->col = color;
-    setText(item->text());
+//    setText(item->text());
 
     d->dirty = true;
 

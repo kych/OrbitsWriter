@@ -38,14 +38,17 @@ enum TextAlignment
 class Editor
 {
 public:
-    virtual void textBold(bool bold) = 0;
-    virtual void textItalic(bool italic) = 0;
-    virtual void textUnderline(bool underline) = 0;
-    virtual void textStrikeOut(bool strike) = 0;
+    virtual void setTextBold(bool bold) = 0;
+    virtual void setTextItalic(bool italic) = 0;
+    virtual void setTextUnderline(bool underline) = 0;
+    virtual void setTextStrikeOut(bool strike) = 0;
 
-    virtual void textAlign(TextAlignment alignment) = 0;
-    virtual void textFontFamily(const QString &family) = 0;
-    virtual void textFontSize(int size) = 0;
+    virtual void setTextAlign(TextAlignment alignment) = 0;
+    virtual void setTextFontFamily(const QString &family) = 0;
+    virtual void setTextFontSize(int size) = 0;
+
+    virtual void setTextColor(const QColor &color) = 0;
+    virtual void setTextBackgroundColor(const QColor &color) = 0;
 }; // end of class GOW::Editor
 } // end of namespace GOW
 

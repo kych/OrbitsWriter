@@ -55,35 +55,35 @@ VisualEditor::~VisualEditor()
 {
 }
 
-void VisualEditor::textBold(bool bold)
+void VisualEditor::setTextBold(bool bold)
 {
     QTextCharFormat fmt;
     fmt.setFontWeight(bold ? QFont::Bold : QFont::Normal);
     d->mergeFormatOnWordOrSelection(fmt);
 }
 
-void VisualEditor::textItalic(bool italic)
+void VisualEditor::setTextItalic(bool italic)
 {
     QTextCharFormat fmt;
     fmt.setFontItalic(italic);
     d->mergeFormatOnWordOrSelection(fmt);
 }
 
-void VisualEditor::textUnderline(bool underline)
+void VisualEditor::setTextUnderline(bool underline)
 {
     QTextCharFormat fmt;
     fmt.setFontUnderline(underline);
     d->mergeFormatOnWordOrSelection(fmt);
 }
 
-void VisualEditor::textStrikeOut(bool strike)
+void VisualEditor::setTextStrikeOut(bool strike)
 {
     QTextCharFormat fmt;
     fmt.setFontStrikeOut(strike);
     d->mergeFormatOnWordOrSelection(fmt);
 }
 
-void VisualEditor::textAlign(TextAlignment alignment)
+void VisualEditor::setTextAlign(TextAlignment alignment)
 {
     switch (alignment) {
     case AlignCenter:
@@ -101,20 +101,34 @@ void VisualEditor::textAlign(TextAlignment alignment)
     }
 }
 
-void VisualEditor::textFontFamily(const QString &family)
+void VisualEditor::setTextFontFamily(const QString &family)
 {
     QTextCharFormat fmt;
     fmt.setFontFamily(family);
     d->mergeFormatOnWordOrSelection(fmt);
 }
 
-void VisualEditor::textFontSize(int size)
+void VisualEditor::setTextFontSize(int size)
 {
     if (size > 0) {
         QTextCharFormat fmt;
         fmt.setFontPointSize(size);
         d->mergeFormatOnWordOrSelection(fmt);
     }
+}
+
+void VisualEditor::setTextColor(const QColor &color)
+{
+    QTextCharFormat fmt;
+    fmt.setForeground(color);
+    d->mergeFormatOnWordOrSelection(fmt);
+}
+
+void VisualEditor::setTextBackgroundColor(const QColor &color)
+{
+    QTextCharFormat fmt;
+    fmt.setBackground(color);
+    d->mergeFormatOnWordOrSelection(fmt);
 }
 
 }

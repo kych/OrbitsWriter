@@ -56,31 +56,43 @@
  */
 
 /*!
-  \fn void GOW::Editor::textBold(bool bold)
+  \fn void GOW::Editor::setTextBold(bool bold)
 
-  Toggles text is bold or not.
+  Sets text is bold or not.
  */
 
 /*!
-  \fn void GOW::Editor::textItalic(bool bold)
+  \fn void GOW::Editor::setTextItalic(bool bold)
 
-  Toggles text is italic or not.
+  Sets text is italic or not.
  */
 
 /*!
-  \fn void GOW::Editor::textUnderline(bool bold)
+  \fn void GOW::Editor::setTextUnderline(bool bold)
 
-  Toggles text is underline or not.
+  Sets text is underline or not.
  */
 
 /*!
-  \fn void GOW::Editor::textStrikeOut(bool bold)
+  \fn void GOW::Editor::setTextStrikeOut(bool bold)
 
-  Toggles text is strike out or not.
+  Sets text is strike out or not.
  */
 
 /*!
-  \fn void GOW::Editor::textAlign(TextAlignment alignment)
+  \fn void GOW::Editor::setTextAlign(TextAlignment alignment)
 
   Sets text alignment to \a alignment.
+ */
+
+/*!
+  \fn void GOW::Editor::setTextColor(const QColor &color)
+
+  Sets text color to \a color.
+ */
+
+/*!
+  \fn void GOW::Editor::setTextBackgroundColor(const QColor &color)
+
+  Sets text background color to \a color.
  */

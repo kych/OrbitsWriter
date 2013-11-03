@@ -21,7 +21,9 @@
 
 #include <QAction>
 #include <QApplication>
+#include <QColorDialog>
 #include <QDebug>
+#include <QFontDialog>
 #include <QLineEdit>
 #include <QMenu>
 #include <QMenuBar>
@@ -104,6 +106,12 @@ private slots:
 
     void fontFamilyActivated(const QString &family);
     void fontSizeActivated(int size);
+    void fontActionTriggered();
+
+    void textColorChanged(const QColor &color);
+    void textBackgroundColorChanged(const QColor &color);
+    void textColorActionTriggered();
+    void textBackgroundColorActionTriggered();
 
 private:
     void createActions();
@@ -210,6 +218,8 @@ void MainWindow::Private::setupToolBars()
     textColorButton->setTipIcon(QIcon(":/image/text_color"));
     textColorButton->setToolTip(tr("Text Color"));
     formatBar->addWidget(textColorButton);
+    connect(textColorButton, SIGNAL(colorChanged(QColor)),
+            this, SLOT(textColorChanged(QColor)));
 //    m_textColorAction->setIcon(m_textColorButton->icon());
     textBackgroundColorButton = new ColorButton(q);
     textBackgroundColorButton->setStandardColors();
@@ -217,6 +227,8 @@ void MainWindow::Private::setupToolBars()
     textBackgroundColorButton->setTipIcon(QIcon(":/image/text_background_color"));
     textBackgroundColorButton->setToolTip(tr("Text Background Color"));
     formatBar->addWidget(textBackgroundColorButton);
+    connect(textBackgroundColorButton, SIGNAL(colorChanged(QColor)),
+            this, SLOT(textBackgroundColorChanged(QColor)));
 //    m_textBackgroundColorAction->setIcon(m_textBackgroundColorButton->icon());
     formatBar->addSeparator();
     if (QApplication::isLeftToRight()) {
@@ -278,27 +290,36 @@ void MainWindow::Private::setupEditors()
     q->setCentralWidget(editorArea);
 }
 
-#define FORMAT_FUNC(ACTION) \
-    void MainWindow::Private::ACTION() \
-    { \
-        currentEditor->ACTION(ACTION##Action->isChecked()); \
-    }
+void MainWindow::Private::textBold()
+{
+    currentEditor->setTextBold(textBoldAction->isChecked());
+}
 
-FORMAT_FUNC(textBold)
-FORMAT_FUNC(textItalic)
-FORMAT_FUNC(textStrikeOut)
-FORMAT_FUNC(textUnderline)
+void MainWindow::Private::textItalic()
+{
+    currentEditor->setTextItalic(textItalicAction->isChecked());
+}
+
+void MainWindow::Private::textStrikeOut()
+{
+    currentEditor->setTextStrikeOut(textStrikeOutAction->isChecked());
+}
+
+void MainWindow::Private::textUnderline()
+{
+    currentEditor->setTextUnderline(textUnderlineAction->isChecked());
+}
 
 void MainWindow::Private::textAlign(QAction *action)
 {
     if (action == alignCenterAction) {
-        currentEditor->textAlign(AlignCenter);
+        currentEditor->setTextAlign(AlignCenter);
     } else if (action == alignLeftAction) {
-        currentEditor->textAlign(AlignLeft);
+        currentEditor->setTextAlign(AlignLeft);
     } else if (action == alignRightAction) {
-        currentEditor->textAlign(AlignRight);
+        currentEditor->setTextAlign(AlignRight);
     } else if (action == alignJustifyAction) {
-        currentEditor->textAlign(AlignJustify);
+        currentEditor->setTextAlign(AlignJustify);
     }
 }
 
@@ -309,76 +330,91 @@ void MainWindow::Private::cursorPositionChanged()
 
 void MainWindow::Private::createActions()
 {
-    newDocAction = new QAction(QIcon::fromTheme("document-new", QIcon(":/image/doc_new")), tr("&New"), this);
+    newDocAction = new QAction(QIcon::fromTheme("document-new", QIcon(":/image/doc_new")),
+                               tr("&New"), this);
     newDocAction->setShortcut(QKeySequence::New);
     newDocAction->setStatusTip(tr("Create a new post."));
 
-    openDocAction = new QAction(QIcon::fromTheme("document-open", QIcon(":/image/doc_open")), tr("&Open..."), this);
+    openDocAction = new QAction(QIcon::fromTheme("document-open", QIcon(":/image/doc_open")),
+                                tr("&Open..."), this);
     openDocAction->setShortcut(QKeySequence::Open);
     openDocAction->setStatusTip(tr("Open a post."));
 
-    closeDocAction = new QAction(QIcon::fromTheme("document-close", QIcon(":/image/doc_close")), tr("&Close..."), this);
+    closeDocAction = new QAction(QIcon::fromTheme("document-close", QIcon(":/image/doc_close")),
+                                 tr("&Close..."), this);
     closeDocAction->setShortcut(QKeySequence::Close);
     closeDocAction->setStatusTip(tr("Close a post."));
 
-    saveAction = new QAction(QIcon::fromTheme("document-save", QIcon(":/image/doc_save")), tr("Save"), this);
+    saveAction = new QAction(QIcon::fromTheme("document-save", QIcon(":/image/doc_save")),
+                             tr("Save"), this);
     saveAction->setEnabled(false);
     saveAction->setShortcut(QKeySequence::Save);
     saveAction->setStatusTip(tr("Save the post."));
 
-    saveAsAction = new QAction(QIcon::fromTheme("document-save-as", QIcon(":/image/doc_save_as")), tr("Save As"), this);
+    saveAsAction = new QAction(QIcon::fromTheme("document-save-as", QIcon(":/image/doc_save_as")),
+                               tr("Save As"), this);
     saveAsAction->setShortcut(QKeySequence::SaveAs);
     saveAsAction->setStatusTip(tr("Save the post as another one."));
 
-    exitAction = new QAction(QIcon::fromTheme("application-exit", QIcon(":/image/app_exit")), tr("E&xit"), this);
+    exitAction = new QAction(QIcon::fromTheme("application-exit", QIcon(":/image/app_exit")),
+                             tr("E&xit"), this);
     exitAction->setMenuRole(QAction::QuitRole);
     exitAction->setShortcut(tr("Ctrl+Q"));
     exitAction->setStatusTip(tr("Exit OrbitsWriter."));
 
-    undoAction = new QAction(QIcon::fromTheme("edit-undo", QIcon(":/image/undo")), tr("Undo"), this);
+    undoAction = new QAction(QIcon::fromTheme("edit-undo", QIcon(":/image/undo")),
+                             tr("Undo"), this);
     undoAction->setShortcut(QKeySequence::Undo);
     undoAction->setStatusTip(tr("Undo."));
     undoAction->setEnabled(false);
 
-    redoAction = new QAction(QIcon::fromTheme("edit-redo", QIcon(":/image/redo")), tr("Redo"), this);
+    redoAction = new QAction(QIcon::fromTheme("edit-redo", QIcon(":/image/redo")),
+                             tr("Redo"), this);
     redoAction->setShortcut(QKeySequence::Redo);
     redoAction->setStatusTip(tr("Redo."));
     redoAction->setEnabled(false);
 
-    cutAction = new QAction(QIcon::fromTheme("edit-cut", QIcon(":/image/cut")), tr("Cut"), this);
+    cutAction = new QAction(QIcon::fromTheme("edit-cut", QIcon(":/image/cut")),
+                            tr("Cut"), this);
     cutAction->setShortcut(QKeySequence::Cut);
     cutAction->setStatusTip(tr("Cut."));
     cutAction->setEnabled(false);
 
-    copyAction = new QAction(QIcon::fromTheme("edit-copy", QIcon(":/image/copy")), tr("Copy"), this);
+    copyAction = new QAction(QIcon::fromTheme("edit-copy", QIcon(":/image/copy")),
+                             tr("Copy"), this);
     copyAction->setShortcut(QKeySequence::Copy);
     copyAction->setStatusTip(tr("Copy."));
     copyAction->setEnabled(false);
 
-    pasteAction = new QAction(QIcon::fromTheme("edit-paste", QIcon(":/image/paste")), tr("Paste"), this);
+    pasteAction = new QAction(QIcon::fromTheme("edit-paste", QIcon(":/image/paste")),
+                              tr("Paste"), this);
     pasteAction->setShortcut(QKeySequence::Paste);
     pasteAction->setStatusTip(tr("Paste."));
     pasteAction->setEnabled(false);
 
-    textBoldAction = new QAction(QIcon::fromTheme("format-text-bold", QIcon(":/image/bold")), tr("Bold"), this);
+    textBoldAction = new QAction(QIcon::fromTheme("format-text-bold", QIcon(":/image/bold")),
+                                 tr("Bold"), this);
     textBoldAction->setShortcut(Qt::CTRL + Qt::Key_B);
     textBoldAction->setStatusTip(tr("Set text bold."));
     textBoldAction->setCheckable(true);
     connect(textBoldAction, SIGNAL(triggered()), this, SLOT(textBold()));
 
-    textItalicAction = new QAction(QIcon::fromTheme("format-text-italic", QIcon(":/image/italic")), tr("Italic"), this);
+    textItalicAction = new QAction(QIcon::fromTheme("format-text-italic", QIcon(":/image/italic")),
+                                   tr("Italic"), this);
     textItalicAction->setShortcut(Qt::CTRL + Qt::Key_I);
     textItalicAction->setStatusTip(tr("Set text italic."));
     textItalicAction->setCheckable(true);
     connect(textItalicAction, SIGNAL(triggered()), this, SLOT(textItalic()));
 
-    textUnderlineAction = new QAction(QIcon::fromTheme("format-text-underline", QIcon(":/image/underline")), tr("Underline"), this);
+    textUnderlineAction = new QAction(QIcon::fromTheme("format-text-underline", QIcon(":/image/underline")),
+                                      tr("Underline"), this);
     textUnderlineAction->setShortcut(Qt::CTRL + Qt::Key_U);
     textUnderlineAction->setStatusTip(tr("Add underline."));
     textUnderlineAction->setCheckable(true);
     connect(textUnderlineAction, SIGNAL(triggered()), this, SLOT(textUnderline()));
 
-    textStrikeOutAction = new QAction(QIcon::fromTheme("format-text-strikethrough", QIcon(":/image/strike")), tr("Strike"), this);
+    textStrikeOutAction = new QAction(QIcon::fromTheme("format-text-strikethrough", QIcon(":/image/strike")),
+                                      tr("Strike"), this);
     textStrikeOutAction->setShortcut(Qt::CTRL + Qt::Key_D);
     textStrikeOutAction->setStatusTip(tr("Strike out."));
     textStrikeOutAction->setCheckable(true);
@@ -386,45 +422,58 @@ void MainWindow::Private::createActions()
 
     textFontAction = new QAction(QIcon(":/image/font"), tr("Font..."), this);
     textFontAction->setStatusTip(tr("Set font."));
+    connect(textFontAction, SIGNAL(triggered()),
+            this, SLOT(fontActionTriggered()));
 
     textColorAction = new QAction(QIcon(":/image/text_color"), tr("Text Color..."), this);
     textColorAction->setStatusTip(tr("Text Color."));
+    connect(textColorAction, SIGNAL(triggered()),
+            this, SLOT(textColorActionTriggered()));
 
-    textBackgroundColorAction = new QAction(QIcon(":/image/text_background_color"), tr("Text Background Color..."), this);
+    textBackgroundColorAction = new QAction(QIcon(":/image/text_background_color"),
+                                            tr("Text Background Color..."), this);
     textBackgroundColorAction->setStatusTip(tr("Text background color."));
+    connect(textBackgroundColorAction, SIGNAL(triggered()),
+            this, SLOT(textBackgroundColorActionTriggered()));
 
     QActionGroup *alignGroup = new QActionGroup(this);
     connect(alignGroup, SIGNAL(triggered(QAction*)), this, SLOT(textAlign(QAction*)));
-    alignCenterAction = new QAction(QIcon::fromTheme("format-justify-center", QIcon(":/image/align_center")), tr("Center"), this);
+    alignCenterAction = new QAction(QIcon::fromTheme("format-justify-center", QIcon(":/image/align_center")),
+                                    tr("Center"), this);
     alignCenterAction->setStatusTip(tr("Justify center."));
     alignCenterAction->setShortcut(Qt::CTRL + Qt::Key_E);
     alignCenterAction->setCheckable(true);
     alignCenterAction->setActionGroup(alignGroup);
 
-    alignJustifyAction = new QAction(QIcon::fromTheme("format-justify-fill", QIcon(":/image/align_fill")), tr("Fill"), this);
+    alignJustifyAction = new QAction(QIcon::fromTheme("format-justify-fill", QIcon(":/image/align_fill")),
+                                     tr("Fill"), this);
     alignJustifyAction->setStatusTip(tr("Justify fill."));
     alignJustifyAction->setShortcut(Qt::CTRL + Qt::Key_F);
     alignJustifyAction->setCheckable(true);
     alignJustifyAction->setChecked(true);
     alignJustifyAction->setActionGroup(alignGroup);
 
-    alignLeftAction = new QAction(QIcon::fromTheme("format-justify-left", QIcon(":/image/align_left")), tr("Left"), this);
+    alignLeftAction = new QAction(QIcon::fromTheme("format-justify-left", QIcon(":/image/align_left")),
+                                  tr("Left"), this);
     alignLeftAction->setStatusTip(tr("Justify left."));
     alignLeftAction->setShortcut(Qt::CTRL + Qt::Key_L);
     alignLeftAction->setCheckable(true);
     alignLeftAction->setActionGroup(alignGroup);
 
-    alignRightAction = new QAction(QIcon::fromTheme("format-justify-right", QIcon(":/image/align_right")), tr("Right"), this);
+    alignRightAction = new QAction(QIcon::fromTheme("format-justify-right", QIcon(":/image/align_right")),
+                                   tr("Right"), this);
     alignRightAction->setStatusTip(tr("Justify Right."));
     alignRightAction->setShortcut(Qt::CTRL + Qt::Key_R);
     alignRightAction->setCheckable(true);
     alignRightAction->setActionGroup(alignGroup);
 
-    helpContentAction = new QAction(QIcon::fromTheme("help-contents", QIcon(":/image/help")), tr("Help"), this);
+    helpContentAction = new QAction(QIcon::fromTheme("help-contents", QIcon(":/image/help")),
+                                    tr("Help"), this);
     helpContentAction->setShortcut(QKeySequence::HelpContents);
     helpContentAction->setStatusTip(tr("Open help contents."));
 
-    aboutAction = new QAction(QIcon::fromTheme("help-about", QIcon(":/image/about")), tr("About"), this);
+    aboutAction = new QAction(QIcon::fromTheme("help-about", QIcon(":/image/about")),
+                              tr("About"), this);
     aboutAction->setMenuRole(QAction::AboutRole);
     aboutAction->setStatusTip(tr("About OrbitsWriter."));
 }
@@ -459,12 +508,54 @@ void MainWindow::Private::currentCharFormatChanged(const QTextCharFormat &format
 
 void MainWindow::Private::fontFamilyActivated(const QString &family)
 {
-    currentEditor->textFontFamily(family);
+    currentEditor->setTextFontFamily(family);
 }
 
 void MainWindow::Private::fontSizeActivated(int size)
 {
-    currentEditor->textFontSize(size);
+    currentEditor->setTextFontSize(size);
+}
+
+void MainWindow::Private::fontActionTriggered()
+{
+    bool ok;
+    QFont font = QFontDialog::getFont(&ok, q);
+    if (ok) {
+        currentEditor->setTextBold(font.bold());
+        currentEditor->setTextItalic(font.italic());
+        currentEditor->setTextStrikeOut(font.strikeOut());
+        currentEditor->setTextUnderline(font.underline());
+        currentEditor->setTextFontFamily(font.family());
+        currentEditor->setTextFontSize(font.pointSize());
+    }
+}
+
+void MainWindow::Private::textColorChanged(const QColor &color)
+{
+    currentEditor->setTextColor(color);
+}
+
+void MainWindow::Private::textBackgroundColorChanged(const QColor &color)
+{
+    currentEditor->setTextBackgroundColor(color);
+}
+
+void MainWindow::Private::textColorActionTriggered()
+{
+    QColor color = QColorDialog::getColor(Qt::black, q, tr("Text Color"),
+                                          QColorDialog::ShowAlphaChannel);
+    if (color.isValid()) {
+        currentEditor->setTextColor(color);
+    }
+}
+
+void MainWindow::Private::textBackgroundColorActionTriggered()
+{
+    QColor color = QColorDialog::getColor(Qt::black, q, tr("Text Background Color"),
+                                          QColorDialog::ShowAlphaChannel);
+    if (color.isValid()) {
+        currentEditor->setTextBackgroundColor(color);
+    }
 }
 
 

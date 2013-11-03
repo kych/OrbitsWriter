@@ -40,14 +40,17 @@ public:
 signals:
     
 public slots:
-    void textBold(bool bold);
-    void textItalic(bool italic);
-    void textUnderline(bool underline);
-    void textStrikeOut(bool strike);
+    void setTextBold(bool bold);
+    void setTextItalic(bool italic);
+    void setTextUnderline(bool underline);
+    void setTextStrikeOut(bool strike);
 
-    void textAlign(TextAlignment alignment);
-    void textFontFamily(const QString &family);
-    void textFontSize(int size);
+    void setTextAlign(TextAlignment alignment);
+    void setTextFontFamily(const QString &family);
+    void setTextFontSize(int size);
+
+    void setTextColor(const QColor &color);
+    void setTextBackgroundColor(const QColor &color);
 
 private:
     D_POINTER
