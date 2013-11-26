@@ -25,7 +25,7 @@
 #include <QComboBox>
 #include <QStyledItemDelegate>
 
-#include <DPointer>
+#include "DPointer"
 
 namespace GOW
 {

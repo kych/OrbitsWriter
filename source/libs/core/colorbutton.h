@@ -24,7 +24,7 @@
 
 #include <QPushButton>
 
-#include <DPointer>
+#include "DPointer"
 
 namespace GOW
 {

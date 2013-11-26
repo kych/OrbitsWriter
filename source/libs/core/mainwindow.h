@@ -24,8 +24,8 @@
 
 #include <QMainWindow>
 
-#include <DPointer>
-#include <Global>
+#include "DPointer"
+#include "Global"
 
 namespace GOW {
 

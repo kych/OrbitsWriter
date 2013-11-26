@@ -24,8 +24,8 @@
 
 #include <QTextEdit>
 
-#include <DPointer>
-#include <Editor>
+#include "DPointer"
+#include "Editor"
 
 namespace GOW
 {
