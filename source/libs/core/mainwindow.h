@@ -27,7 +27,7 @@
 #include "DPointer"
 #include "Global"
 
-namespace GOW {
+namespace Orbits {
 
 class LIBRARY_EXPORT MainWindow : public QMainWindow
 {
@@ -44,6 +44,6 @@ private:
     D_POINTER
 };
 
-} // end of namespace GOW
+} // end of namespace Orbits
 
 #endif // MAINWINDOW_H

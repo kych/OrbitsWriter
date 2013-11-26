@@ -36,10 +36,10 @@
 
 #include "colorbutton.h"
 
-namespace GOW
+namespace Orbits
 {
 
-static const char * ClassName_ColorPickerItem = "GOW::ColorPickerItem";
+static const char * ClassName_ColorPickerItem = "Orbits::ColorPickerItem";
 
 /*
     A class  that acts very much  like a QPushButton. It's not styled,

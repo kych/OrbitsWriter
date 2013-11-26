@@ -24,7 +24,7 @@
 
 #include "fontsizechooser.h"
 
-namespace GOW
+namespace Orbits
 {
 
 class FontSizeChooser::Private : public QObject
@@ -39,7 +39,7 @@ public slots:
     }
 private:
     Q_POINTER(FontSizeChooser)
-}; // end of class GOW::FontSizeChooser::Private
+}; // end of class Orbits::FontSizeChooser::Private
 
 
 class FontSizeChooserItemDelegate : public QStyledItemDelegate
@@ -53,7 +53,7 @@ protected:
                const QModelIndex &index) const;
     QSize sizeHint(const QStyleOptionViewItem &,
                    const QModelIndex &index) const;
-}; // end of class GOW::FontSizeChooserItemDelegate
+}; // end of class Orbits::FontSizeChooserItemDelegate
 
 void FontSizeChooserItemDelegate::paint(QPainter *painter,
                                         const QStyleOptionViewItem &option,
@@ -90,7 +90,7 @@ QSize FontSizeChooserItemDelegate::sizeHint(const QStyleOptionViewItem &,
 
 
 /*!
-  \class GOW::FontSizeChooser
+  \class Orbits::FontSizeChooser
 
   A font size selector according to HTML standard.
 

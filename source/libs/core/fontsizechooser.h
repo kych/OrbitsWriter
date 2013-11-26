@@ -27,7 +27,7 @@
 
 #include "DPointer"
 
-namespace GOW
+namespace Orbits
 {
 
 class FontSizeChooser : public QComboBox
@@ -45,8 +45,8 @@ protected:
 
 private:
     D_POINTER
-}; // end of class GOW::FontSizeChooser
+}; // end of class Orbits::FontSizeChooser
 
-} // end of namesapce GOW
+} // end of namesapce Orbits
 
 #endif // FONTSIZECHOOSER_H

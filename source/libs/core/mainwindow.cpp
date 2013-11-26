@@ -39,9 +39,9 @@
 #include "sourceeditor.h"
 #include "visualeditor.h"
 
-namespace GOW {
+namespace Orbits {
 
-#define currentEditor (dynamic_cast<GOW::Editor *>(editorTabs->currentWidget()))
+#define currentEditor (dynamic_cast<Orbits::Editor *>(editorTabs->currentWidget()))
 
 class MainWindow::Private : public QObject
 {
@@ -117,7 +117,7 @@ private:
     void createActions();
     void alignmentChanged(Qt::Alignment align);
     void fontChanged(const QFont &font);
-}; // end of class GOW::MainWindow::Private
+}; // end of class Orbits::MainWindow::Private
 
 MainWindow::Private::Private(MainWindow *q_ptr) :
     QObject(q_ptr),

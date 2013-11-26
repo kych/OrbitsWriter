@@ -32,7 +32,7 @@ int main(int argc, char** argv)
     app.setApplicationName(QLatin1String(Application::NAME));
     app.setApplicationVersion(QLatin1String(Application::VERSION_LONG));
 
-    GOW::MainWindow win;
+    Orbits::MainWindow win;
     win.showMaximized();
 
     return app.exec();

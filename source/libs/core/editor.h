@@ -24,7 +24,7 @@
 
 QT_FORWARD_DECLARE_CLASS(QString);
 
-namespace GOW
+namespace Orbits
 {
 
 enum TextAlignment
@@ -49,7 +49,7 @@ public:
 
     virtual void setTextColor(const QColor &color) = 0;
     virtual void setTextBackgroundColor(const QColor &color) = 0;
-}; // end of class GOW::Editor
-} // end of namespace GOW
+}; // end of class Orbits::Editor
+} // end of namespace Orbits
 
 #endif // EDITOR_H

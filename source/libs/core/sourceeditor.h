@@ -24,7 +24,7 @@
 
 #include <QTextEdit>
 
-namespace GOW
+namespace Orbits
 {
 
 class SourceEditor : public QTextEdit
@@ -37,8 +37,8 @@ signals:
     
 public slots:
     
-}; // end of class GOW::SourceEditor
+}; // end of class Orbits::SourceEditor
 
-} // end of namespace GOW
+} // end of namespace Orbits
 
 #endif // SOURCEEDITOR_H

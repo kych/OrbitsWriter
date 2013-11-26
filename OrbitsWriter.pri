@@ -114,7 +114,7 @@ isEmpty(BUILD_TREE) {
 }
 
 INCLUDEPATH += \
-    $$BUILD_TREE/source/Application # for <Application/Version>
+    $$BUILD_TREE/source/application # for <application/Version>
 
 CONFIG += depend_includepath c++11
 

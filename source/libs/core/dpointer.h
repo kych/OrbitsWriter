@@ -24,7 +24,7 @@
 
 #include <QScopedPointer>
 
-namespace GOW
+namespace Orbits
 {
 
 template <typename T>
@@ -78,16 +78,16 @@ public:
 
 private:
     QScopedPointer<T> d;
-}; // end of class GOW::DPointer
+}; // end of class Orbits::DPointer
 
 #define D_POINTER                   \
     class Private;                  \
     friend class Private;           \
-    const GOW::DPointer<Private> d; \
+    const Orbits::DPointer<Private> d; \
 
 #define Q_POINTER(CLASS)            \
     friend class CLASS;             \
     CLASS * const q;
-} // end of namespace GOW
+} // end of namespace Orbits
 
 #endif // DPOINTER_H

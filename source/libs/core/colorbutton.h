@@ -26,7 +26,7 @@
 
 #include "DPointer"
 
-namespace GOW
+namespace Orbits
 {
 
 class ColorButton : public QPushButton
@@ -68,8 +68,8 @@ private slots:
 private:
     D_POINTER
 
-}; // end of class GOW::ColorButton
+}; // end of class Orbits::ColorButton
 
-} // end of namespace GOW
+} // end of namespace Orbits
 
 #endif // COLORBUTTON_H

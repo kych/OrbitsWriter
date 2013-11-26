@@ -20,79 +20,79 @@
  *-------------------------------------------------*/
 
 /*!
-  \enum GOW::TextAlignment
+  \enum Orbits::TextAlignment
 
   Text alignment.
  */
 
 /*!
-  \var GOW::TextAlignment GOW::AlignJustify
+  \var Orbits::TextAlignment Orbits::AlignJustify
 
   Text alignment jistify.
  */
 
 /*!
-  \var GOW::TextAlignment GOW::AlignLeft
+  \var Orbits::TextAlignment Orbits::AlignLeft
 
   Text alignment left.
  */
 
 /*!
-  \var GOW::TextAlignment GOW::AlignRight
+  \var Orbits::TextAlignment Orbits::AlignRight
 
   Text alignment right.
  */
 
 /*!
-  \var GOW::TextAlignment GOW::AlignCenter
+  \var Orbits::TextAlignment Orbits::AlignCenter
 
   Text alignment center.
  */
 
 /*!
-  \class GOW::Editor
+  \class Orbits::Editor
 
   The editor interface for editors.
  */
 
 /*!
-  \fn void GOW::Editor::setTextBold(bool bold)
+  \fn void Orbits::Editor::setTextBold(bool bold)
 
   Sets text is bold or not.
  */
 
 /*!
-  \fn void GOW::Editor::setTextItalic(bool bold)
+  \fn void Orbits::Editor::setTextItalic(bool bold)
 
   Sets text is italic or not.
  */
 
 /*!
-  \fn void GOW::Editor::setTextUnderline(bool bold)
+  \fn void Orbits::Editor::setTextUnderline(bool bold)
 
   Sets text is underline or not.
  */
 
 /*!
-  \fn void GOW::Editor::setTextStrikeOut(bool bold)
+  \fn void Orbits::Editor::setTextStrikeOut(bool bold)
 
   Sets text is strike out or not.
  */
 
 /*!
-  \fn void GOW::Editor::setTextAlign(TextAlignment alignment)
+  \fn void Orbits::Editor::setTextAlign(TextAlignment alignment)
 
   Sets text alignment to \a alignment.
  */
 
 /*!
-  \fn void GOW::Editor::setTextColor(const QColor &color)
+  \fn void Orbits::Editor::setTextColor(const QColor &color)
 
   Sets text color to \a color.
  */
 
 /*!
-  \fn void GOW::Editor::setTextBackgroundColor(const QColor &color)
+  \fn void Orbits::Editor::setTextBackgroundColor(const QColor &color)
 
   Sets text background color to \a color.
  */

@@ -21,7 +21,7 @@
 
 #include "visualeditor.h"
 
-namespace GOW
+namespace Orbits
 {
 
 class VisualEditor::Private : public QObject
@@ -42,7 +42,7 @@ public:
 
 private:
     Q_POINTER(VisualEditor)
-}; // end of class GOW::VisualEditor::Private
+}; // end of class Orbits::VisualEditor::Private
 
 
 VisualEditor::VisualEditor(QWidget *parent) :

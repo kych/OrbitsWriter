@@ -21,7 +21,7 @@
 
 #include "sourceeditor.h"
 
-namespace GOW
+namespace Orbits
 {
 
 SourceEditor::SourceEditor(QWidget *parent) :

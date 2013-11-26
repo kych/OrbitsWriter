@@ -21,7 +21,7 @@
 
 #include "previewer.h"
 
-namespace GOW
+namespace Orbits
 {
 
 Previewer::Previewer(QWidget *parent) :

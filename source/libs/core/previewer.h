@@ -24,7 +24,7 @@
 
 #include <QTextEdit>
 
-namespace GOW
+namespace Orbits
 {
 
 class Previewer : public QTextEdit
@@ -37,8 +37,8 @@ signals:
     
 public slots:
     
-}; // end of class GOW::Previewer
+}; // end of class Orbits::Previewer
 
-} // end of namespace GOW
+} // end of namespace Orbits
 
 #endif // PREVIEWER_H

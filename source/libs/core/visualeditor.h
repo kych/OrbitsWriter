@@ -27,7 +27,7 @@
 #include "DPointer"
 #include "Editor"
 
-namespace GOW
+namespace Orbits
 {
 
 class VisualEditor : public QTextEdit, public Editor
@@ -54,8 +54,8 @@ public slots:
 
 private:
     D_POINTER
-}; // end of class GOW::VisualEditor
+}; // end of class Orbits::VisualEditor
 
-} // end of namespace GOW
+} // end of namespace Orbits
 
 #endif // VISUALEDITOR_H

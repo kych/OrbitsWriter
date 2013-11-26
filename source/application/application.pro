@@ -48,7 +48,8 @@ win32 {
     INSTALLS    += target
 }
 
-OTHER_FILES += application.rc
+OTHER_FILES += application.rc \
+    version.h.in
 
 app_info.input          = $$PWD/version.h.in
 app_info.output         = $$OUT_PWD/version.h

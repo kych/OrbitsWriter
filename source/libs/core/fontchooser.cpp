@@ -24,7 +24,7 @@
 
 #include "fontchooser.h"
 
-namespace GOW
+namespace Orbits
 {
 
 class FontChooser::Private : public QObject
@@ -41,7 +41,7 @@ public slots:
     }
 private:
     Q_POINTER(FontChooser)
-}; // end of class GOW::FontSize::Private
+}; // end of class Orbits::FontSize::Private
 
 
 class FontChooserItemDelegate : public QStyledItemDelegate
@@ -55,7 +55,7 @@ protected:
                const QModelIndex &index) const;
     QSize sizeHint(const QStyleOptionViewItem &,
                    const QModelIndex &index) const;
-}; // end of class GOW::FontChooserItemDelegate
+}; // end of class Orbits::FontChooserItemDelegate
 
 void FontChooserItemDelegate::paint(QPainter *painter,
                                     const QStyleOptionViewItem &option,
