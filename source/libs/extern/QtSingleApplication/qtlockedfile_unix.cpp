@@ -34,7 +34,7 @@
 #include <unistd.h>
 #include <fcntl.h>
 
-namespace Extern {
+namespace ExternLib {
 
 bool QtLockedFile::lock(LockMode mode, bool block)
 {
@@ -104,4 +104,4 @@ QtLockedFile::~QtLockedFile()
         unlock();
 }
 
-} // namespace Extern
+} // namespace ExternLibExternLib

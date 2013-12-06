@@ -19,21 +19,152 @@
  *
  *-------------------------------------------------*/
 
-#include <QtSingleApplication>
+#include <QDateTime>
+#include <QDebug>
+#include <QDesktopServices>
+#include <QDir>
+#include <QSettings>
 
-#include <MainWindow>
-#include <Version>
+#include <commons/application.h>
+#include <pluginsystem/pluginmanager.h>
+#include <pluginsystem/pluginspec.h>
+#include <version.h>
+
+#ifdef Q_OS_MAC
+#  define SHARE_PATH "/../Resources"
+#else
+#  define SHARE_PATH "/../share/orbitswriter"
+#endif
+
+static const char CorePluginName[]     = "Core";
+static const char ApplicationLogFile[] = "OrbitsWriter.log";
+
+// Gets all plugin paths
+static inline QStringList getPluginPaths()
+{
+    QStringList rc;
+    // Figure out root:  Up one from 'bin'
+    QDir rootDir = QCoreApplication::applicationDirPath();
+    const QString rootDirPath = rootDir.canonicalPath();
+#if !defined(Q_OS_MAC)
+    // 1) "plugins" (Win/Linux)
+    QString pluginPath = rootDirPath;
+    pluginPath += QLatin1String("/plugins/");
+    pluginPath += QLatin1String(OrbitsWriter::ORGANIZATION);
+    rc.push_back(pluginPath);
+#else
+    // 2) "PlugIns" (OS X)
+    QString pluginPath = rootDirPath;
+    pluginPath += QLatin1String("/PlugIns");
+    rc.push_back(pluginPath);
+#endif
+    // 3) <localappdata>/plugins/<ideversion>
+    //    where <localappdata> is e.g.
+    //    <drive>:\Users\<username>\AppData\Local\GalaxyWorld\orbitswriter on Windows Vista and later
+    //    $XDG_DATA_HOME or ~/.local/share/data/GalaxyWorld/orbitswriter on Linux
+    //    ~/Library/Application Support/GalaxyWorld/Orbits Writer on Mac
+#if (QT_VERSION >= 0x050000)
+    pluginPath = QStandardPaths::writableLocation(QStandardPaths::DataLocation);
+#else
+    pluginPath = QDesktopServices::storageLocation(QDesktopServices::DataLocation);
+#endif
+//#if !defined(Q_OS_MAC)
+//    pluginPath += QLatin1String("orbitswriter");
+//#else
+//    pluginPath += QLatin1String("Orbits Writer");
+//#endif
+    pluginPath += QLatin1String("/plugins/");
+    pluginPath += QLatin1String(OrbitsWriter::VERSION_LONG);
+    rc.push_back(pluginPath);
+    return rc;
+}
+
+void logMessageOutput(QtMsgType type, const QMessageLogContext &context, const QString &msg)
+{
+    QFile logFile(ApplicationLogFile);
+    if (!logFile.open(QFile::WriteOnly | QFile::Text | QFile::Append)) {
+        return;
+    }
+    QTextStream out(&logFile);
+    out << QDateTime::currentDateTime().toString(QLatin1String("yyyy-MM-dd hh:mm:ss.zzz")) << " [";
+    switch (type) {
+    case QtDebugMsg:
+        out << "Debug] [" << context.file << ":" << context.line << ", " << context.function << "]: ";
+        break;
+    case QtWarningMsg:
+        out << "Warning] ";
+        break;
+    case QtCriticalMsg:
+        out << "Critical] ";
+        break;
+    case QtFatalMsg:
+        out << "Fatal] ";
+    }
+    out << msg << endl;
+    logFile.close();
+}
 
 int main(int argc, char** argv)
 {
-    Extern::QtSingleApplication app(QLatin1String(Application::NAME), argc, argv);
-    app.setOrganizationName(QLatin1String(Application::ORGANIZATION));
-    app.setOrganizationDomain(QLatin1String(Application::ORGANIZATION_DOMAIN));
-    app.setApplicationName(QLatin1String(Application::NAME));
-    app.setApplicationVersion(QLatin1String(Application::VERSION_LONG));
+    using namespace Commons;
+    using namespace PluginSystem;
 
-    Orbits::MainWindow win;
-    win.showMaximized();
+    qInstallMessageHandler(logMessageOutput);
+    Application app(QLatin1String(OrbitsWriter::APPLICATION_NAME), argc, argv);
+
+    // <<<<<<<<<< settings
+    // Must be done before any QSettings class is created
+    QSettings::setPath(QSettings::IniFormat, QSettings::SystemScope,
+                       QCoreApplication::applicationDirPath() + QLatin1String(SHARE_PATH));
+    QSettings::setDefaultFormat(QSettings::IniFormat);
+    // plugin manager takes control of this settings object
+    QSettings *settings = new QSettings(QSettings::IniFormat, QSettings::UserScope,
+                                        QLatin1String(OrbitsWriter::SETTINGSVARIANT_STR),
+                                        QLatin1String(OrbitsWriter::APPLICATION_NAME));
+    QSettings *globalSettings = new QSettings(QSettings::IniFormat, QSettings::SystemScope,
+                                              QLatin1String(OrbitsWriter::SETTINGSVARIANT_STR),
+                                              QLatin1String(OrbitsWriter::APPLICATION_NAME));
+
+    // <<<<<<<<<< load plugins
+    const QStringList pluginPaths = getPluginPaths();
+    PluginManager *pluginManager = PluginManager::instance();
+    pluginManager->setPluginPaths(pluginPaths);
+
+    const QList<PluginSpec *> plugins = pluginManager->plugins();
+    // ensure core plugin spec loads successfully
+    PluginSpec *corePlugin = 0;
+    foreach (PluginSpec *spec, plugins) {
+        if (spec->name() == QLatin1String(CorePluginName)) {
+            corePlugin = spec;
+            break;
+        }
+    }
+    if (!corePlugin) {
+        QString nativePaths = QDir::toNativeSeparators(pluginPaths.join(QLatin1String(", ")));
+        const QString reason = QCoreApplication::translate("Application", "Could not find \"Core.spec\" in %1").arg(nativePaths);
+        // displayError(msgCoreLoadFailure(reason));
+        qFatal(qPrintable(reason));
+        return 1;
+    }
+    if (corePlugin->hasError()) {
+        // displayError(msgCoreLoadFailure(corePlugin->errorString()));
+        qFatal(qPrintable(corePlugin->errorString()));
+        return 1;
+    }
+
+    pluginManager->loadPlugins();
+    if (corePlugin->hasError()) {
+        // displayError(msgCoreLoadFailure(coreplugin->errorString()));
+        qFatal(qPrintable(corePlugin->errorString()));
+        return 1;
+    }
+    if (pluginManager->hasError()) {
+        // PluginErrorOverview errorOverview;
+        // errorOverview.exec();
+    }
+
+    // shutdown plugin manager on the exit
+    QObject::connect(&app, SIGNAL(aboutToQuit()), pluginManager, SLOT(unloadPlugins()));
 
     return app.exec();
 }

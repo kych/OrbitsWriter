@@ -19,20 +19,19 @@
 #
 #-------------------------------------------------
 
-include(../../OrbitsWriter.pri)
+include(../../orbitswriter.pri)
 
 TEMPLATE = app
 TARGET   = $$APPLICATION_TARGET
 DESTDIR  = $$APPLICATION_BIN_PATH
 
 include(../rpath.pri)
-include(../libs/extern/QtSingleApplication/qtsingleapplication.pri)
 
 QT      *= core gui
 
-LIBS    *= -l$$libraryName(core)
+LIBS    *= -l$$libraryName(Commons) -l$$libraryName(PluginSystem)
 
-INCLUDEPATH += $$PWD/../libs/core
+message($$INCLUDEPATH)
 
 SOURCES += \
     main.cpp
@@ -51,8 +50,6 @@ win32 {
 OTHER_FILES += application.rc \
     version.h.in
 
-app_info.input          = $$PWD/version.h.in
-app_info.output         = $$OUT_PWD/version.h
-app_info_include.input  = $$PWD/version.in
-app_info_include.output = $$OUT_PWD/Version
-QMAKE_SUBSTITUTES      += app_info app_info_include
+version.input          = $$PWD/version.h.in
+version.output         = $$OUT_PWD/version.h
+QMAKE_SUBSTITUTES     += version

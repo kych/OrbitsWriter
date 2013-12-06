@@ -32,7 +32,7 @@
 #include <qt_windows.h>
 #include <QFileInfo>
 
-namespace Extern {
+namespace ExternLib {
 
 #define SEMAPHORE_PREFIX "QtLockedFile semaphore "
 #define MUTEX_PREFIX "QtLockedFile mutex "
@@ -192,4 +192,4 @@ QtLockedFile::~QtLockedFile()
     }
 }
 
-} // namespace Extern
+} // namespace ExternLibExternLib

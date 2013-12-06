@@ -21,4 +21,5 @@
 
 TEMPLATE = subdirs
 CONFIG  += ordered
-SUBDIRS  =
+SUBDIRS  = \
+    core

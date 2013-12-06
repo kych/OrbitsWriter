@@ -19,8 +19,4 @@
 #
 #-------------------------------------------------
 
-TEMPLATE = subdirs
-CONFIG  += ordered
-SUBDIRS  = \
-    commons \
-    pluginsystem
+LIBS *= -l$$libraryName(Commons)

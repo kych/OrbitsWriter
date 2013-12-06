@@ -48,7 +48,7 @@
 #  define QT_QTLOCKEDFILE_EXPORT
 #endif
 
-namespace Extern {
+namespace ExternLib {
 
 class QT_QTLOCKEDFILE_EXPORT QtLockedFile : public QFile
 {
@@ -72,6 +72,6 @@ private:
     LockMode m_lock_mode;
 };
 
-} // namespace Extern
+} // namespace ExternLib
 
 #endif // QTLOCKEDFILE_H

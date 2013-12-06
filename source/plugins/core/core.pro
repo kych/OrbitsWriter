@@ -19,8 +19,24 @@
 #
 #-------------------------------------------------
 
-TEMPLATE = subdirs
-CONFIG  += ordered
-SUBDIRS  = \
-    commons \
-    pluginsystem
+TEMPLATE = lib
+TARGET   = Core
+DEFINES += CORE_LIBRARY
+
+QT      *= core gui
+
+include(../../plugin.pri)
+include(core_dependencies.pri)
+
+PRECOMPILED_HEADER = $$PWD/core_pch.h
+
+HEADERS += \
+    mainwindow.h \
+    core_global.h \
+    core_pch.h \
+    coreplugin.h
+
+SOURCES += \
+    mainwindow.cpp \
+    coreplugin.cpp
+

@@ -19,7 +19,7 @@
 #
 #-------------------------------------------------
 
-include(../OrbitsWriter.pri)
+include(../orbitswriter.pri)
 
 # use precompiled header for libraries by default
 !isEmpty(PRECOMPILED_HEADER):PRECOMPILED_HEADER = $$PWD/shared/application_pch.h

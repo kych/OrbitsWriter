@@ -33,7 +33,7 @@
 #include <QLocalSocket>
 #include <QDir>
 
-namespace Extern {
+namespace ExternLib {
 
 class QtLocalPeer : public QObject
 {
@@ -62,4 +62,4 @@ private:
     static const char* ack;
 };
 
-} // namespace Extern
+} // namespace ExternLib

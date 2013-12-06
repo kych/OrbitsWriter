@@ -29,7 +29,7 @@
 
 #include "qtlockedfile.h"
 
-namespace Extern {
+namespace ExternLib {
 
 /*!
     \class QtLockedFile
@@ -155,4 +155,4 @@ QtLockedFile::LockMode QtLockedFile::lockMode() const
     Destroys the \e QtLockedFile object. If any locks were held, they are released.
 */
 
-} // namespace Extern
+} // namespace ExternLibExternLib

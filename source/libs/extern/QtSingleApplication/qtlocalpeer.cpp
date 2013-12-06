@@ -44,7 +44,7 @@ static PProcessIdToSessionId pProcessIdToSessionId = 0;
 #include <unistd.h>
 #endif
 
-namespace Extern {
+namespace ExternLib {
 
 const char *QtLocalPeer::ack = "ack";
 
@@ -169,4 +169,4 @@ void QtLocalPeer::receiveConnection()
     emit messageReceived(message); // ##(might take a long time to return)
 }
 
-} // namespace Extern
+} // namespace ExternLib

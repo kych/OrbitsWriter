@@ -19,7 +19,7 @@
 #
 #-------------------------------------------------
 
-!isEmpty(ORBITSWRITER_PRI_INCLUDED): error("OrbitsWriter.pri already included")
+!isEmpty(ORBITSWRITER_PRI_INCLUDED): error("orbitswriter.pri already included")
 ORBITSWRITER_PRI_INCLUDED = 1
 
 APPLICATION_NAME    = OrbitsWriter
@@ -114,7 +114,9 @@ isEmpty(BUILD_TREE) {
 }
 
 INCLUDEPATH += \
-    $$BUILD_TREE/source/application # for <application/Version>
+    $$BUILD_TREE/source/application \ # for <application/version.h>
+    $$SOURCE_TREE/source/libs \
+    $$SOURCE_TREE/source/plugins
 
 CONFIG += depend_includepath c++11
 

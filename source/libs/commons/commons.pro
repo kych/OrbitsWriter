@@ -19,8 +19,25 @@
 #
 #-------------------------------------------------
 
-TEMPLATE = subdirs
-CONFIG  += ordered
-SUBDIRS  = \
-    commons \
-    pluginsystem
+TEMPLATE = lib
+TARGET   = Commons
+DEFINES += COMMONS_LIBRARY
+
+include(../../library.pri)
+include(commons_dependencies.pri)
+
+HEADERS += \
+    aggregate.h \
+    application.h \
+    commons_global.h \
+    objectpool.h \
+    settingsmanager.h \
+    singleton.h \
+    dpointer.h
+
+SOURCES += \
+    aggregate.cpp \
+    application.cpp \
+    objectpool.cpp \
+    settingsmanager.cpp \
+    dpointer.cpp

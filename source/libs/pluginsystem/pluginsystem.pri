@@ -19,8 +19,6 @@
 #
 #-------------------------------------------------
 
-TEMPLATE = subdirs
-CONFIG  += ordered
-SUBDIRS  = \
-    commons \
-    pluginsystem
+include(pluginsystem_dependencies.pri)
+
+LIBS *= -l$$libraryName(PluginSystem)

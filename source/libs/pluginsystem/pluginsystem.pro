@@ -19,8 +19,29 @@
 #
 #-------------------------------------------------
 
-TEMPLATE = subdirs
-CONFIG  += ordered
-SUBDIRS  = \
-    commons \
-    pluginsystem
+TEMPLATE = lib
+TARGET   = PluginSystem
+DEFINES += PLUGINSYSTEM_LIBRARY
+
+include(../../library.pri)
+include(pluginsystem_dependencies.pri)
+
+unix:!macx:!freebsd*:LIBS += -ldl
+
+HEADERS += \
+    pluginmanager.h \
+    pluginspec.h \
+    pluginspec_p.h \
+    pluginmanager_p.h \
+    plugin.h \
+    plugin_p.h \
+    plugincollection.h \
+    pluginsystem_global.h \
+    pluginview.h
+
+SOURCES += \
+    pluginmanager.cpp \
+    pluginspec.cpp \
+    plugin.cpp \
+    plugincollection.cpp \
+    pluginview.cpp

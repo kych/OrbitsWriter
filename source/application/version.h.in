@@ -22,7 +22,7 @@
 #ifndef VERSION_H
 #define VERSION_H
 
-namespace Application
+namespace OrbitsWriter
 {
 
 #define STRINGIFY_INTERNAL(x) #x
@@ -36,7 +36,7 @@ namespace Application
 #define VERSION_PATCH $$replace(APPLICATION_VERSION, "^\\d+\\.\\d+\\.(\\d+)(-.*)?$", \\1)
 
 const char * const VERSION_LONG        = VERSION_STR;
-const char * const NAME                = \"$${APPLICATION_NAME}\";
+const char * const APPLICATION_NAME    = \"$${APPLICATION_NAME}\";
 const char * const ORGANIZATION        = \"GalaxyWorld\";
 const char * const ORGANIZATION_DOMAIN = \"GalaxyWorld.Org\";
 const char * const YEAR                = \"2012\";
@@ -59,6 +59,6 @@ const char * const SETTINGSVARIANT_STR      = \"GalaxyWorld\";
 #undef STRINGIFY
 #undef STRINGIFY_INTERNAL
 
-} // end of namespace Application
+} // end of namespace OrbitsWriter
 
 #endif // VERSION_H

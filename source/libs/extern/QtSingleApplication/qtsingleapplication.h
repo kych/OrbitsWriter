@@ -29,7 +29,7 @@
 
 #include <QApplication>
 
-namespace Extern {
+namespace ExternLib {
 
 class QtLocalPeer;
 
@@ -72,4 +72,4 @@ private:
     QString appId;
 };
 
-} // namespace Extern
+} // namespace ExternLib
