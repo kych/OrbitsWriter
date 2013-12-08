@@ -32,11 +32,4 @@ Application::Application(const QString &id, int &argc, char **argv) :
     setApplicationName(QLatin1String(OrbitsWriter::APPLICATION_NAME));
     setApplicationVersion(QLatin1String(OrbitsWriter::VERSION_LONG));
     addLibraryPath("./plugins");
-
-    initLogger();
-}
-
-void Application::initLogger()
-{
-
 }

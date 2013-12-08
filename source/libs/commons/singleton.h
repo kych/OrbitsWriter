@@ -2,7 +2,7 @@
  *
  * OrbitsWriter - an Offline Blog Writer
  *
- * Copyright (C) 2012 devbean@galaxyworld.org
+ * Copyright (C) 2013 devbean@galaxyworld.org
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,14 +22,6 @@
 #ifndef SINGLETON_H
 #define SINGLETON_H
 
-/*!
-  This macto expands the singleton instance getter for
-  \a ClassName and the instance pointer name should be
-  declared by DECLARE_SINGLETON(ClassName).
-
-  You must include QMutex in order to use this macro
-  meanwhile the class use it must have a default constructor.
- */
 #define GET_INSTANCE(ClassName)                \
 ClassName *ClassName::m_instance = 0;          \
 ClassName *ClassName::instance()               \
@@ -44,13 +36,6 @@ ClassName *ClassName::instance()               \
     return m_instance;                         \
 }
 
-/*!
-  This macto expands a singleton instance with \a ClassName and
-  a getter function which should be implemented
-  by GET_INSTANCE(ClassName).
-
-  It will also disable the copy constructor and assignment operator.
- */
 #define DECLARE_SINGLETON(ClassName)           \
 public:                                        \
     static ClassName *instance();              \

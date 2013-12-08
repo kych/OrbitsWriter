@@ -2,7 +2,7 @@
 #
 # OrbitsWriter - an Offline Blog Writer
 #
-# Copyright (C) 2012 devbean@galaxyworld.org
+# Copyright (C) 2013 devbean@galaxyworld.org
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -34,9 +34,11 @@ HEADERS += \
     mainwindow.h \
     core_global.h \
     core_pch.h \
-    coreplugin.h
+    coreplugin.h \
+    id.h
 
 SOURCES += \
     mainwindow.cpp \
-    coreplugin.cpp
+    coreplugin.cpp \
+    id.cpp
 

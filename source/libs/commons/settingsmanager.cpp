@@ -2,7 +2,7 @@
  *
  * OrbitsWriter - an Offline Blog Writer
  *
- * Copyright (C) 2012 devbean@galaxyworld.org
+ * Copyright (C) 2013 devbean@galaxyworld.org
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,6 +22,14 @@
 #include <QMutex>
 
 #include "settingsmanager.h"
+
+/*!
+  \class Commons::SettingsManager
+  The SettingsManager class is used for save/restore application global settings.
+
+  This is a singleton class. If you need to access its instance, use SettingsManager::instance()
+  method.
+ */
 
 namespace Commons
 {
@@ -73,31 +81,59 @@ void SettingsManagerPrivate::setGlobalSettings(QSettings *s)
 
 GET_INSTANCE(SettingsManager)
 
+/*!
+  Constructs an instance of SettingsManager.
+ */
 SettingsManager::SettingsManager() :
     d(new Internal::SettingsManagerPrivate(this))
 {
 }
 
+/*!
+  Destroys the instance of SettingsManager.
+ */
 SettingsManager::~SettingsManager()
 {
     delete d;
 }
 
+/*!
+  Define the user specific settings to use for information about
+  enabled/disabled plugins.
+
+  Needs to be set before the plugin search path is set with
+  PluginManager::setPluginPaths().
+ */
 void SettingsManager::setSettings(QSettings *settings)
 {
     d->setSettings(settings);
 }
 
+/*!
+  Define the global (user-independent) settings to use for information
+  about default disabled plugins.
+
+  Needs to be set before the plugin search path is set with
+  PluginManager::setPluginPaths().
+ */
 void SettingsManager::setGlobalSettings(QSettings *settings)
 {
     d->setGlobalSettings(settings);
 }
 
+/*!
+  Gets the user specific settings used for information
+  about enabled/disabled plugins.
+ */
 QSettings *SettingsManager::settings() const
 {
     return d->settings;
 }
 
+/*!
+  Gets the global (user-independent) settings used
+  for information about default disabled plugins.
+ */
 QSettings *SettingsManager::globalSettings() const
 {
     return d->globalSettings;

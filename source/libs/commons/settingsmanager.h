@@ -2,7 +2,7 @@
  *
  * OrbitsWriter - an Offline Blog Writer
  *
- * Copyright (C) 2012 devbean@galaxyworld.org
+ * Copyright (C) 2013 devbean@galaxyworld.org
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -37,45 +37,19 @@ namespace Internal
 class SettingsManagerPrivate;
 } // end of namespace Commons::Internal
 
-/*!
-  The SettingsManager class is used for save/restore application global settings.
-
-  This is a singleton class. If you need to access its instance, use SettingsManager::instance()
-  method.
- */
 class COMMONS_EXPORT SettingsManager : public QObject
 {
     Q_OBJECT
     DECLARE_SINGLETON(SettingsManager)
 public:
-
-    /*!
-      Define the user specific settings to use for information about enabled/disabled plugins.
-
-      Needs to be set before the plugin search path is set with PluginManager::setPluginPaths().
-     */
     void setSettings(QSettings *settings);
-
-    /*!
-      Define the global (user-independent) settings to use for information about default disabled plugins.
-      Needs to be set before the plugin search path is set with PluginManager::setPluginPaths().
-     */
     void setGlobalSettings(QSettings *settings);
 
-    /*!
-      Gets the user specific settings used for information about enabled/disabled plugins.
-     */
     QSettings * settings() const;
-
-    /*!
-      Gets the global (user-independent) settings used for information about default disabled plugins.
-     */
     QSettings * globalSettings() const;
 
 private:
-    //! Constructs an instance of SettingsManager.
     SettingsManager();
-    //! Destroys the instance of SettingsManager.
     ~SettingsManager();
 
     Internal::SettingsManagerPrivate *d;

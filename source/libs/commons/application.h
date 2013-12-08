@@ -35,13 +35,6 @@ class COMMONS_EXPORT Application : public ExternLib::QtSingleApplication
     Q_OBJECT
 public:
     Application(const QString &id, int &argc, char **argv);
-    
-signals:
-    
-public slots:
-    
-private:
-    void initLogger();
 }; // end of class Commons::Application
 
 } // end of namespace Commons

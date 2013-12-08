@@ -1,6 +1,6 @@
 /*-------------------------------------------------
  *
- * OrbitsWriter - an Offline Blog Writer
+ * OrbitsWriter - An Offline Blog Writer
  *
  * Copyright (C) 2013 devbean@galaxyworld.org
  *
@@ -19,42 +19,23 @@
  *
  *-------------------------------------------------*/
 
-#include <QtPlugin>
-#include <QStringList>
+#include "singleton.h"
 
-#include "coreplugin.h"
-#include "mainwindow.h"
+/*!
+  \macro GET_INSTANCE(ClassName)
+  This macto expands the singleton instance getter for
+  \a ClassName and the instance pointer name should be
+  declared by DECLARE_SINGLETON(ClassName).
 
-namespace Core {
+  You must include QMutex in order to use this macro
+  meanwhile the class use it must have a default constructor.
+ */
 
-class CorePlugin::Private
-{
-public:
-    MainWindow *mainWindow;
-}; // end of class CorePlugin::Private
+/*!
+  \macro DECLARE_SINGLETON(ClassName)
+  This macto expands a singleton instance with \a ClassName and
+  a getter function which should be implemented
+  by GET_INSTANCE(ClassName).
 
-CorePlugin::CorePlugin()
-    : d()
-{
-    d->mainWindow = new MainWindow;
-}
-
-CorePlugin::~CorePlugin()
-{
-}
-
-bool CorePlugin::initialize(const QStringList &arguments, QString *errorString)
-{
-    Q_UNUSED(arguments)
-    const bool success = d->mainWindow->init(errorString);
-    return success;
-}
-
-void CorePlugin::dependenciesInitialized()
-{
-    d->mainWindow->prepareToShow();
-}
-
-}
-
-Q_EXPORT_PLUGIN2(CorePlugin, Core::CorePlugin)
+  It will also disable the copy constructor and assignment operator.
+ */

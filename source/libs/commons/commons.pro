@@ -2,7 +2,7 @@
 #
 # OrbitsWriter - an Offline Blog Writer
 #
-# Copyright (C) 2012 devbean@galaxyworld.org
+# Copyright (C) 2013 devbean@galaxyworld.org
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -40,4 +40,5 @@ SOURCES += \
     application.cpp \
     objectpool.cpp \
     settingsmanager.cpp \
-    dpointer.cpp
+    dpointer.cpp \
+    singleton.cpp
