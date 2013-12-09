@@ -26,6 +26,7 @@
 #include <QSettings>
 
 #include <commons/application.h>
+#include <commons/settingsmanager.h>
 #include <pluginsystem/pluginmanager.h>
 #include <pluginsystem/pluginspec.h>
 #include <version.h>
@@ -124,6 +125,9 @@ int main(int argc, char** argv)
     QSettings *globalSettings = new QSettings(QSettings::IniFormat, QSettings::SystemScope,
                                               QLatin1String(OrbitsWriter::SETTINGSVARIANT_STR),
                                               QLatin1String(OrbitsWriter::APPLICATION_NAME));
+    SettingsManager *settingsManager = SettingsManager::instance();
+    settingsManager->setSettings(settings);
+    settingsManager->setGlobalSettings(globalSettings);
 
     // <<<<<<<<<< load plugins
     const QStringList pluginPaths = getPluginPaths();

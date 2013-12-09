@@ -36,6 +36,9 @@
 using namespace PluginSystem;
 using namespace PluginSystem::Internal;
 
+/*!
+  Hash functions for PluginDependency.
+ */
 uint PluginSystem::qHash(const PluginDependency &value)
 {
     return qHash(value.name);
@@ -43,6 +46,58 @@ uint PluginSystem::qHash(const PluginDependency &value)
 
 // ========== PluginSystem::PluginDependency ========== //
 
+/*!
+  \struct PluginSystem::PluginDependency
+  Struct that contains the name and required compatible version number of a plugin's dependency.
+
+  Each dependency has a name and a minimum version.
+  If the dependency does not match, this plugin should not be loaded.
+ */
+
+/*!
+  \enum PluginDependency::Type
+  Dependency type.
+
+  Defines whether the dependency is required or optional.
+ */
+
+/*!
+  \var PluginDependency::Type PluginDependency::Required
+  Dependency needs to be there.
+ */
+
+/*!
+  \var PluginDependency::Type PluginDependency::Optional
+  Dependency is not necessarily needed.
+
+  You need to make sure that the plugin is able to load without
+  this dependency installed, so for example you may not link to
+  the dependency's library.
+ */
+
+/*!
+  \fn PluginDependency::PluginDependency()
+  Constructs an instance of PluginDependency.
+ */
+
+/*!
+  \property PluginDependency::name
+  Dependency name.
+ */
+
+/*!
+  \property PluginDependency::version
+  Dependency version.
+ */
+
+/*!
+  \property PluginDependency::type
+  Dependency type.
+ */
+
+/*!
+  Returns true if two PluginDependency instances are equal.
+ */
 bool PluginDependency::operator ==(const PluginDependency &other) const
 {
     return name == other.name
@@ -52,132 +107,378 @@ bool PluginDependency::operator ==(const PluginDependency &other) const
 
 // ========== PluginSystem::PluginSpec ========== //
 
+/*!
+  \class PluginSystem::PluginSpec
+  Contains the information of the plugins xml description file and
+  information about the plugin's current state.
+
+  The plugin spec is also filled with more information as the plugin
+  goes through its loading process (see PluginSpec::State).
+  If an error occurs, the plugin spec is the place to look for the error details.
+
+  Spec information is the meta-information about a plugin. Meta-information means
+  the name, version number, dependencies and so on. Plugins must give a spec file
+  in order to load into application. The spec file should be described in XML format.
+  The XML Schema is as following:
+  \code
+  <?xml version="1.0"?>
+  <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+      <xsd:element name="plugin">
+          <xsd:complexType>
+              <xsd:all>
+                  <xsd:element name="vendor" type="xsd:string"/>
+                  <xsd:element name="copyright" type="xsd:string"/>
+                  <xsd:element name="license" type="xsd:string"/>
+                  <xsd:element name="category">
+                      <xsd:simpleType>
+                          <xsd:restriction base="xsd:string">
+                              <xsd:pattern value="BASE|HTML|API"/>
+                          </xsd:restriction>
+                      </xsd:simpleType>
+                  </xsd:element>
+                  <xsd:element name="description" type="xsd:string"/>
+                  <xsd:element name="url" type="xsd:string"/>
+                  <xsd:element name="dependencyList">
+                      <xsd:complexType>
+                          <xsd:sequence>
+                              <xsd:element name="dependency" maxOccurs="unbounded">
+                                  <xsd:complexType>
+                                      <xsd:attribute name="name" type="xsd:string" use="required"/>
+                                      <xsd:attribute name="version" type="xsd:string" use="required"/>
+                                  </xsd:complexType>
+                              </xsd:element>
+                          </xsd:sequence>
+                      </xsd:complexType>
+                  </xsd:element>
+              </xsd:all>
+              <xsd:attribute name="name" type="xsd:string" use="required"/>
+              <xsd:attribute name="version" type="xsd:string" use="required"/>
+              <xsd:attribute name="compatVersion" type="xsd:string" use="required"/>
+          </xsd:complexType>
+      </xsd:element>
+  </xsd:schema>
+  \endcode
+
+  As the scheme shows, spec files should have a root node named plugin. The root must have 3 attributes:
+  - name: plugin's name;
+  - version: plugin's version;
+  - compatVersion: plugin's required application's version.
+
+  There are 7 elements and they could in any order:
+  - vendor: the plugin's vendor;
+  - copyright: the plugin's copyright;
+  - license: the plugin's license, must wrap with CDATA. You could put any license contents here;
+  - category: the plugin's category, OrbitsWriter classifies this plugin by its category.
+  The category should be the same as the interfaces which this plugin implements.
+  The valid categories are:
+       - BASE: Base plugins.
+       - API: API plugins.
+       - HTML: HTML plugins.
+  - description: the description for this plugin, usually a single sentence to explain what the plugin
+  is used for;
+  - url: The plugin's URL. Maybe vendor's website or some others;
+  - dependencyList: The dependencies for this plugin. It could contain any number of dependency node
+  which must have 2 attributes:
+       - name: dependency library name;
+       - version: dependency library minimum version.
+
+  Usually you need not create the instance of this class. OrbitsWriter will create an instance
+  when the plugin loaded successfully and set it to this plugin.
+
+  \note You cannot access any field of spec in constructors of plugins for the spec information
+  will be set after getting the instance of plugins.
+ */
+
+/*!
+  \enum PluginSpec::State
+  The state gives a hint on what went wrong in case of an error.
+ */
+
+/*!
+  \var PluginSpec::State PluginSpec::Invalid
+  Starting point: Even the xml description file was not read.
+ */
+
+/*!
+  \var PluginSpec::State PluginSpec::Read
+  The xml description file has been successfully read,
+  and its information is available via the PluginSpec.
+ */
+
+/*!
+  \var PluginSpec::State PluginSpec::Resolved
+  The dependencies given in the description file have been
+  successfully found, and are available via the dependencySpecs() method.
+ */
+
+/*!
+  \var PluginSpec::State PluginSpec::Loaded
+  The plugin's library is loaded and the plugin instance created
+  (available through plugin()).
+ */
+
+/*!
+  \var PluginSpec::State PluginSpec::Initialized
+  The plugin instance's initialize() method has been
+  called and returned a success value.
+ */
+
+/*!
+  \var PluginSpec::State PluginSpec::Running
+  The plugin's dependencies are successfully initialized
+  and extensionsInitialized has been called. The loading process is complete.
+ */
+
+/*!
+  \var PluginSpec::State PluginSpec::Stopped
+  The plugin has been shut down, i.e. the plugin's
+  aboutToShutdown() method has been called.
+ */
+
+/*!
+  \var PluginSpec::State PluginSpec::Deleted
+  The plugin instance has been deleted.
+ */
+
+/*!
+  Constructs an instance of PluginSpec.
+ */
 PluginSpec::PluginSpec() :
     d(new PluginSpecPrivate(this))
 {
 }
 
+/*!
+  Destroys the instance of PluginSpec.
+ */
 PluginSpec::~PluginSpec()
 {
     delete d;
     d = 0;
 }
 
+/*!
+  The plugin name.
+
+  This is valid after the PluginSpec::Read state is reached.
+ */
 QString PluginSpec::name() const
 {
     return d->name;
 }
 
+/*!
+  The plugin version.
+
+  This is valid after the PluginSpec::Read state is reached.
+ */
 QString PluginSpec::version() const
 {
     return d->version;
 }
 
+/*!
+  The plugin compatibility version.
+
+  This is valid after the PluginSpec::Read state is reached.
+ */
 QString PluginSpec::compatVersion() const
 {
     return d->compatVersion;
 }
 
+/*!
+  The plugin vendor.
+
+  This is valid after the PluginSpec::Read state is reached.
+ */
 QString PluginSpec::vendor() const
 {
     return d->vendor;
 }
 
+/*!
+  The plugin copyright.
+
+  This is valid after the PluginSpec::Read state is reached.
+ */
 QString PluginSpec::copyright() const
 {
     return d->copyright;
 }
 
+/*!
+  The plugin license.
+
+  This is valid after the PluginSpec::Read state is reached.
+ */
 QString PluginSpec::license() const
 {
     return d->license;
 }
 
+/*!
+  The category that the plugin belongs to.
+
+  Categories are groups of plugins which allow for keeping them together in the UI.
+  Returns an empty string if the plugin does not belong to a category.
+ */
 QString PluginSpec::category() const
 {
     return d->category;
 }
 
+/*!
+  The plugin description.
+
+  This is valid after the PluginSpec::Read state is reached.
+ */
 QString PluginSpec::description() const
 {
     return d->description;
 }
 
+/*!
+  The plugin url where you can find more information about the plugin.
+
+  This is valid after the PluginSpec::Read state is reached.
+ */
 QString PluginSpec::url() const
 {
     return d->url;
 }
 
+/*!
+  The plugin dependencies.
+
+  This is valid after the PluginSpec::Read state is reached.
+ */
 QList<PluginDependency> PluginSpec::dependencyList() const
 {
     return d->dependencyList;
 }
 
+/*!
+  Return true if there is some error while loading this spec.
+ */
 bool PluginSpec::hasError() const
 {
     return d->hasError;
 }
 
+/*!
+  Detailed, possibly multi-line, error description in case of an error.
+ */
 QString PluginSpec::errorString() const
 {
     return d->errorString();
 }
 
+/*!
+  Plugin loads state.
+ */
 PluginSpec::State PluginSpec::state() const
 {
     return d->state;
 }
 
+/*!
+  The absolute path to the directory containing the plugin xml description file
+  this PluginSpec corresponds to.
+
+  This is valid after the PluginSpec::Read state is reached.
+ */
 QString PluginSpec::location() const
 {
     return d->location;
 }
 
+/*!
+  The absolute path to the plugin xml description file (including the file name)
+  this PluginSpec corresponds to.
+
+  This is valid after the PluginSpec::Read state is reached.
+ */
 QString PluginSpec::filePath() const
 {
     return d->filePath;
 }
 
+/*!
+  Returns if this plugin can be used to fill in a dependency of the given
+  \a pluginName and \a version.
+
+  \sa PluginSpec::dependencyList()
+ */
 bool PluginSpec::provides(const QString &pluginName, const QString &version) const
 {
     return d->provides(pluginName, version);
 }
 
+/*!
+  The plugin dependency specs.
+
+  This is valid after the PluginSpec::Resolved state is reached.
+ */
 QHash<PluginDependency, PluginSpec *> PluginSpec::dependencySpecs() const
 {
     return d->dependencySpecs;
 }
 
+/*!
+  The plugin of this spec.
+ */
 Plugin *PluginSpec::plugin() const
 {
     return d->plugin;
 }
 
+/*!
+  Returns if the plugin is disabled by default.
+ */
 bool PluginSpec::isDisabledByDefault() const
 {
     return d->disabledByDefault;
 }
 
+/*!
+  Returns if the plugin is loaded at startup.
+
+  True by default - the user can change it from the Plugin settings.
+ */
 bool PluginSpec::isEnabled() const
 {
     return d->enabled;
 }
 
+/*!
+  Returns true if loading was not done due to user unselecting this plugin
+  or its dependencies, or if command-line parameter -noload was used.
+ */
 bool PluginSpec::isDisabledIndirectly() const
 {
     return d->disabledIndirectly;
 }
 
+/*!
+  Sets this plugin enabled or not.
+ */
 void PluginSpec::setEnabled(bool value)
 {
     d->enabled = value;
 }
 
+/*!
+  Sets this plugin disabled by default or not.
+ */
 void PluginSpec::setDisabledByDefault(bool value)
 {
     d->disabledByDefault = value;
 }
 
+/*!
+  Sets this plugin disabled indirectly or not.
+ */
 void PluginSpec::setDisabledIndirectly(bool value)
 {
     d->disabledIndirectly = value;

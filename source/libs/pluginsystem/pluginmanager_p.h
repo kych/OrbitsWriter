@@ -43,9 +43,6 @@ class PluginCollection;
 namespace Internal
 {
 
-/*!
-  The PluginManagerPrivate class is the private implementation of PluginManager.
- */
 class PluginManagerPrivate : public QObject
 {
     Q_OBJECT

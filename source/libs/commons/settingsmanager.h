@@ -27,8 +27,6 @@
 #include "commons/commons_global.h"
 #include "commons/singleton.h"
 
-#define gSettingsManager (Commons::SettingsManager::instance())
-
 namespace Commons
 {
 

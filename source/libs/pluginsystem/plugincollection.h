@@ -30,40 +30,17 @@ namespace PluginSystem
 
 class PluginSpec;
 
-/*!
-  The plugin collection for a category.
- */
 class PluginCollection
 {
 public:
-    /*!
-      Constructs an instance of PluginCollection with category name \a name.
-     */
     explicit PluginCollection(const QString& name);
-
-    /*!
-      Destroys the instance of this colletion.
-     */
     ~PluginCollection();
 
-    /*!
-      The plugin category name.
-     */
     QString name() const;
 
-    /*!
-      Adds plugin \a spec to this collection.
-     */
     void addPlugin(PluginSpec *spec);
-
-    /*!
-      Removes the plugin \a spec to this collection.
-     */
     void removePlugin(PluginSpec *spec);
 
-    /*!
-      All plugins of this collection.
-     */
     QList<PluginSpec *> plugins() const;
 
 private:

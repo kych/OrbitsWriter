@@ -32,6 +32,14 @@
 #include "pluginspec.h"
 #include "pluginspec_p.h"
 
+/*!
+  \namespace PluginSystem
+  The PluginSystem namespace provides classes that belong to the core plugin system.
+
+  The basic plugin system contains the plugin manager and its supporting classes,
+  and the Plugin interface that must be implemented by plugin providers.
+ */
+
 using namespace PluginSystem;
 using namespace PluginSystem::Internal;
 
@@ -42,34 +50,68 @@ static bool lessThanByPluginName(const PluginSpec *one, const PluginSpec *two)
 
 // ========== PluginManager ========== //
 
+/*!
+  \class PluginManager
+  Managers for plugins.
+ */
+
 GET_INSTANCE(PluginManager)
 
+/*!
+  Constructs an instance of PluginManager.
+ */
 PluginManager::PluginManager() :
     d(new Internal::PluginManagerPrivate(this))
 {
 }
 
+/*!
+  Destroys the instance of PluginManager.
+ */
 PluginManager::~PluginManager()
 {
     delete d;
     d = 0;
 }
 
+/*!
+  Tries to load all the plugins that were previously found
+  when setting the plugin search paths.
+
+  The plugin specs of the plugins can be used to retrieve error
+  and state information about individual plugins.
+ */
 void PluginManager::loadPlugins() const
 {
     d->loadPlugins();
 }
 
+/*!
+  Unload and deletes all plugins.
+ */
 void PluginManager::unloadPlugins() const
 {
     d->unloadPlugins();
 }
 
+/*!
+  List of all plugin specifications that have been found in the plugin search paths.
+
+  The plugin specifications contain the information from the plugins'
+  xml description files and the current state of the plugins.
+  If a plugin's library has been already successfully loaded,
+  the plugin specification has a reference to the created plugin instance as well.
+ */
 QList<PluginSpec *> PluginManager::plugins() const
 {
     return d->pluginSpecs;
 }
 
+/*!
+  Returns true if any plugin has errors even though it is enabled.
+
+  Most useful to call after loadPlugins().
+ */
 bool PluginManager::hasError() const
 {
     foreach (PluginSpec *spec, plugins()) {
@@ -81,11 +123,20 @@ bool PluginManager::hasError() const
     return false;
 }
 
+/*!
+  The plugin collections.
+ */
 QHash<QString, PluginCollection *> PluginManager::pluginCollections() const
 {
     return d->pluginCategories;
 }
 
+/*!
+  Sets the plugin search paths, i.e. the file system paths where the plugin manager
+  looks for plugin descriptions.
+
+  All given \a paths and their sub directory trees are searched for plugin xml description files.
+ */
 void PluginManager::setPluginPaths(const QStringList &paths)
 {
     d->setPluginPaths(paths);
@@ -95,7 +146,7 @@ void PluginManager::setPluginPaths(const QStringList &paths)
 
 /*!
   \class PluginSystem::Internal::PluginManagerPrivate
-  \brief PluginManagerPrivate
+  The PluginManagerPrivate class is the private implementation of PluginManager.
  */
 
 PluginManagerPrivate::PluginManagerPrivate(PluginManager *pluginManager) :
@@ -434,3 +485,8 @@ void PluginManagerPrivate::asyncShutdownFinished()
         shutdownEventLoop->exit();
     }
 }
+
+/*!
+  \fn void PluginManager::pluginsChanged()
+  Emits when the list of available plugins has changed.
+ */

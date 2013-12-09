@@ -21,32 +21,55 @@
 
 #include "plugincollection.h"
 
+/*!
+  \class PluginCollection
+  The plugin collection for a category.
+ */
+
 using namespace PluginSystem;
 
+/*!
+  Constructs an instance of PluginCollection with category name \a name.
+ */
 PluginCollection::PluginCollection(const QString& name) :
     m_name(name)
 {
 }
 
+/*!
+  Destroys the instance of this colletion.
+ */
 PluginCollection::~PluginCollection()
 {
 }
 
+/*!
+  The plugin category name.
+ */
 QString PluginCollection::name() const
 {
     return m_name;
 }
 
+/*!
+  Adds plugin \a spec to this collection.
+ */
 void PluginCollection::addPlugin(PluginSpec *spec)
 {
     m_plugins.append(spec);
 }
 
+/*!
+  Removes the plugin \a spec to this collection.
+ */
 void PluginCollection::removePlugin(PluginSpec *spec)
 {
     m_plugins.removeOne(spec);
 }
 
+/*!
+  All plugins of this collection.
+ */
 QList<PluginSpec *> PluginCollection::plugins() const
 {
     return m_plugins;

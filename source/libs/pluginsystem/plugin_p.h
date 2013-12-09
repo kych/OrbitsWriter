@@ -39,9 +39,6 @@ class PluginSpec;
 namespace Internal
 {
 
-/*!
-  The PluginPrivate class is the private implementation of Plugin.
- */
 class PluginPrivate
 {
 public:
