@@ -35,10 +35,27 @@ HEADERS += \
     core_global.h \
     core_pch.h \
     coreplugin.h \
-    id.h
+    id.h \
+    actionsystem/command.h \
+    actionsystem/command_p.h \
+    actionsystem/proxyaction.h \
+    actionsystem/actioncontainer.h \
+    actionsystem/actioncontainer_p.h \
+    actionsystem/actionmanager.h \
+    actionsystem/actionmanager_p.h \
+    constants.h \
+    context.h \
+    appcore.h \
+    appcore_p.h
 
 SOURCES += \
     mainwindow.cpp \
     coreplugin.cpp \
-    id.cpp
+    id.cpp \
+    actionsystem/command.cpp \
+    actionsystem/proxyaction.cpp \
+    actionsystem/actioncontainer.cpp \
+    actionsystem/actionmanager.cpp \
+    context.cpp \
+    appcore.cpp
 

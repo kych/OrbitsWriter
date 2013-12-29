@@ -32,13 +32,11 @@ HEADERS += \
     commons_global.h \
     objectpool.h \
     settingsmanager.h \
-    singleton.h \
-    dpointer.h
+    singleton.h
 
 SOURCES += \
     aggregate.cpp \
     application.cpp \
     objectpool.cpp \
     settingsmanager.cpp \
-    dpointer.cpp \
     singleton.cpp

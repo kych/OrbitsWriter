@@ -31,8 +31,6 @@ QT      *= core gui
 
 LIBS    *= -l$$libraryName(Commons) -l$$libraryName(PluginSystem)
 
-message($$INCLUDEPATH)
-
 SOURCES += \
     main.cpp
 
