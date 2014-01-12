@@ -36,10 +36,30 @@ public:
 
     bool init(QString *errorMessage);
     void prepareToShow();
-signals:
 
-public slots:
+protected:
+    void closeEvent(QCloseEvent *event);
 
+private slots:
+    void showAboutDialog();
+    void showAboutPluginDialog();
+
+private:
+    void registerDefaultContainers();
+    void registerDefaultActions();
+
+    void readSettings();
+    void writeSettings();
+
+    // Actions
+    QAction *m_newDocAction;
+    QAction *m_openDocAction;
+    QAction *m_exitAction;
+    QAction *m_undoAction;
+    QAction *m_redoAction;
+    QAction *m_cutAction;
+    QAction *m_copyAction;
+    QAction *m_pasteAction;
 }; // end of class MainWindow
 
 } // end of namespace Core

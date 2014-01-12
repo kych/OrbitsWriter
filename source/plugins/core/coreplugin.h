@@ -22,10 +22,14 @@
 #ifndef COREPLUGIN_H
 #define COREPLUGIN_H
 
-#include <commons/dpointer.h>
 #include <pluginsystem/plugin.h>
 
 namespace Core {
+
+namespace Internal
+{
+class CorePluginPrivate;
+}
 
 class CorePlugin : public PluginSystem::Plugin
 {
@@ -39,7 +43,7 @@ public:
     void dependenciesInitialized();
 
 private:
-    D_POINTER
+    Internal::CorePluginPrivate *d;
 }; // end of class CorePlugin
 
 } // end of namespace Core

@@ -46,7 +46,8 @@ HEADERS += \
     constants.h \
     context.h \
     appcore.h \
-    appcore_p.h
+    appcore_p.h \
+    corelistener.h
 
 SOURCES += \
     mainwindow.cpp \
@@ -57,5 +58,9 @@ SOURCES += \
     actionsystem/actioncontainer.cpp \
     actionsystem/actionmanager.cpp \
     context.cpp \
-    appcore.cpp
+    appcore.cpp \
+    corelistener.cpp
+
+RESOURCES += \
+    resources/resources.qrc
 

@@ -2,7 +2,7 @@
  *
  * OrbitsWriter - an Offline Blog Writer
  *
- * Copyright (C) 2013 devbean@galaxyworld.org
+ * Copyright (C) 2014 devbean@galaxyworld.org
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,45 +19,26 @@
  *
  *-------------------------------------------------*/
 
-#include <QtPlugin>
-#include <QStringList>
+#ifndef CORELISTENER_H
+#define CORELISTENER_H
 
-#include "coreplugin.h"
-#include "mainwindow.h"
+#include <QObject>
 
 namespace Core {
 
-namespace Internal {
+class Editor;
 
-class CorePluginPrivate
+class CoreListener : public QObject
 {
+    Q_OBJECT
 public:
-    MainWindow *mainWindow;
-}; // end of class CorePluginPrivate
-}
+    explicit CoreListener(QObject *parent = 0) : QObject(parent) {}
+    virtual ~CoreListener() {}
 
-CorePlugin::CorePlugin() :
-    d(new Internal::CorePluginPrivate)
-{
-    d->mainWindow = new MainWindow;
-}
+    virtual bool editorAboutToClose(Editor * /*editor*/) { return true; }
+    virtual bool mainWindowAboutToClose() { return true; }
+}; // end of class Core::CoreListener
 
-CorePlugin::~CorePlugin()
-{
-}
+} // end of namespace Core
 
-bool CorePlugin::initialize(const QStringList &arguments, QString *errorString)
-{
-    Q_UNUSED(arguments)
-    const bool success = d->mainWindow->init(errorString);
-    return success;
-}
-
-void CorePlugin::dependenciesInitialized()
-{
-    d->mainWindow->prepareToShow();
-}
-
-}
-
-Q_EXPORT_PLUGIN2(CorePlugin, Core::CorePlugin)
+#endif // CORELISTENER_H

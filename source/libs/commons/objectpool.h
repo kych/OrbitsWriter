@@ -29,6 +29,8 @@
 #include "commons/commons_global.h"
 #include "commons/singleton.h"
 
+#define gObjectPool (Commons::ObjectPool::instance())
+
 namespace Commons
 {
 
