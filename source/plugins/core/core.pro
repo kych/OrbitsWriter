@@ -47,7 +47,11 @@ HEADERS += \
     context.h \
     appcore.h \
     appcore_p.h \
-    corelistener.h
+    corelistener.h \
+    editorsystem/editor.h \
+    editorsystem/editormanager.h \
+    editorsystem/editorfactory.h \
+    editorsystem/editormanager_p.h
 
 SOURCES += \
     mainwindow.cpp \
@@ -59,7 +63,10 @@ SOURCES += \
     actionsystem/actionmanager.cpp \
     context.cpp \
     appcore.cpp \
-    corelistener.cpp
+    corelistener.cpp \
+    editorsystem/editor.cpp \
+    editorsystem/editormanager.cpp \
+    editorsystem/editorfactory.cpp
 
 RESOURCES += \
     resources/resources.qrc
