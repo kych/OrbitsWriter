@@ -2,7 +2,7 @@
  *
  * OrbitsWriter - an Offline Blog Writer
  *
- * Copyright (C) 2014 devbean@galaxyworld.org
+ * Copyright (C) 2013 devbean@galaxyworld.org
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,30 +19,28 @@
  *
  *-------------------------------------------------*/
 
-#ifndef EDITORFACTORY_H
-#define EDITORFACTORY_H
+#include "htmleditorwidget.h"
 
-#include <QObject>
-
-#include "core/editorsystem/editor.h"
-#include "core/core_global.h"
-
-namespace Core {
-
-class Id;
-
-class CORE_EXPORT EditorFactory : public QObject
+namespace HtmlEditor
 {
-    Q_OBJECT
+
+namespace Internal
+{
+class HtmlEditorWidgetPrivate
+{
 public:
-    explicit EditorFactory(QObject *parent = 0);
-    virtual ~EditorFactory() {}
+}; // end of class HtmlEditor::Internal::HtmlEditorWidgetPrivate
+} // end of namespace HtmlEditor::Internal
 
-    virtual Editor * createEditor(QWidget *parent) = 0;
-    virtual Id id() const = 0;
+HtmlEditorWidget::HtmlEditorWidget(QWidget *parent) :
+    QWidget(parent),
+    d(new Internal::HtmlEditorWidgetPrivate)
+{
+}
 
-}; // end of class Core::EditorFactory
+HtmlEditorWidget::~HtmlEditorWidget()
+{
+    delete d;
+}
 
-} // end of namespace Core
-
-#endif // EDITORFACTORY_H
+} // end of namespace HtmlEditor

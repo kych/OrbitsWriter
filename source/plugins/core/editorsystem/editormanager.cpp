@@ -21,7 +21,8 @@
 
 #include <commons/objectpool.h>
 
-#include "core/appcore.h"
+#include "appcore.h"
+#include "context.h"
 #include "editorfactory.h"
 #include "editormanager.h"
 #include "editormanager_p.h"
@@ -73,14 +74,14 @@ Editor *EditorManagerPrivate::createEditor(const Id &id)
 {
     EditorFactory *factory = findEditorFactoryById<EditorFactory>(id);
     Q_ASSERT_X(factory != 0, "currentEditor", "No any editor factory registered.");
-    currEditor = factory->createEditor(appCore->mainWindow());
+    currEditor = factory->createEditor(gCore->mainWindow());
 //    setEditorActions(currEditor->editorActions());
     return currEditor;
 }
 
 void EditorManagerPrivate::contextAboutToChange(WidgetContext *context)
 {
-    Editor *editor = context ? qobject_cast<Editor*>(context) : 0;
+    Editor *editor = context ? qobject_cast<Editor *>(context) : 0;
     if (editor) {
         setCurrentEditor(editor);
     } else {

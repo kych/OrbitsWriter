@@ -2,7 +2,7 @@
  *
  * OrbitsWriter - an Offline Blog Writer
  *
- * Copyright (C) 2014 devbean@galaxyworld.org
+ * Copyright (C) 2013 devbean@galaxyworld.org
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,30 +19,40 @@
  *
  *-------------------------------------------------*/
 
-#ifndef EDITORFACTORY_H
-#define EDITORFACTORY_H
+#include <QtPlugin>
 
-#include <QObject>
+#include "htmleditorfactory.h"
+#include "htmleditorplugin.h"
 
-#include "core/editorsystem/editor.h"
-#include "core/core_global.h"
-
-namespace Core {
-
-class Id;
-
-class CORE_EXPORT EditorFactory : public QObject
+namespace HtmlEditor
 {
-    Q_OBJECT
-public:
-    explicit EditorFactory(QObject *parent = 0);
-    virtual ~EditorFactory() {}
+namespace Internal
+{
+class HtmlEditorPluginPrivate
+{
+}; // end of class HtmlEditor::Internal::HtmlEditorPluginPrivate
+} // end of namespace HtmlEditor::Internal
 
-    virtual Editor * createEditor(QWidget *parent) = 0;
-    virtual Id id() const = 0;
+HtmlEditorPlugin::HtmlEditorPlugin() :
+    d(new Internal::HtmlEditorPluginPrivate)
+{
+}
 
-}; // end of class Core::EditorFactory
+HtmlEditorPlugin::~HtmlEditorPlugin()
+{
+    delete d;
+}
 
-} // end of namespace Core
+bool HtmlEditorPlugin::initialize(const QStringList &arguments, QString *errorString)
+{
+    addAutoReleasedObject(new HtmlEditorFactory(this));
+    return true;
+}
 
-#endif // EDITORFACTORY_H
+void HtmlEditorPlugin::dependenciesInitialized()
+{
+}
+
+} // end of namespace HtmlEditor
+
+Q_EXPORT_PLUGIN2(HtmlEditorPlugin, HtmlEditor::HtmlEditorPlugin)

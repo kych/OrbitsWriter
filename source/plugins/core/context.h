@@ -64,7 +64,7 @@ class CORE_EXPORT WidgetContext : public QObject
 {
     Q_OBJECT
 public:
-    WidgetContext(QObject *parent = 0) : QObject(parent) {}
+    explicit WidgetContext(QObject *parent = 0) : QObject(parent) {}
 
     virtual Context context() const { return m_context; }
     virtual QWidget *widget() const { return m_widget; }

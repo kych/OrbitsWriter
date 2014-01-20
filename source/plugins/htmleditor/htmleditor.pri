@@ -2,7 +2,7 @@
 #
 # OrbitsWriter - an Offline Blog Writer
 #
-# Copyright (C) 2013 devbean@galaxyworld.org
+# Copyright (C) 2012 devbean@galaxyworld.org
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -19,8 +19,5 @@
 #
 #-------------------------------------------------
 
-TEMPLATE = subdirs
-CONFIG  += ordered
-SUBDIRS  = \
-    core \
-    htmleditor
+include(htmleditor_dependencies.pri)
+LIBS *= -l$$libraryName(HtmlEditor)

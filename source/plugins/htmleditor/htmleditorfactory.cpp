@@ -2,7 +2,7 @@
  *
  * OrbitsWriter - an Offline Blog Writer
  *
- * Copyright (C) 2014 devbean@galaxyworld.org
+ * Copyright (C) 2013 devbean@galaxyworld.org
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,46 +19,45 @@
  *
  *-------------------------------------------------*/
 
-#ifndef EDITORMANAGER_H
-#define EDITORMANAGER_H
+#include <core/id.h>
 
-#include <QObject>
+#include "constants.h"
+#include "htmleditor.h"
+#include "htmleditorfactory.h"
+#include "htmleditorwidget.h"
 
-#include <commons/singleton.h>
-
-#include "core/core_global.h"
-
-#define gEditorManager (Core::EditorManager::instance())
-
-namespace Core {
-
-class Editor;
+namespace HtmlEditor
+{
 
 namespace Internal
 {
-class EditorManagerPrivate;
+class HtmlEditorFactoryPrivate
+{
+public:
+
+}; // end of class HtmlEditor::Internal::HtmlEditorFactoryPrivate
+} // end of namespace HtmlEditor::Internal
+
+HtmlEditorFactory::HtmlEditorFactory(QObject *parent) :
+    Core::EditorFactory(parent),
+    d(new Internal::HtmlEditorFactoryPrivate)
+{
 }
 
-class CORE_EXPORT EditorManager : public QObject
+HtmlEditorFactory::~HtmlEditorFactory()
 {
-    Q_OBJECT
-    DECLARE_SINGLETON(EditorManager)
-public:
-    void initialize();
+    delete d;
+}
 
-    Editor * currentEditor();
+Core::Editor *HtmlEditorFactory::createEditor(QWidget *parent)
+{
+    HtmlEditorWidget *editorWidget = new HtmlEditorWidget(parent);
+    return new HTMLEditor(editorWidget);
+}
 
-signals:
-    void currentEditorChanged(Editor *editor);
+Core::Id HtmlEditorFactory::id() const
+{
+    return Core::Id(Constants::ID_HTMLEDITORFACTORY);
+}
 
-private:
-    explicit EditorManager(QObject *parent = 0);
-    ~EditorManager();
-
-    Internal::EditorManagerPrivate *d;
-    friend class Internal::EditorManagerPrivate;
-}; // end of class Core::EditorManager
-
-} // end of namespace Core
-
-#endif // EDITORMANAGER_H
+} // end of namespace HtmlEditor

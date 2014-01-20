@@ -2,7 +2,7 @@
 #
 # OrbitsWriter - an Offline Blog Writer
 #
-# Copyright (C) 2013 devbean@galaxyworld.org
+# Copyright (C) 2012 devbean@galaxyworld.org
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -19,8 +19,26 @@
 #
 #-------------------------------------------------
 
-TEMPLATE = subdirs
-CONFIG  += ordered
-SUBDIRS  = \
-    core \
-    htmleditor
+TEMPLATE = lib
+TARGET   = HtmlEditor
+DEFINES += HTMLEDITOR_LIBRARY
+
+QT      += core gui webkit
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets webkitwidgets
+
+include(../../plugin.pri)
+include(htmleditor_dependencies.pri)
+
+HEADERS += \
+    htmleditor_global.h \
+    htmleditorplugin.h \
+    htmleditorfactory.h \
+    htmleditorwidget.h \
+    htmleditor.h \
+    constants.h
+
+SOURCES += \
+    htmleditorplugin.cpp \
+    htmleditorfactory.cpp \
+    htmleditorwidget.cpp \
+    htmleditor.cpp

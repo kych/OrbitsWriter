@@ -2,7 +2,7 @@
  *
  * OrbitsWriter - an Offline Blog Writer
  *
- * Copyright (C) 2014 devbean@galaxyworld.org
+ * Copyright (C) 2013 devbean@galaxyworld.org
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,30 +19,34 @@
  *
  *-------------------------------------------------*/
 
-#ifndef EDITORFACTORY_H
-#define EDITORFACTORY_H
+#ifndef HTMLEDITORPLUGIN_H
+#define HTMLEDITORPLUGIN_H
 
-#include <QObject>
+#include <pluginsystem/plugin.h>
 
-#include "core/editorsystem/editor.h"
-#include "core/core_global.h"
+namespace HtmlEditor {
 
-namespace Core {
+namespace Internal
+{
+class HtmlEditorPluginPrivate;
+} // end of namespace HtmlEditor::Internal
 
-class Id;
-
-class CORE_EXPORT EditorFactory : public QObject
+class HtmlEditorPlugin : public PluginSystem::Plugin
 {
     Q_OBJECT
+    Q_PLUGIN_METADATA(IID "org.galaxyworld.orbitswriter.plugin" FILE "HtmlEditor.json")
 public:
-    explicit EditorFactory(QObject *parent = 0);
-    virtual ~EditorFactory() {}
+    HtmlEditorPlugin();
+    ~HtmlEditorPlugin();
 
-    virtual Editor * createEditor(QWidget *parent) = 0;
-    virtual Id id() const = 0;
+    bool initialize(const QStringList &arguments, QString *errorString);
+    void dependenciesInitialized();
 
-}; // end of class Core::EditorFactory
+private:
+    Internal::HtmlEditorPluginPrivate *d;
+    friend class Internal::HtmlEditorPluginPrivate;
+}; // end of class HtmlEditor::HtmlEditorPlugin
 
-} // end of namespace Core
+} // end of namesapce HtmlEditor
 
-#endif // EDITORFACTORY_H
+#endif // HTMLEDITORPLUGIN_H

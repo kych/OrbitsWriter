@@ -38,3 +38,10 @@
   \fn Id EditorFactory::id() const
   Gets ID of this factory.
  */
+
+using namespace Core;
+
+EditorFactory::EditorFactory(QObject *parent) :
+    QObject(parent)
+{
+}
