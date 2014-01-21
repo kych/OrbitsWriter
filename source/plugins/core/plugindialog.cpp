@@ -2,7 +2,7 @@
  *
  * OrbitsWriter - an Offline Blog Writer
  *
- * Copyright (C) 2013 devbean@galaxyworld.org
+ * Copyright (C) 2014 devbean@galaxyworld.org
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,31 +19,17 @@
  *
  *-------------------------------------------------*/
 
-#include "htmleditor.h"
+#include <QVBoxLayout>
 
-namespace HtmlEditor
+#include <pluginsystem/pluginview.h>
+
+#include "plugindialog.h"
+
+using namespace Core;
+
+PluginDialog::PluginDialog(QWidget *parent) :
+    QDialog(parent)
 {
-
-namespace Internal
-{
-
-class HTMLEditorPirvate
-{
-public:
-}; // end of class HtmlEditor::Internal::HTMLEditorPirvate
-
-} // end of namespace HtmlEditor::Internal
-
-HTMLEditor::HTMLEditor(QObject *parent) :
-    Core::Editor(parent),
-    d(new Internal::HTMLEditorPirvate)
-{
-
+    QVBoxLayout *mainLayout = new QVBoxLayout(this);
+    mainLayout->addWidget(new PluginSystem::PluginView(this));
 }
-
-HTMLEditor::~HTMLEditor()
-{
-    delete d;
-}
-
-} // end of namespace HtmlEditor

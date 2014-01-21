@@ -19,28 +19,41 @@
  *
  *-------------------------------------------------*/
 
-#include "htmleditorwidget.h"
+#include <core/constants.h>
 
-namespace HtmlEditor
+#include "htmleditconstants.h"
+#include "htmleditor.h"
+#include "htmleditwidget.h"
+
+namespace HtmlEdit
 {
 
 namespace Internal
 {
-class HtmlEditorWidgetPrivate
+
+class HtmlEditorPirvate
 {
 public:
-}; // end of class HtmlEditor::Internal::HtmlEditorWidgetPrivate
-} // end of namespace HtmlEditor::Internal
+    HtmlEditorPirvate() : editWidget(0) {}
 
-HtmlEditorWidget::HtmlEditorWidget(QWidget *parent) :
-    QWidget(parent),
-    d(new Internal::HtmlEditorWidgetPrivate)
+    HtmlEditWidget *editWidget;
+}; // end of class HtmlEdit::Internal::HtmlEditorPirvate
+
+} // end of namespace HtmlEdit::Internal
+
+HtmlEditor::HtmlEditor(HtmlEditWidget *editWidget) :
+    Core::Editor(editWidget),
+    d(new Internal::HtmlEditorPirvate)
 {
+    d->editWidget = editWidget;
+
+    m_widget = d->editWidget;
+    m_context = Core::Context(Constants::CONTEXT_HTMLEDIT);
 }
 
-HtmlEditorWidget::~HtmlEditorWidget()
+HtmlEditor::~HtmlEditor()
 {
     delete d;
 }
 
-} // end of namespace HtmlEditor
+} // end of namespace HtmlEdit

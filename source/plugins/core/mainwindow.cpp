@@ -31,11 +31,14 @@
 
 #include "actionsystem/actionmanager.h"
 #include "actionsystem/actionmanager_p.h"
-#include "corelistener.h"
 #include "appcore.h"
 #include "appcore_p.h"
 #include "constants.h"
+#include "corelistener.h"
+#include "editorsystem/editor.h"
+#include "editorsystem/editormanager.h"
 #include "mainwindow.h"
+#include "plugindialog.h"
 
 // Icons
 static const char ICON_NEWDOC[]       = ":/img/doc_new";      //! Path for new document icon.
@@ -82,7 +85,23 @@ bool MainWindow::init(QString *errorMessage)
 
 void MainWindow::prepareToShow()
 {
-    showMaximized();
+    gActionManager->d->initialize();
+
+    readSettings();
+    gCore->d->updateContext();
+
+//    appDocumentManager->createDocument();
+
+    gEditorManager->initialize();
+    Editor *mainEditor = gEditorManager->currentEditor();
+    setCentralWidget(mainEditor->widget());
+    //TODO: move these code to editor manager?
+    gCore->addWidgetContext(mainEditor);
+    gCore->updateAdditionalContexts(Context(), mainEditor->context());
+
+    emit gCore->coreAboutToOpen();
+    show();
+    emit gCore->coreOpened();
 }
 
 void MainWindow::closeEvent(QCloseEvent *event)
@@ -117,8 +136,8 @@ void MainWindow::showAboutDialog()
 
 void MainWindow::showAboutPluginDialog()
 {
-//    PluginDialog dialog(this);
-//    dialog.exec();
+    PluginDialog dialog(this);
+    dialog.exec();
 }
 
 void MainWindow::registerDefaultContainers()

@@ -19,15 +19,30 @@
  *
  *-------------------------------------------------*/
 
-#ifndef CONSTANTS_H
-#define CONSTANTS_H
+#ifndef HTMLEDITOR_H
+#define HTMLEDITOR_H
 
-namespace HtmlEditor {
-namespace Constants {
+#include <core/editorsystem/editor.h>
 
-const char ID_HTMLEDITORFACTORY[]    = "HtmlEditorFactory ID";
+namespace HtmlEdit {
 
-} // end of namespace HtmlEditor::Constants
-} // end of namespace HtmlEditor
+namespace Internal {
+class HtmlEditorPirvate;
+}
 
-#endif // CONSTANTS_H
+class HtmlEditWidget;
+
+class HtmlEditor : public Core::Editor
+{
+    Q_OBJECT
+public:
+    explicit HtmlEditor(HtmlEditWidget *editWidget = 0);
+    ~HtmlEditor();
+private:
+    Internal::HtmlEditorPirvate *d;
+    friend class Internal::HtmlEditorPirvate;
+}; // end of class HtmlEdit::HtmlEditor
+
+} // end of namespace HtmlEdit
+
+#endif // HTMLEDITOR_H

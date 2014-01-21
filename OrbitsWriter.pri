@@ -146,8 +146,6 @@ win32-msvc* {
     QMAKE_CXXFLAGS += -std=c++0x
 }
 
-CONFIG(debug, debug|release):DEFINES += _DEBUG_
-
 greaterThan(QT_MAJOR_VERSION, 4) {
     QT += widgets
 }

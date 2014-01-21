@@ -19,29 +19,33 @@
  *
  *-------------------------------------------------*/
 
-#ifndef HTMLEDITORWIDGET_H
-#define HTMLEDITORWIDGET_H
+#ifndef HTMLEDITORFACTORY_H
+#define HTMLEDITORFACTORY_H
 
-#include <QWidget>
+#include <core/editorsystem/editorfactory.h>
 
-namespace HtmlEditor {
+namespace HtmlEdit {
 
-namespace Internal {
-class HtmlEditorWidgetPrivate;
-} // end of namespace HtmlEditor::Internal
+namespace Internal
+{
+class HtmlEditorFactoryPrivate;
+}
 
-class HtmlEditorWidget : public QWidget
+class HtmlEditorFactory : public Core::EditorFactory
 {
     Q_OBJECT
 public:
-    explicit HtmlEditorWidget(QWidget *parent = 0);
-    ~HtmlEditorWidget();
+    explicit HtmlEditorFactory(QObject *parent = 0);
+    ~HtmlEditorFactory();
+
+    Core::Editor *createEditor(QWidget *parent);
+    Core::Id id() const;
 
 private:
-    Internal::HtmlEditorWidgetPrivate *d;
-    friend class Internal::HtmlEditorWidgetPrivate;
-};
+    Internal::HtmlEditorFactoryPrivate *d;
+    friend class Internal::HtmlEditorFactoryPrivate;
+}; // end of class HtmlEdit::HtmlEditorFactory
 
-} // end of namespace HtmlEditor
+} // end of namespace HtmlEdit
 
-#endif // HTMLEDITORWIDGET_H
+#endif // HTMLEDITORFACTORY_H

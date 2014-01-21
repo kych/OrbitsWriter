@@ -19,34 +19,34 @@
  *
  *-------------------------------------------------*/
 
-#ifndef HTMLEDITORPLUGIN_H
-#define HTMLEDITORPLUGIN_H
+#ifndef HTMLEDITPLUGIN_H
+#define HTMLEDITPLUGIN_H
 
 #include <pluginsystem/plugin.h>
 
-namespace HtmlEditor {
+namespace HtmlEdit {
 
 namespace Internal
 {
-class HtmlEditorPluginPrivate;
-} // end of namespace HtmlEditor::Internal
+class HtmlEditPluginPrivate;
+} // end of namespace HtmlEdit::Internal
 
-class HtmlEditorPlugin : public PluginSystem::Plugin
+class HtmlEditPlugin : public PluginSystem::Plugin
 {
     Q_OBJECT
-    Q_PLUGIN_METADATA(IID "org.galaxyworld.orbitswriter.plugin" FILE "HtmlEditor.json")
+    Q_PLUGIN_METADATA(IID "org.galaxyworld.orbitswriter.plugin" FILE "HtmlEdit.json")
 public:
-    HtmlEditorPlugin();
-    ~HtmlEditorPlugin();
+    HtmlEditPlugin();
+    ~HtmlEditPlugin();
 
     bool initialize(const QStringList &arguments, QString *errorString);
     void dependenciesInitialized();
 
 private:
-    Internal::HtmlEditorPluginPrivate *d;
-    friend class Internal::HtmlEditorPluginPrivate;
-}; // end of class HtmlEditor::HtmlEditorPlugin
+    Internal::HtmlEditPluginPrivate *d;
+    friend class Internal::HtmlEditPluginPrivate;
+}; // end of class HtmlEdit::HtmlEditorPlugin
 
-} // end of namesapce HtmlEditor
+} // end of namesapce HtmlEdit
 
-#endif // HTMLEDITORPLUGIN_H
+#endif // HTMLEDITPLUGIN_H

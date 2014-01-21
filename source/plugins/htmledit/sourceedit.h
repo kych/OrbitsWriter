@@ -19,45 +19,25 @@
  *
  *-------------------------------------------------*/
 
-#include <core/id.h>
+#ifndef SOURCEEDIT_H
+#define SOURCEEDIT_H
 
-#include "constants.h"
-#include "htmleditor.h"
-#include "htmleditorfactory.h"
-#include "htmleditorwidget.h"
+#include <QTextEdit>
 
-namespace HtmlEditor
-{
+namespace HtmlEdit {
 
-namespace Internal
+class SourceEdit : public QTextEdit
 {
-class HtmlEditorFactoryPrivate
-{
+    Q_OBJECT
 public:
+    explicit SourceEdit(QWidget *parent = 0);
 
-}; // end of class HtmlEditor::Internal::HtmlEditorFactoryPrivate
-} // end of namespace HtmlEditor::Internal
+signals:
 
-HtmlEditorFactory::HtmlEditorFactory(QObject *parent) :
-    Core::EditorFactory(parent),
-    d(new Internal::HtmlEditorFactoryPrivate)
-{
-}
+public slots:
 
-HtmlEditorFactory::~HtmlEditorFactory()
-{
-    delete d;
-}
+}; // end of class HtmlEdit::SourceEdit
 
-Core::Editor *HtmlEditorFactory::createEditor(QWidget *parent)
-{
-    HtmlEditorWidget *editorWidget = new HtmlEditorWidget(parent);
-    return new HTMLEditor(editorWidget);
-}
+} // end of namespace HtmlEdit
 
-Core::Id HtmlEditorFactory::id() const
-{
-    return Core::Id(Constants::ID_HTMLEDITORFACTORY);
-}
-
-} // end of namespace HtmlEditor
+#endif // SOURCEEDIT_H

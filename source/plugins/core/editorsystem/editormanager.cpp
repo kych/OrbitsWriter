@@ -95,7 +95,7 @@ void EditorManagerPrivate::contextAboutToChange(WidgetContext *context)
   \class Core::EditorManager
   The EditorManager class is the manager for editors.
 
-  The main editor is HTML editor provided by HtmlEditor plugin. New editors
+  The main editor is HTML editor provided by HtmlEdit plugin. New editors
   should add itself to object pool in order to create the instance.
  */
 
@@ -116,10 +116,9 @@ EditorManager::~EditorManager()
 void EditorManager::initialize()
 {
 //    d->init();
-//    d->setEditorActions(Editor::NoAction);
 
-//    connect(gCore, SIGNAL(contextAboutToChange(WidgetContext*)),
-//            d, SLOT(contextAboutToChange(WidgetContext*)));
+    connect(gCore, SIGNAL(contextAboutToChange(WidgetContext*)),
+            d, SLOT(contextAboutToChange(WidgetContext*)));
 }
 
 Editor *EditorManager::currentEditor()

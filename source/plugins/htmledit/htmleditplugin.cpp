@@ -19,28 +19,40 @@
  *
  *-------------------------------------------------*/
 
-#ifndef HTMLEDITOR_H
-#define HTMLEDITOR_H
+#include <QtPlugin>
 
-#include <core/editorsystem/editor.h>
+#include "htmleditorfactory.h"
+#include "htmleditplugin.h"
 
-namespace HtmlEditor {
+namespace HtmlEdit
+{
+namespace Internal
+{
+class HtmlEditPluginPrivate
+{
+}; // end of class HtmlEdit::Internal::HtmlEditPluginPrivate
+} // end of namespace HtmlEdit::Internal
 
-namespace Internal {
-class HTMLEditorPirvate;
+HtmlEditPlugin::HtmlEditPlugin() :
+    d(new Internal::HtmlEditPluginPrivate)
+{
 }
 
-class HTMLEditor : public Core::Editor
+HtmlEditPlugin::~HtmlEditPlugin()
 {
-    Q_OBJECT
-public:
-    explicit HTMLEditor(QObject *parent = 0);
-    ~HTMLEditor();
-private:
-    Internal::HTMLEditorPirvate *d;
-    friend class Internal::HTMLEditorPirvate;
-}; // end of class HtmlEditor::HTMLEditor
+    delete d;
+}
 
-} // end of namespace HtmlEditor
+bool HtmlEditPlugin::initialize(const QStringList &arguments, QString *errorString)
+{
+    addAutoReleasedObject(new HtmlEditorFactory(this));
+    return true;
+}
 
-#endif // HTMLEDITOR_H
+void HtmlEditPlugin::dependenciesInitialized()
+{
+}
+
+} // end of namespace HtmlEdit
+
+Q_EXPORT_PLUGIN2(HtmlEditPlugin, HtmlEdit::HtmlEditPlugin)

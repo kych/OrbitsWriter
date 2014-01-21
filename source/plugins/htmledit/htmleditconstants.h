@@ -19,40 +19,19 @@
  *
  *-------------------------------------------------*/
 
-#include <QtPlugin>
+#ifndef HTMLEDITCONSTANTS_H
+#define HTMLEDITCONSTANTS_H
 
-#include "htmleditorfactory.h"
-#include "htmleditorplugin.h"
+namespace HtmlEdit {
+namespace Constants {
 
-namespace HtmlEditor
-{
-namespace Internal
-{
-class HtmlEditorPluginPrivate
-{
-}; // end of class HtmlEditor::Internal::HtmlEditorPluginPrivate
-} // end of namespace HtmlEditor::Internal
+// Context
+//! Global context.
+const char CONTEXT_HTMLEDIT[]      = "HtmlEdit Context";
 
-HtmlEditorPlugin::HtmlEditorPlugin() :
-    d(new Internal::HtmlEditorPluginPrivate)
-{
-}
+const char ID_HTMLEDITORFACTORY[]    = "HtmlEditorFactory ID";
 
-HtmlEditorPlugin::~HtmlEditorPlugin()
-{
-    delete d;
-}
+} // end of namespace HtmlEdit::Constants
+} // end of namespace HtmlEdit
 
-bool HtmlEditorPlugin::initialize(const QStringList &arguments, QString *errorString)
-{
-    addAutoReleasedObject(new HtmlEditorFactory(this));
-    return true;
-}
-
-void HtmlEditorPlugin::dependenciesInitialized()
-{
-}
-
-} // end of namespace HtmlEditor
-
-Q_EXPORT_PLUGIN2(HtmlEditorPlugin, HtmlEditor::HtmlEditorPlugin)
+#endif // HTMLEDITCONSTANTS_H

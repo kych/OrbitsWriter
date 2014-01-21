@@ -155,7 +155,7 @@ PluginManagerPrivate::PluginManagerPrivate(PluginManager *pluginManager) :
     shutdownEventLoop(0),
     q(pluginManager)
 {
-#ifdef DEBUG
+#ifdef QT_DEBUG
     initProfiling();
 #endif
 }

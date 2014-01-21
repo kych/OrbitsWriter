@@ -51,7 +51,8 @@ HEADERS += \
     editorsystem/editor.h \
     editorsystem/editormanager.h \
     editorsystem/editorfactory.h \
-    editorsystem/editormanager_p.h
+    editorsystem/editormanager_p.h \
+    plugindialog.h
 
 SOURCES += \
     mainwindow.cpp \
@@ -66,8 +67,12 @@ SOURCES += \
     corelistener.cpp \
     editorsystem/editor.cpp \
     editorsystem/editormanager.cpp \
-    editorsystem/editorfactory.cpp
+    editorsystem/editorfactory.cpp \
+    plugindialog.cpp
 
 RESOURCES += \
     resources/resources.qrc
+
+OTHER_FILES += \
+    Core.spec.in
 

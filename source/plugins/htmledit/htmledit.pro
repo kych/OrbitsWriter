@@ -20,25 +20,30 @@
 #-------------------------------------------------
 
 TEMPLATE = lib
-TARGET   = HtmlEditor
-DEFINES += HTMLEDITOR_LIBRARY
+TARGET   = HtmlEdit
+DEFINES += HTMLEDIT_LIBRARY
 
 QT      += core gui webkit
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets webkitwidgets
 
 include(../../plugin.pri)
-include(htmleditor_dependencies.pri)
+include(htmledit_dependencies.pri)
 
 HEADERS += \
-    htmleditor_global.h \
-    htmleditorplugin.h \
-    htmleditorfactory.h \
-    htmleditorwidget.h \
+    htmledit_global.h \
+    htmleditplugin.h \
+    htmleditwidget.h \
+    htmleditconstants.h \
+    sourceedit.h \
     htmleditor.h \
-    constants.h
+    htmleditorfactory.h
 
 SOURCES += \
-    htmleditorplugin.cpp \
-    htmleditorfactory.cpp \
-    htmleditorwidget.cpp \
-    htmleditor.cpp
+    htmleditplugin.cpp \
+    htmleditwidget.cpp \
+    sourceedit.cpp \
+    htmleditor.cpp \
+    htmleditorfactory.cpp
+
+OTHER_FILES += \
+    HtmlEdit.spec.in

@@ -19,15 +19,28 @@
  *
  *-------------------------------------------------*/
 
-#ifndef HTMLEDITOR_GLOBAL_H
-#define HTMLEDITOR_GLOBAL_H
+#include "htmleditwidget.h"
 
-#include <QtCore/QtGlobal>
+namespace HtmlEdit
+{
 
-#if defined(HTMLEDITOR_LIBRARY)
-#  define HTMLEDITOR_EXPORT Q_DECL_EXPORT
-#else
-#  define HTMLEDITOR_EXPORT Q_DECL_IMPORT
-#endif
+namespace Internal
+{
+class HtmlEditWidgetPrivate
+{
+public:
+}; // end of class HtmlEdit::Internal::HtmlEditWidgetPrivate
+} // end of namespace HtmlEdit::Internal
 
-#endif // HTMLEDITOR_GLOBAL_H
+HtmlEditWidget::HtmlEditWidget(QWidget *parent) :
+    QWidget(parent),
+    d(new Internal::HtmlEditWidgetPrivate)
+{
+}
+
+HtmlEditWidget::~HtmlEditWidget()
+{
+    delete d;
+}
+
+} // end of namespace HtmlEdit

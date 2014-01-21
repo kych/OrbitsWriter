@@ -1,4 +1,4 @@
-<plugin name=\"HtmlEditor\" version=\"$$ORBITSWRITER_VERSION\" compatVersion=\"$$ORBITSWRITER_VERSION\">
+<plugin name=\"HtmlEdit\" version=\"0.0.1\" compatVersion=\"$$APPLICATION_VERSION\">
     <vendor>GalaxyWorld</vendor>
     <copyright>(C) 2012 GalaxyWorld</copyright>
     <license>
@@ -23,7 +23,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <description>The main HTML editor plugin for the application.</description>
     <url>http://orbitswriter.galaxyworld.org</url>
     <dependencyList>
-        <dependency name=\"Core\" version=\"0.0.1\"/>
-        <dependency name=\"ListStyle\" version=\"0.0.1\"/>
+        <dependency name=\"Core\" version=\"$$APPLICATION_VERSION\"/>
     </dependencyList>
 </plugin>

@@ -89,9 +89,11 @@ void logMessageOutput(QtMsgType type, const QMessageLogContext &context, const Q
     QTextStream out(&logFile);
     out << QDateTime::currentDateTime().toString(QLatin1String("yyyy-MM-dd hh:mm:ss.zzz")) << " [";
     switch (type) {
+#ifdef QT_DEBUG
     case QtDebugMsg:
         out << "Debug] [" << context.file << ":" << context.line << ", " << context.function << "]: ";
         break;
+#endif
     case QtWarningMsg:
         out << "Warning] ";
         break;
@@ -110,7 +112,9 @@ int main(int argc, char** argv)
     using namespace Commons;
     using namespace PluginSystem;
 
+#ifdef QT_NO_DEBUG
     qInstallMessageHandler(logMessageOutput);
+#endif
     Application app(QLatin1String(OrbitsWriter::APPLICATION_NAME), argc, argv);
 
     // <<<<<<<<<< settings
