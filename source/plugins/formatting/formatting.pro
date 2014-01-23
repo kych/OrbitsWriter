@@ -2,7 +2,7 @@
 #
 # OrbitsWriter - an Offline Blog Writer
 #
-# Copyright (C) 2013 devbean@galaxyworld.org
+# Copyright (C) 2014 devbean@galaxyworld.org
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -19,9 +19,21 @@
 #
 #-------------------------------------------------
 
-TEMPLATE = subdirs
-CONFIG  += ordered
-SUBDIRS  = \
-    core \
-    htmledit \
-    formatting
+TEMPLATE = lib
+TARGET   = Formatting
+DEFINES += FORMATTING_LIBRARY
+
+QT      += core gui
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+
+include(../../plugin.pri)
+include(formatting_dependencies.pri)
+
+HEADERS += \
+    formattingplugin.h
+
+SOURCES += \
+    formattingplugin.cpp
+
+OTHER_FILES += \
+    Formatting.spec.in

@@ -19,41 +19,35 @@
  *
  *-------------------------------------------------*/
 
-#include <core/context.h>
+#include "formattingplugin.h"
 
-#include "htmleditconstants.h"
-#include "htmleditor.h"
-#include "htmleditwidget.h"
-
-namespace HtmlEdit
+namespace Formatting
 {
-
 namespace Internal
 {
-
-class HtmlEditorPrivate
+class FormattingPluginPrivate
 {
-public:
-    HtmlEditorPrivate() : editWidget(0) {}
+}; // end of class Formatting::Internal::FormattingPluginPrivate
+} // end of namespace Formatting::Internal
 
-    HtmlEditWidget *editWidget;
-}; // end of class HtmlEdit::Internal::HtmlSourceEditorPrivate
-} // end of namespace HtmlEdit::Internal
-
-HtmlEditor::HtmlEditor(HtmlEditWidget *editWidget) :
-    Editor(editWidget),
-    d(new Internal::HtmlEditorPrivate)
+FormattingPlugin::FormattingPlugin() :
+    d(new Internal::FormattingPluginPrivate)
 {
-    d->editWidget = editWidget;
-
-    m_widget = d->editWidget;
-    m_context = Core::Context(Constants::CONTEXT_HTMLSOURCEEDITOR);
-    m_context.add(Constants::CONTEXT_HTMLVISUALEDITOR);
 }
 
-HtmlEditor::~HtmlEditor()
+FormattingPlugin::~FormattingPlugin()
 {
     delete d;
 }
 
-} // end of namespace HtmlEdit
+bool FormattingPlugin::initialize(const QStringList &arguments, QString *errorString)
+{
+    return true;
+}
+
+void FormattingPlugin::dependenciesInitialized()
+{
+
+}
+
+} // end of namespace Formatting

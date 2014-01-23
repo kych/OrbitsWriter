@@ -19,41 +19,34 @@
  *
  *-------------------------------------------------*/
 
-#include <core/context.h>
+#ifndef FORMATTINGPLUGIN_H
+#define FORMATTINGPLUGIN_H
 
-#include "htmleditconstants.h"
-#include "htmleditor.h"
-#include "htmleditwidget.h"
+#include <pluginsystem/plugin.h>
 
-namespace HtmlEdit
-{
+namespace Formatting {
 
 namespace Internal
 {
+class FormattingPluginPrivate;
+} // end of namespace Formatting::Internal
 
-class HtmlEditorPrivate
+class FormattingPlugin : public PluginSystem::Plugin
 {
+    Q_OBJECT
+    Q_PLUGIN_METADATA(IID "org.galaxyworld.orbitswriter.plugin" FILE "Formatting.json")
 public:
-    HtmlEditorPrivate() : editWidget(0) {}
+    explicit FormattingPlugin();
+    ~FormattingPlugin();
 
-    HtmlEditWidget *editWidget;
-}; // end of class HtmlEdit::Internal::HtmlSourceEditorPrivate
-} // end of namespace HtmlEdit::Internal
+    bool initialize(const QStringList &arguments, QString *errorString);
+    void dependenciesInitialized();
 
-HtmlEditor::HtmlEditor(HtmlEditWidget *editWidget) :
-    Editor(editWidget),
-    d(new Internal::HtmlEditorPrivate)
-{
-    d->editWidget = editWidget;
+private:
+    Internal::FormattingPluginPrivate *d;
+    friend class Internal::FormattingPluginPrivate;
+}; // end of class Formatting::FormattingPlugin
 
-    m_widget = d->editWidget;
-    m_context = Core::Context(Constants::CONTEXT_HTMLSOURCEEDITOR);
-    m_context.add(Constants::CONTEXT_HTMLVISUALEDITOR);
-}
+} // end of namespace Formatting
 
-HtmlEditor::~HtmlEditor()
-{
-    delete d;
-}
-
-} // end of namespace HtmlEdit
+#endif // FORMATTINGPLUGIN_H

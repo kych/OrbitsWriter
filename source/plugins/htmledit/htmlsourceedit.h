@@ -2,7 +2,7 @@
  *
  * OrbitsWriter - an Offline Blog Writer
  *
- * Copyright (C) 2013 devbean@galaxyworld.org
+ * Copyright (C) 2014 devbean@galaxyworld.org
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,14 +19,20 @@
  *
  *-------------------------------------------------*/
 
-#include "sourceedit.h"
+#ifndef HTMLSOURCEEDIT_H
+#define HTMLSOURCEEDIT_H
 
-namespace HtmlEdit
-{
+#include <QPlainTextEdit>
 
-SourceEdit::SourceEdit(QWidget *parent) :
-    QTextEdit(parent)
+namespace HtmlEdit {
+
+class HtmlSourceEdit : public QPlainTextEdit
 {
-}
+    Q_OBJECT
+public:
+    explicit HtmlSourceEdit(QWidget *parent = 0);
+}; // end of class HtmlEdit::HtmlSourceEdit
 
 } // end of namespace HtmlEdit
+
+#endif // HTMLSOURCEEDIT_H

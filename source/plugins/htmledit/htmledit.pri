@@ -19,5 +19,5 @@
 #
 #-------------------------------------------------
 
-include(htmleditor_dependencies.pri)
-LIBS *= -l$$libraryName(HtmlEditor)
+include(htmledit_dependencies.pri)
+LIBS *= -l$$libraryName(HtmlEdit)

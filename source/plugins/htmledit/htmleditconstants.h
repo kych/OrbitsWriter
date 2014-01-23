@@ -27,7 +27,8 @@ namespace Constants {
 
 // Context
 //! Global context.
-const char CONTEXT_HTMLEDIT[]      = "HtmlEdit Context";
+const char CONTEXT_HTMLSOURCEEDITOR[] = "HtmlSourceEditor Context";
+const char CONTEXT_HTMLVISUALEDITOR[] = "HtmlVisualEditor Context";
 
 const char ID_HTMLEDITORFACTORY[]    = "HtmlEditorFactory ID";
 

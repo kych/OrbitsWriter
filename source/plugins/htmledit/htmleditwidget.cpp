@@ -19,23 +19,83 @@
  *
  *-------------------------------------------------*/
 
+#include <QDebug>
+#include <QLineEdit>
+#include <QTabWidget>
+#include <QVBoxLayout>
+
 #include "htmleditwidget.h"
+#include "htmlsourceedit.h"
+#include "htmlvisualedit.h"
 
 namespace HtmlEdit
 {
 
+static const int IDX_VISUALEDIT = 0;
+static const int IDX_SOURCEEDIT = 1;
+
 namespace Internal
 {
-class HtmlEditWidgetPrivate
+class HtmlEditWidgetPrivate : public QObject
 {
+    Q_OBJECT
 public:
-}; // end of class HtmlEdit::Internal::HtmlEditWidgetPrivate
+    QTabWidget *editorArea;
+
+    HtmlSourceEdit *sourceEdit;
+    HtmlVisualEdit *visualEdit;
+    QLineEdit  *titleEdit;
+
+public slots:
+    void editWidgetChanged(int index);
+};
+
+void HtmlEditWidgetPrivate::editWidgetChanged(int index)
+{
+    switch (index) {
+    case IDX_SOURCEEDIT:
+        break;
+    case IDX_VISUALEDIT:
+        break;
+    }
+}
+
+// end of class HtmlEdit::Internal::HtmlEditWidgetPrivate
 } // end of namespace HtmlEdit::Internal
 
 HtmlEditWidget::HtmlEditWidget(QWidget *parent) :
     QWidget(parent),
     d(new Internal::HtmlEditWidgetPrivate)
 {
+    d->sourceEdit = new HtmlSourceEdit(this);
+    d->sourceEdit->setStyleSheet("border: 0");
+
+    d->visualEdit = new HtmlVisualEdit(this);
+    d->visualEdit->setStyleSheet("border: 0");
+
+    d->editorArea = new QTabWidget(this);
+    d->editorArea->setTabPosition(QTabWidget::South);
+    d->editorArea->insertTab(IDX_VISUALEDIT, d->visualEdit, tr("Visual"));
+    d->editorArea->insertTab(IDX_SOURCEEDIT, d->sourceEdit, tr("Source"));
+    connect(d->editorArea, SIGNAL(currentChanged(int)),
+            d, SLOT(editWidgetChanged(int)));
+
+    d->titleEdit = new QLineEdit(this);
+    d->titleEdit->setFixedHeight(40);
+    QFont defaultFont;
+    defaultFont.setPointSize(24);
+    d->titleEdit->setFont(defaultFont);
+    d->titleEdit->setStyleSheet("border:2px solid gray;"
+                                "border-radius: 10px;"
+                                "padding:0 8px;");
+
+    QVBoxLayout *mainLayout = new QVBoxLayout(this);
+    mainLayout->setContentsMargins(4, 6, 4, 0);
+    mainLayout->setMargin(4);
+    mainLayout->addWidget(d->titleEdit);
+    mainLayout->addWidget(d->editorArea);
+
+    d->visualEdit->setFocus();
 }
 
 HtmlEditWidget::~HtmlEditWidget()
@@ -44,3 +104,5 @@ HtmlEditWidget::~HtmlEditWidget()
 }
 
 } // end of namespace HtmlEdit
+
+#include "htmleditwidget.moc"

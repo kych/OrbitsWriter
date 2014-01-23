@@ -2,7 +2,7 @@
  *
  * OrbitsWriter - an Offline Blog Writer
  *
- * Copyright (C) 2014 devbean@galaxyworld.org
+ * Copyright (C) 2013 devbean@galaxyworld.org
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,41 +19,14 @@
  *
  *-------------------------------------------------*/
 
-#include <core/context.h>
-
-#include "htmleditconstants.h"
-#include "htmleditor.h"
-#include "htmleditwidget.h"
+#include "htmlvisualedit.h"
 
 namespace HtmlEdit
 {
 
-namespace Internal
+HtmlVisualEdit::HtmlVisualEdit(QWidget *parent) :
+    QTextEdit(parent)
 {
-
-class HtmlEditorPrivate
-{
-public:
-    HtmlEditorPrivate() : editWidget(0) {}
-
-    HtmlEditWidget *editWidget;
-}; // end of class HtmlEdit::Internal::HtmlSourceEditorPrivate
-} // end of namespace HtmlEdit::Internal
-
-HtmlEditor::HtmlEditor(HtmlEditWidget *editWidget) :
-    Editor(editWidget),
-    d(new Internal::HtmlEditorPrivate)
-{
-    d->editWidget = editWidget;
-
-    m_widget = d->editWidget;
-    m_context = Core::Context(Constants::CONTEXT_HTMLSOURCEEDITOR);
-    m_context.add(Constants::CONTEXT_HTMLVISUALEDITOR);
-}
-
-HtmlEditor::~HtmlEditor()
-{
-    delete d;
 }
 
 } // end of namespace HtmlEdit

@@ -2,7 +2,7 @@
  *
  * OrbitsWriter - an Offline Blog Writer
  *
- * Copyright (C) 2013 devbean@galaxyworld.org
+ * Copyright (C) 2014 devbean@galaxyworld.org
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,12 +22,12 @@
 #ifndef HTMLEDITOR_H
 #define HTMLEDITOR_H
 
-#include <core/editorsystem/editor.h>
+#include "core/editorsystem/editor.h"
 
 namespace HtmlEdit {
 
 namespace Internal {
-class HtmlEditorPirvate;
+class HtmlEditorPrivate;
 }
 
 class HtmlEditWidget;
@@ -38,9 +38,10 @@ class HtmlEditor : public Core::Editor
 public:
     explicit HtmlEditor(HtmlEditWidget *editWidget = 0);
     ~HtmlEditor();
+
 private:
-    Internal::HtmlEditorPirvate *d;
-    friend class Internal::HtmlEditorPirvate;
+    Internal::HtmlEditorPrivate *d;
+    friend class Internal::HtmlEditorPrivate;
 }; // end of class HtmlEdit::HtmlEditor
 
 } // end of namespace HtmlEdit
