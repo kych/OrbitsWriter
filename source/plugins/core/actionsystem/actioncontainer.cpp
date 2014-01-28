@@ -30,7 +30,7 @@
 #include "actioncontainer_p.h"
 #include "actionmanager.h"
 #include "command.h"
-#include "core/constants.h"
+#include "core/coreconstants.h"
 
 using namespace Core;
 using namespace Core::Internal;

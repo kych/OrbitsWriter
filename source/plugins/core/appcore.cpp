@@ -26,7 +26,7 @@
 
 #include "appcore.h"
 #include "appcore_p.h"
-#include "constants.h"
+#include "coreconstants.h"
 #include "actionsystem/actionmanager.h"
 #include "actionsystem/actionmanager_p.h"
 

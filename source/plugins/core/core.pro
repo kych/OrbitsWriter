@@ -43,7 +43,6 @@ HEADERS += \
     actionsystem/actioncontainer_p.h \
     actionsystem/actionmanager.h \
     actionsystem/actionmanager_p.h \
-    constants.h \
     context.h \
     appcore.h \
     appcore_p.h \
@@ -52,7 +51,8 @@ HEADERS += \
     editorsystem/editormanager.h \
     editorsystem/editorfactory.h \
     editorsystem/editormanager_p.h \
-    plugindialog.h
+    plugindialog.h \
+    coreconstants.h
 
 SOURCES += \
     mainwindow.cpp \

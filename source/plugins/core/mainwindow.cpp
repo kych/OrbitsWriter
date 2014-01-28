@@ -33,7 +33,7 @@
 #include "actionsystem/actionmanager_p.h"
 #include "appcore.h"
 #include "appcore_p.h"
-#include "constants.h"
+#include "coreconstants.h"
 #include "corelistener.h"
 #include "editorsystem/editor.h"
 #include "editorsystem/editormanager.h"
@@ -93,8 +93,10 @@ void MainWindow::prepareToShow()
 //    appDocumentManager->createDocument();
 
     gEditorManager->initialize();
+
     Editor *mainEditor = gEditorManager->currentEditor();
-    setCentralWidget(mainEditor->widget());
+//    setCentralWidget(mainEditor->widget());
+
     //TODO: move these code to editor manager?
     gCore->addWidgetContext(mainEditor);
     gCore->updateAdditionalContexts(Context(), mainEditor->context());
