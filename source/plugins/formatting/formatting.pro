@@ -30,10 +30,14 @@ include(../../plugin.pri)
 include(formatting_dependencies.pri)
 
 HEADERS += \
-    formattingplugin.h
+    formattingplugin.h \
+    formattingconstants.h
 
 SOURCES += \
     formattingplugin.cpp
 
 OTHER_FILES += \
     Formatting.spec.in
+
+RESOURCES += \
+    resources/resources.qrc
