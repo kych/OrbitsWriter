@@ -24,6 +24,10 @@
 #include <QTabWidget>
 #include <QVBoxLayout>
 
+#include <core/appcore.h>
+#include <core/context.h>
+
+#include "htmleditconstants.h"
 #include "htmleditwidget.h"
 #include "htmlsourceedit.h"
 #include "htmlvisualedit.h"
@@ -54,9 +58,19 @@ void HtmlEditWidgetPrivate::editWidgetChanged(int index)
 {
     switch (index) {
     case IDX_SOURCEEDIT:
+    {
+        gCore->updateAdditionalContexts(
+                    Core::Context(Constants::CONTEXT_HTMLVISUALEDITOR),
+                    Core::Context(Constants::CONTEXT_HTMLSOURCEEDITOR));
         break;
+    }
     case IDX_VISUALEDIT:
+    {
+        gCore->updateAdditionalContexts
+                (Core::Context(Constants::CONTEXT_HTMLSOURCEEDITOR),
+                 Core::Context(Constants::CONTEXT_HTMLVISUALEDITOR));
         break;
+    }
     }
 }
 

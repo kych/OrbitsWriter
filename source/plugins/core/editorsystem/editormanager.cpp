@@ -124,8 +124,8 @@ void EditorManager::initialize()
 Editor *EditorManager::currentEditor()
 {
     if (!d->currEditor) {
-        static const char ID_HTMLVISUALEDITORFACTORY[] = "HtmlVisualEditorFactory ID";
-        d->createEditor(Id(ID_HTMLVISUALEDITORFACTORY));
+        static const char ID_HTMLEDITORFACTORY[] = "HtmlEditorFactory ID";
+        d->createEditor(Id(ID_HTMLEDITORFACTORY));
     }
     return d->currEditor;
 }

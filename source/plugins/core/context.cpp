@@ -25,6 +25,11 @@
 namespace Core
 {
 
+Context::Context(const char *id, int offset)
+{
+    d.append(Id(QLatin1String(id) + QString::number(offset)).uniqueIdentifier());
+}
+
 void Context::add(const char *id)
 {
     d.append(Id(id).uniqueIdentifier());

@@ -34,18 +34,18 @@ HEADERS += \
     htmleditplugin.h \
     htmleditwidget.h \
     htmleditconstants.h \
-    htmleditorfactory.h \
     htmlsourceedit.h \
+    htmlvisualedit.h \
     htmleditor.h \
-    htmlvisualedit.h
+    htmleditorfactory.h
 
 SOURCES += \
     htmleditplugin.cpp \
     htmleditwidget.cpp \
-    htmleditorfactory.cpp \
     htmlsourceedit.cpp \
+    htmlvisualedit.cpp \
     htmleditor.cpp \
-    htmlvisualedit.cpp
+    htmleditorfactory.cpp
 
 OTHER_FILES += \
     HtmlEdit.spec.in

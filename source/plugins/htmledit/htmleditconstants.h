@@ -30,7 +30,10 @@ namespace Constants {
 const char CONTEXT_HTMLSOURCEEDITOR[] = "HtmlSourceEditor Context";
 const char CONTEXT_HTMLVISUALEDITOR[] = "HtmlVisualEditor Context";
 
-const char ID_HTMLEDITORFACTORY[]    = "HtmlEditorFactory ID";
+// IDs
+const char ID_HTMLEDITORFACTORY[]          = "HtmlEditorFactory ID";
+const char ID_HTMLSOURCEEDITORFACTORY[]    = "HtmlSourceEditorFactory ID";
+const char ID_HTMLVISUALEDITORFACTORY[]    = "HtmlVisualEditorFactory ID";
 
 } // end of namespace HtmlEdit::Constants
 } // end of namespace HtmlEdit

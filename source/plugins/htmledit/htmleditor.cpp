@@ -48,7 +48,6 @@ HtmlEditor::HtmlEditor(HtmlEditWidget *editWidget) :
 
     m_widget = d->editWidget;
     m_context = Core::Context(Constants::CONTEXT_HTMLSOURCEEDITOR);
-    m_context.add(Constants::CONTEXT_HTMLVISUALEDITOR);
 }
 
 HtmlEditor::~HtmlEditor()

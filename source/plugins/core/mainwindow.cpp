@@ -95,7 +95,7 @@ void MainWindow::prepareToShow()
     gEditorManager->initialize();
 
     Editor *mainEditor = gEditorManager->currentEditor();
-//    setCentralWidget(mainEditor->widget());
+    setCentralWidget(mainEditor->widget());
 
     //TODO: move these code to editor manager?
     gCore->addWidgetContext(mainEditor);
