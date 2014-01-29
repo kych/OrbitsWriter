@@ -19,9 +19,21 @@
 #
 #-------------------------------------------------
 
+# USE .subdir AND .depends !
+# OTHERWISE PLUGINS WILL BUILD IN WRONG ORDER (DIRECTORIES ARE COMPILED IN PARALLEL)
+
 TEMPLATE = subdirs
 CONFIG  += ordered
 SUBDIRS  = \
-    core \
-    htmledit \
-    formatting
+    plugin_core \
+    plugin_htmledit \
+    plugin_formatting
+
+plugin_core.subdir = core
+
+plugin_htmledit.subdir = htmledit
+plugin_htmledit.depends = plugin_core
+
+plugin_formatting.subdir = formatting
+plugin_formatting.depends = plugin_core
+plugin_formatting.depends += plugin_htmledit
