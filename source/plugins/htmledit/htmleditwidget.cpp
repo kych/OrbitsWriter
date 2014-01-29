@@ -44,11 +44,11 @@ class HtmlEditWidgetPrivate : public QObject
 {
     Q_OBJECT
 public:
-    QTabWidget *editorArea;
+    QTabWidget     *m_editorArea;
 
-    HtmlSourceEdit *sourceEdit;
-    HtmlVisualEdit *visualEdit;
-    QLineEdit  *titleEdit;
+    HtmlSourceEdit *m_sourceEdit;
+    HtmlVisualEdit *m_visualEdit;
+    QLineEdit      *m_titleEdit;
 
 public slots:
     void editWidgetChanged(int index);
@@ -81,35 +81,35 @@ HtmlEditWidget::HtmlEditWidget(QWidget *parent) :
     QWidget(parent),
     d(new Internal::HtmlEditWidgetPrivate)
 {
-    d->sourceEdit = new HtmlSourceEdit(this);
-    d->sourceEdit->setStyleSheet("border: 0");
+    d->m_sourceEdit = new HtmlSourceEdit(this);
+    d->m_sourceEdit->setStyleSheet("border: 0");
 
-    d->visualEdit = new HtmlVisualEdit(this);
-    d->visualEdit->setStyleSheet("border: 0");
+    d->m_visualEdit = new HtmlVisualEdit(this);
+    d->m_visualEdit->setStyleSheet("border: 0");
 
-    d->editorArea = new QTabWidget(this);
-    d->editorArea->setTabPosition(QTabWidget::South);
-    d->editorArea->insertTab(IDX_VISUALEDIT, d->visualEdit, tr("Visual"));
-    d->editorArea->insertTab(IDX_SOURCEEDIT, d->sourceEdit, tr("Source"));
-    connect(d->editorArea, SIGNAL(currentChanged(int)),
+    d->m_editorArea = new QTabWidget(this);
+    d->m_editorArea->setTabPosition(QTabWidget::South);
+    d->m_editorArea->insertTab(IDX_VISUALEDIT, d->m_visualEdit, tr("Visual"));
+    d->m_editorArea->insertTab(IDX_SOURCEEDIT, d->m_sourceEdit, tr("Source"));
+    connect(d->m_editorArea, SIGNAL(currentChanged(int)),
             d, SLOT(editWidgetChanged(int)));
 
-    d->titleEdit = new QLineEdit(this);
-    d->titleEdit->setFixedHeight(40);
+    d->m_titleEdit = new QLineEdit(this);
+    d->m_titleEdit->setFixedHeight(40);
     QFont defaultFont;
     defaultFont.setPointSize(24);
-    d->titleEdit->setFont(defaultFont);
-    d->titleEdit->setStyleSheet("border:2px solid gray;"
+    d->m_titleEdit->setFont(defaultFont);
+    d->m_titleEdit->setStyleSheet("border:2px solid gray;"
                                 "border-radius: 10px;"
                                 "padding:0 8px;");
 
     QVBoxLayout *mainLayout = new QVBoxLayout(this);
     mainLayout->setContentsMargins(4, 6, 4, 0);
     mainLayout->setMargin(4);
-    mainLayout->addWidget(d->titleEdit);
-    mainLayout->addWidget(d->editorArea);
+    mainLayout->addWidget(d->m_titleEdit);
+    mainLayout->addWidget(d->m_editorArea);
 
-    d->visualEdit->setFocus();
+    d->m_visualEdit->setFocus();
 }
 
 HtmlEditWidget::~HtmlEditWidget()

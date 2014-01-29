@@ -31,11 +31,6 @@ class HtmlVisualEdit : public QTextEdit
     Q_OBJECT
 public:
     explicit HtmlVisualEdit(QWidget *parent = 0);
-
-signals:
-
-public slots:
-
 }; // end of class HtmlEdit::HtmlVisualEdit
 
 } // end of namespace HtmlEdit

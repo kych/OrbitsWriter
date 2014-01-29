@@ -34,9 +34,9 @@ namespace Internal
 class HtmlEditorPrivate
 {
 public:
-    HtmlEditorPrivate() : editWidget(0) {}
+    HtmlEditorPrivate() : m_editWidget(0) {}
 
-    HtmlEditWidget *editWidget;
+    HtmlEditWidget *m_editWidget;
 }; // end of class HtmlEdit::Internal::HtmlSourceEditorPrivate
 } // end of namespace HtmlEdit::Internal
 
@@ -44,10 +44,10 @@ HtmlEditor::HtmlEditor(HtmlEditWidget *editWidget) :
     Editor(editWidget),
     d(new Internal::HtmlEditorPrivate)
 {
-    d->editWidget = editWidget;
+    d->m_editWidget = editWidget;
 
-    m_widget = d->editWidget;
-    m_context = Core::Context(Constants::CONTEXT_HTMLSOURCEEDITOR);
+    m_widget = d->m_editWidget;
+    m_context = Core::Context(Constants::CONTEXT_HTMLVISUALEDITOR);
 }
 
 HtmlEditor::~HtmlEditor()

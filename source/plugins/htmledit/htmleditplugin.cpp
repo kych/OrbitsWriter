@@ -27,8 +27,6 @@
 #include "htmleditplugin.h"
 #include "htmleditwidget.h"
 #include "htmleditorfactory.h"
-#include "htmlsourceeditorfactory.h"
-#include "htmlvisualeditorfactory.h"
 
 namespace HtmlEdit
 {
@@ -54,17 +52,11 @@ bool HtmlEditPlugin::initialize(const QStringList &arguments, QString *errorStri
     Q_UNUSED(arguments);
     Q_UNUSED(errorString);
     addAutoReleasedObject(new HtmlEditorFactory(this));
-//    addAutoReleasedObject(new HtmlSourceEditorFactory(this));
-//    addAutoReleasedObject(new HtmlVisualEditorFactory(this));
     return true;
 }
 
 void HtmlEditPlugin::dependenciesInitialized()
 {
-//    QMainWindow *win = dynamic_cast<QMainWindow *>(gCore->mainWindow());
-//    if (win) {
-//        win->setCentralWidget(new HtmlEditWidget(win));
-//    }
 }
 
 } // end of namespace HtmlEdit
