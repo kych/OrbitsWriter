@@ -22,8 +22,9 @@
 !isEmpty(ORBITSWRITER_PRI_INCLUDED): error("orbitswriter.pri already included")
 ORBITSWRITER_PRI_INCLUDED = 1
 
-APPLICATION_NAME    = OrbitsWriter
-APPLICATION_VERSION = 0.0.1
+APPLICATION_NAME     = OrbitsWriter
+APPLICATION_VERSION  = 0.0.1
+APPLICATION_REVISION = $$system(git log -n 1 --pretty="format:%h")
 
 isEqual(QT_MAJOR_VERSION, 5) {
 

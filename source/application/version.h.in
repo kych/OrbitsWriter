@@ -35,17 +35,12 @@ namespace OrbitsWriter
 #define VERSION_MINOR $$replace(APPLICATION_VERSION, "^\\d+\\.(\\d+)\\.\\d+(-.*)?$", \\1)
 #define VERSION_PATCH $$replace(APPLICATION_VERSION, "^\\d+\\.\\d+\\.(\\d+)(-.*)?$", \\1)
 
-const char * const VERSION_LONG        = VERSION_STR;
-const char * const APPLICATION_NAME    = \"$${APPLICATION_NAME}\";
-const char * const ORGANIZATION        = \"GalaxyWorld\";
-const char * const ORGANIZATION_DOMAIN = \"GalaxyWorld.Org\";
-const char * const YEAR                = \"2013\";
-
-#ifdef REVISION
-const char * const REVISION_STR        = STRINGIFY(REVISION);
-#else
-const char * const REVISION_STR        = \"\";
-#endif
+const char * const VERSION_LONG         = VERSION_STR;
+const char * const APPLICATION_NAME     = \"$${APPLICATION_NAME}\";
+const char * const ORGANIZATION         = \"GalaxyWorld\";
+const char * const ORGANIZATION_DOMAIN  = \"GalaxyWorld.Org\";
+const char * const YEAR                 = \"2013\";
+const char * const APPLICATION_REVISION = \"$${APPLICATION_REVISION}\";
 
 // changes the path where the settings are saved to
 #ifdef SETTINGSVARIANT

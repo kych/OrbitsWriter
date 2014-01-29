@@ -132,7 +132,7 @@ void MainWindow::showAboutDialog()
                      .arg(OrbitsWriter::VERSION_LONG)
                      .arg(QT_VERSION_STR)
                      .arg(QDateTime::currentDateTime().toString(QLatin1String("yyyy-MM-dd hh:mm:ss")))
-                     .arg(OrbitsWriter::REVISION_STR));
+                     .arg(OrbitsWriter::APPLICATION_REVISION));
     aboutBox.exec();
 }
 
