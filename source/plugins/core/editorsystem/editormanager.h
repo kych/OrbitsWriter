@@ -49,7 +49,7 @@ public:
     Editor * currentEditor();
 
 signals:
-    void currentEditorChanged(Editor *editor);
+    void currentEditorChanged(Core::Editor *editor);
 
 private:
     explicit EditorManager(QObject *parent = 0);

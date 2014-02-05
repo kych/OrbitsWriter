@@ -19,35 +19,19 @@
  *
  *-------------------------------------------------*/
 
-#ifndef HTMLEDITWIDGET_H
-#define HTMLEDITWIDGET_H
+#include "editoraction.h"
 
-#include <QWidget>
+/*!
+  \class HtmlEdit::EditorAction
+  Editor actions for plugins based on this editor.
+ */
 
-namespace HtmlEdit {
+/*!
+  \fn bool HtmlEdit::EditorAction::hasVisualEditorAction()
+  Returns true if this action should execute on visual editor.
+ */
 
-namespace Internal {
-class HtmlEditWidgetPrivate;
-} // end of namespace HtmlEdit::Internal
-
-class HtmlSourceEdit;
-class HtmlVisualEdit;
-
-class HtmlEditWidget : public QWidget
-{
-    Q_OBJECT
-public:
-    explicit HtmlEditWidget(QWidget *parent = 0);
-    ~HtmlEditWidget();
-
-    HtmlSourceEdit * sourceEdit() const;
-    HtmlVisualEdit * visualEdit() const;
-
-private:
-    Internal::HtmlEditWidgetPrivate *d;
-    friend class Internal::HtmlEditWidgetPrivate;
-};
-
-} // end of namespace HtmlEdit
-
-#endif // HTMLEDITWIDGET_H
+/*!
+  \fn bool HtmlEdit::EditorAction::hasSourceEditorAction()
+  Returns true if this action should execute on source editor.
+ */

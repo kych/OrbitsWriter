@@ -57,7 +57,7 @@ public:
     Editor * createEditor(const Id &id);
 
 public slots:
-    void contextAboutToChange(WidgetContext *context);
+    void contextAboutToChange(Core::WidgetContext *context);
 }; // end of class Core::Internal::EditorManagerPrivate
 
 } // end of namespace Core::Internal

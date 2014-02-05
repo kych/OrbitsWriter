@@ -79,7 +79,7 @@ Editor *EditorManagerPrivate::createEditor(const Id &id)
     return currEditor;
 }
 
-void EditorManagerPrivate::contextAboutToChange(WidgetContext *context)
+void EditorManagerPrivate::contextAboutToChange(Core::WidgetContext *context)
 {
     Editor *editor = context ? qobject_cast<Editor *>(context) : 0;
     if (editor) {
@@ -117,8 +117,8 @@ void EditorManager::initialize()
 {
 //    d->init();
 
-    connect(gCore, SIGNAL(contextAboutToChange(WidgetContext*)),
-            d, SLOT(contextAboutToChange(WidgetContext*)));
+    connect(gCore, SIGNAL(contextAboutToChange(Core::WidgetContext*)),
+            d, SLOT(contextAboutToChange(Core::WidgetContext*)));
 }
 
 Editor *EditorManager::currentEditor()

@@ -24,13 +24,17 @@
 
 #include <QTextEdit>
 
+#include "htmledit_global.h"
+
 namespace HtmlEdit {
 
-class HtmlVisualEdit : public QTextEdit
+class HTMLEDIT_EXPORT HtmlVisualEdit : public QTextEdit
 {
     Q_OBJECT
 public:
     explicit HtmlVisualEdit(QWidget *parent = 0);
+
+    void mergeFormatOnWordOrSelection(const QTextCharFormat &format);
 }; // end of class HtmlEdit::HtmlVisualEdit
 
 } // end of namespace HtmlEdit

@@ -22,7 +22,9 @@
 #ifndef HTMLEDITOR_H
 #define HTMLEDITOR_H
 
-#include "core/editorsystem/editor.h"
+#include <core/editorsystem/editor.h>
+
+#include "htmledit_global.h"
 
 namespace HtmlEdit {
 
@@ -30,14 +32,24 @@ namespace Internal {
 class HtmlEditorPrivate;
 }
 
+class EditorAction;
 class HtmlEditWidget;
+class HtmlSourceEdit;
+class HtmlVisualEdit;
 
-class HtmlEditor : public Core::Editor
+class HTMLEDIT_EXPORT HtmlEditor : public Core::Editor
 {
     Q_OBJECT
 public:
+    static void mergeFormat(EditorAction *editorAction);
+
     explicit HtmlEditor(HtmlEditWidget *editWidget = 0);
     ~HtmlEditor();
+
+    Core::Id id() const;
+
+    HtmlSourceEdit * sourceEdit() const;
+    HtmlVisualEdit * visualEdit() const;
 
 private:
     Internal::HtmlEditorPrivate *d;

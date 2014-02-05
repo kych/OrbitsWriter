@@ -37,3 +37,8 @@
 
   Editor widget should be returned by widget() function.
  */
+
+/*!
+  \fn Id Editor::id() const
+  ID of this editor.
+ */

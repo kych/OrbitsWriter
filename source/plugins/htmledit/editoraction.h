@@ -19,35 +19,24 @@
  *
  *-------------------------------------------------*/
 
-#ifndef HTMLEDITWIDGET_H
-#define HTMLEDITWIDGET_H
-
-#include <QWidget>
+#ifndef EDITORACTION_H
+#define EDITORACTION_H
 
 namespace HtmlEdit {
 
-namespace Internal {
-class HtmlEditWidgetPrivate;
-} // end of namespace HtmlEdit::Internal
-
-class HtmlSourceEdit;
 class HtmlVisualEdit;
 
-class HtmlEditWidget : public QWidget
+class EditorAction
 {
-    Q_OBJECT
 public:
-    explicit HtmlEditWidget(QWidget *parent = 0);
-    ~HtmlEditWidget();
+    virtual ~EditorAction() {}
 
-    HtmlSourceEdit * sourceEdit() const;
-    HtmlVisualEdit * visualEdit() const;
+    virtual bool hasVisualEditorAction() = 0;
+    virtual void doActionOnVisualEditor(HtmlEdit::HtmlVisualEdit *visualEdit) = 0;
 
-private:
-    Internal::HtmlEditWidgetPrivate *d;
-    friend class Internal::HtmlEditWidgetPrivate;
-};
+    virtual bool hasSourceEditorAction() = 0;
+}; // end of class HtmlEdit::EditorAction
 
 } // end of namespace HtmlEdit
 
-#endif // HTMLEDITWIDGET_H
+#endif // EDITORACTION_H

@@ -19,8 +19,13 @@
  *
  *-------------------------------------------------*/
 
+#include <core/appcore.h>
 #include <core/context.h>
+#include <core/editorsystem/editor.h>
+#include <core/editorsystem/editormanager.h>
+#include <core/id.h>
 
+#include "editoraction.h"
 #include "htmleditconstants.h"
 #include "htmleditor.h"
 #include "htmleditwidget.h"
@@ -40,6 +45,21 @@ public:
 }; // end of class HtmlEdit::Internal::HtmlSourceEditorPrivate
 } // end of namespace HtmlEdit::Internal
 
+void HtmlEditor::mergeFormat(EditorAction *editorAction)
+{
+    Core::Editor *currentEditor = gEditorManager->currentEditor();
+    if (currentEditor->id() == HtmlEdit::Constants::ID_HTMLEDITOR) {
+        HtmlEdit::HtmlEditor *htmlEditor = qobject_cast<HtmlEdit::HtmlEditor *>(currentEditor);
+        if (gCore->hasContext(Core::Id(HtmlEdit::Constants::CONTEXT_HTMLVISUALEDITOR).uniqueIdentifier())) {
+            if (editorAction->hasVisualEditorAction()) {
+                HtmlEdit::HtmlVisualEdit *visualEdit = htmlEditor->visualEdit();
+                editorAction->doActionOnVisualEditor(visualEdit);
+            }
+        } else if (gCore->hasContext(Core::Id(HtmlEdit::Constants::CONTEXT_HTMLSOURCEEDITOR).uniqueIdentifier())) {
+        }
+    }
+}
+
 HtmlEditor::HtmlEditor(HtmlEditWidget *editWidget) :
     Editor(editWidget),
     d(new Internal::HtmlEditorPrivate)
@@ -53,6 +73,21 @@ HtmlEditor::HtmlEditor(HtmlEditWidget *editWidget) :
 HtmlEditor::~HtmlEditor()
 {
     delete d;
+}
+
+Core::Id HtmlEditor::id() const
+{
+    return Core::Id(Constants::ID_HTMLEDITOR);
+}
+
+HtmlSourceEdit *HtmlEditor::sourceEdit() const
+{
+    return d->m_editWidget->sourceEdit();
+}
+
+HtmlVisualEdit *HtmlEditor::visualEdit() const
+{
+    return d->m_editWidget->visualEdit();
 }
 
 } // end of namespace HtmlEdit

@@ -70,8 +70,8 @@ signals:
     void coreAboutToOpen();
     void coreAboutToClose();
     void coreOpened();
-    void contextAboutToChange(WidgetContext *context);
-    void contextChanged(WidgetContext *context, const Context &additionalContexts);
+    void contextAboutToChange(Core::WidgetContext *context);
+    void contextChanged(Core::WidgetContext *context, const Core::Context &additionalContexts);
 
 private:
     explicit AppCore(QObject *parent = 0);

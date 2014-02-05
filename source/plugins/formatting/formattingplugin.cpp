@@ -21,15 +21,21 @@
 
 #include <QAction>
 #include <QApplication>
+#include <QDebug>
 #include <QPainter>
 #include <QStaticText>
+#include <QTextCharFormat>
 
 #include <core/actionsystem/actioncontainer.h>
 #include <core/actionsystem/actionmanager.h>
 #include <core/coreconstants.h>
 #include <core/context.h>
 
+#include <htmledit/editoraction.h>
 #include <htmledit/htmleditconstants.h>
+#include <htmledit/htmleditor.h>
+#include <htmledit/htmlsourceedit.h>
+#include <htmledit/htmlvisualedit.h>
 
 #include "formattingconstants.h"
 #include "formattingplugin.h"
@@ -46,10 +52,96 @@ static const char ICON_TEXTFONT[]      = ":/img/font";
 static const char ICON_ALIGNCENTER[]   = ":/img/align_center";
 static const char ICON_ALIGNLEFT[]     = ":/img/align_left";
 static const char ICON_ALIGNRIGHT[]    = ":/img/align_right";
-static const char ICON_ALIGNFILL[]     = ":/img/align_fill";
+static const char ICON_ALIGNJUSTIFY[]  = ":/img/align_justify";
 
 namespace Internal
 {
+
+class TextFormatAction : public HtmlEdit::EditorAction
+{
+public:
+    enum TextFormatType {
+        Bold,
+        Italic,
+        Underline,
+        Strike
+    };
+
+    TextFormatAction(TextFormatType type, bool enable)
+    {
+        m_type = type;
+        m_enable = enable;
+    }
+
+    bool hasVisualEditorAction()
+    {
+        return true;
+    }
+
+    void doActionOnVisualEditor(HtmlEdit::HtmlVisualEdit *visualEdit)
+    {
+        QTextCharFormat fmt;
+        switch (m_type) {
+        case Bold:
+        {
+            fmt.setFontWeight(m_enable ? QFont::Bold : QFont::Normal);
+            break;
+        }
+        case Italic:
+        {
+            fmt.setFontItalic(m_enable);
+            break;
+        }
+        case Underline:
+        {
+            fmt.setFontUnderline(m_enable);
+            break;
+        }
+        case Strike:
+        {
+            fmt.setFontStrikeOut(m_enable);
+            break;
+        }
+        }
+        visualEdit->mergeFormatOnWordOrSelection(fmt);
+    }
+
+    bool hasSourceEditorAction()
+    {
+        return false;
+    }
+
+private:
+    TextFormatType m_type;
+    bool m_enable;
+}; // end of class Formatting::Internal::TextFormatAction
+
+class TextAlignmentAction : public HtmlEdit::EditorAction
+{
+public:
+    TextAlignmentAction(Qt::Alignment alignment)
+    {
+        m_alignment = alignment;
+    }
+
+    bool hasVisualEditorAction()
+    {
+        return true;
+    }
+
+    void doActionOnVisualEditor(HtmlEdit::HtmlVisualEdit *visualEdit)
+    {
+        visualEdit->setAlignment(m_alignment);
+    }
+
+    bool hasSourceEditorAction()
+    {
+        return false;
+    }
+
+private:
+    Qt::Alignment m_alignment;
+}; // end of class Formatting::Internal::TextAlignmentAction
 
 class IconUtil
 {
@@ -98,7 +190,7 @@ public:
         m_alignLeftAction(0),
         m_alignCenterAction(0),
         m_alignRightAction(0),
-        m_alignFillAction(0),
+        m_alignJustifyAction(0),
         m_alignActionGroup(0)
     {
     }
@@ -115,9 +207,20 @@ public:
     QAction      *m_alignLeftAction;
     QAction      *m_alignCenterAction;
     QAction      *m_alignRightAction;
-    QAction      *m_alignFillAction;
+    QAction      *m_alignJustifyAction;
     QActionGroup *m_alignActionGroup;
-};
+
+public slots:
+    void setTextBold(bool bold);
+    void setTextItalic(bool italic);
+    void setTextStrike(bool strike);
+    void setTextUnderline(bool underline);
+
+    void setAlignLeft();
+    void setAlignCenter();
+    void setAlignRight();
+    void setAlignJustify();
+}; // end of class Formatting::Internal::FormattingPluginPrivate
 
 void FormattingPluginPrivate::init()
 {
@@ -135,6 +238,8 @@ void FormattingPluginPrivate::init()
                                                                 ctx);
     formatMenu->addAction(cmdTextBold, Core::Constants::G_FORMAT_TEXTSTYLE);
     toolBar->addAction(cmdTextBold, Core::Constants::GT_FORMAT);
+    connect(m_textBoldAction, SIGNAL(toggled(bool)),
+            this, SLOT(setTextBold(bool)));
 
     // Text Italic Action
     icon = QIcon(QLatin1String(ICON_TEXTITALIC));
@@ -146,6 +251,8 @@ void FormattingPluginPrivate::init()
                                                                   ctx);
     formatMenu->addAction(cmdTextItalic, Core::Constants::G_FORMAT_TEXTSTYLE);
     toolBar->addAction(cmdTextItalic, Core::Constants::GT_FORMAT);
+    connect(m_textItalicAction, SIGNAL(toggled(bool)),
+            this, SLOT(setTextItalic(bool)));
 
     // Text Strike Action
     icon = QIcon(QLatin1String(ICON_TEXTSTRIKE));
@@ -157,6 +264,8 @@ void FormattingPluginPrivate::init()
                                                                   ctx);
     formatMenu->addAction(cmdTextStrike, Core::Constants::G_FORMAT_TEXTSTYLE);
     toolBar->addAction(cmdTextStrike, Core::Constants::GT_FORMAT);
+    connect(m_textStrikeAction, SIGNAL(toggled(bool)),
+            this, SLOT(setTextStrike(bool)));
 
     // Text Underline Action
     icon = QIcon(QLatin1String(ICON_TEXTUNDERLINE));
@@ -168,6 +277,8 @@ void FormattingPluginPrivate::init()
                                                                      ctx);
     formatMenu->addAction(cmdTextUnderline, Core::Constants::G_FORMAT_TEXTSTYLE);
     toolBar->addAction(cmdTextUnderline, Core::Constants::GT_FORMAT);
+    connect(m_textUnderlineAction, SIGNAL(toggled(bool)),
+            this, SLOT(setTextUnderline(bool)));
 
     // Text Font Action
     icon = QIcon(QLatin1String(ICON_TEXTFONT));
@@ -198,29 +309,32 @@ void FormattingPluginPrivate::init()
     // Alignment Left Action
     icon = QIcon(QLatin1String(ICON_ALIGNLEFT));
     m_alignLeftAction = new QAction(icon, tr("Align Left"), this);
-    m_alignLeftAction->setShortcut(Qt::CTRL + Qt::Key_L);
     m_alignLeftAction->setCheckable(true);
     Core::Command *cmdAlignLeft = gActionManager->registerAction(m_alignLeftAction,
                                                                  Constants::ID_ALIGNLEFT,
                                                                  ctx);
+    connect(m_alignLeftAction, SIGNAL(toggled(bool)),
+            this, SLOT(setAlignLeft()));
 
     // Alignment Center Action
     icon = QIcon(QLatin1String(ICON_ALIGNCENTER));
     m_alignCenterAction = new QAction(icon, tr("Align Center"), this);
-    m_alignCenterAction->setShortcut(Qt::CTRL + Qt::Key_E);
     m_alignCenterAction->setCheckable(true);
     Core::Command *cmdAlignCenter = gActionManager->registerAction(m_alignCenterAction,
                                                                    Constants::ID_ALIGNCENTER,
                                                                    ctx);
+    connect(m_alignCenterAction, SIGNAL(toggled(bool)),
+            this, SLOT(setAlignCenter()));
 
     // Alignment Right Action
     icon = QIcon(QLatin1String(ICON_ALIGNRIGHT));
     m_alignRightAction = new QAction(icon, tr("Align Right"), this);
-    m_alignRightAction->setShortcut(Qt::CTRL + Qt::Key_R);
     m_alignRightAction->setCheckable(true);
     Core::Command *cmdAlignRight = gActionManager->registerAction(m_alignRightAction,
                                                                   Constants::ID_ALIGNRIGHT,
                                                                   ctx);
+    connect(m_alignRightAction, SIGNAL(toggled(bool)),
+            this, SLOT(setAlignRight()));
 
     if (QApplication::isLeftToRight()) {
         formatMenu->addAction(cmdAlignLeft, Core::Constants::G_FORMAT_ALIGNMENT);
@@ -239,24 +353,72 @@ void FormattingPluginPrivate::init()
     }
 
     // Alignment Fill Action
-    icon = QIcon(QLatin1String(ICON_ALIGNFILL));
-    m_alignFillAction = new QAction(icon, tr("Align Fill"), this);
-    m_alignFillAction->setShortcut(Qt::CTRL + Qt::Key_F);
-    m_alignFillAction->setCheckable(true);
-    Core::Command *cmdAlignFill = gActionManager->registerAction(m_alignFillAction,
+    icon = QIcon(QLatin1String(ICON_ALIGNJUSTIFY));
+    m_alignJustifyAction = new QAction(icon, tr("Align Justify"), this);
+    m_alignJustifyAction->setCheckable(true);
+    Core::Command *cmdAlignFill = gActionManager->registerAction(m_alignJustifyAction,
                                                                  Constants::ID_ALIGNFILL,
                                                                  ctx);
     formatMenu->addAction(cmdAlignFill, Core::Constants::G_FORMAT_ALIGNMENT);
     toolBar->addAction(cmdAlignFill, Core::Constants::GT_FORMAT);
+    connect(m_alignJustifyAction, SIGNAL(toggled(bool)),
+            this, SLOT(setAlignJustify()));
 
     m_alignActionGroup = new QActionGroup(this);
     m_alignActionGroup->addAction(m_alignLeftAction);
     m_alignActionGroup->addAction(m_alignCenterAction);
     m_alignActionGroup->addAction(m_alignRightAction);
-    m_alignActionGroup->addAction(m_alignFillAction);
+    m_alignActionGroup->addAction(m_alignJustifyAction);
 }
 
-// end of class Formatting::Internal::FormattingPluginPrivate
+void FormattingPluginPrivate::setTextBold(bool bold)
+{
+    TextFormatAction action(TextFormatAction::Bold, bold);
+    HtmlEdit::HtmlEditor::mergeFormat(&action);
+}
+
+void FormattingPluginPrivate::setTextItalic(bool italic)
+{
+    TextFormatAction action(TextFormatAction::Italic, italic);
+    HtmlEdit::HtmlEditor::mergeFormat(&action);
+}
+
+void FormattingPluginPrivate::setTextStrike(bool strike)
+{
+    TextFormatAction action(TextFormatAction::Strike, strike);
+    HtmlEdit::HtmlEditor::mergeFormat(&action);
+}
+
+void FormattingPluginPrivate::setTextUnderline(bool underline)
+{
+    TextFormatAction action(TextFormatAction::Underline, underline);
+    HtmlEdit::HtmlEditor::mergeFormat(&action);
+}
+
+void FormattingPluginPrivate::setAlignLeft()
+{
+    TextAlignmentAction action(Qt::AlignLeft | Qt::AlignAbsolute);
+    HtmlEdit::HtmlEditor::mergeFormat(&action);
+}
+
+void FormattingPluginPrivate::setAlignCenter()
+{
+    TextAlignmentAction action(Qt::AlignHCenter);
+    HtmlEdit::HtmlEditor::mergeFormat(&action);
+}
+
+void FormattingPluginPrivate::setAlignRight()
+{
+    TextAlignmentAction action(Qt::AlignRight | Qt::AlignAbsolute);
+    HtmlEdit::HtmlEditor::mergeFormat(&action);
+}
+
+void FormattingPluginPrivate::setAlignJustify()
+{
+    TextAlignmentAction action(Qt::AlignJustify);
+    HtmlEdit::HtmlEditor::mergeFormat(&action);
+}
+
 } // end of namespace Formatting::Internal
 
 FormattingPlugin::FormattingPlugin() :

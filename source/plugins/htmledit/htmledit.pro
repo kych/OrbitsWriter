@@ -37,7 +37,8 @@ HEADERS += \
     htmlsourceedit.h \
     htmlvisualedit.h \
     htmleditor.h \
-    htmleditorfactory.h
+    htmleditorfactory.h \
+    editoraction.h
 
 SOURCES += \
     htmleditplugin.cpp \
@@ -45,7 +46,8 @@ SOURCES += \
     htmlsourceedit.cpp \
     htmlvisualedit.cpp \
     htmleditor.cpp \
-    htmleditorfactory.cpp
+    htmleditorfactory.cpp \
+    editoraction.cpp
 
 OTHER_FILES += \
     HtmlEdit.spec.in

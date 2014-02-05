@@ -52,7 +52,7 @@ public:
 
 public slots:
     void editWidgetChanged(int index);
-};
+}; // end of class HtmlEdit::Internal::HtmlEditWidgetPrivate
 
 void HtmlEditWidgetPrivate::editWidgetChanged(int index)
 {
@@ -62,6 +62,7 @@ void HtmlEditWidgetPrivate::editWidgetChanged(int index)
         gCore->updateAdditionalContexts(
                     Core::Context(Constants::CONTEXT_HTMLVISUALEDITOR),
                     Core::Context(Constants::CONTEXT_HTMLSOURCEEDITOR));
+        m_sourceEdit->setHtmlSource(m_visualEdit->toHtml());
         break;
     }
     case IDX_VISUALEDIT:
@@ -69,12 +70,12 @@ void HtmlEditWidgetPrivate::editWidgetChanged(int index)
         gCore->updateAdditionalContexts
                 (Core::Context(Constants::CONTEXT_HTMLSOURCEEDITOR),
                  Core::Context(Constants::CONTEXT_HTMLVISUALEDITOR));
+        m_visualEdit->setHtml(m_sourceEdit->htmlSource());
         break;
     }
     }
 }
 
-// end of class HtmlEdit::Internal::HtmlEditWidgetPrivate
 } // end of namespace HtmlEdit::Internal
 
 HtmlEditWidget::HtmlEditWidget(QWidget *parent) :
@@ -115,6 +116,16 @@ HtmlEditWidget::HtmlEditWidget(QWidget *parent) :
 HtmlEditWidget::~HtmlEditWidget()
 {
     delete d;
+}
+
+HtmlSourceEdit *HtmlEditWidget::sourceEdit() const
+{
+    return  d->m_sourceEdit;
+}
+
+HtmlVisualEdit *HtmlEditWidget::visualEdit() const
+{
+    return d->m_visualEdit;
 }
 
 } // end of namespace HtmlEdit

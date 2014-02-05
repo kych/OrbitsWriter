@@ -27,13 +27,19 @@
 
 namespace Core {
 
+class Id;
+
 class CORE_EXPORT Editor : public WidgetContext
 {
     Q_OBJECT
 public:
     explicit Editor(QObject *parent = 0) : WidgetContext(parent) {}
     virtual ~Editor() {}
+
+    virtual Core::Id id() const = 0;
 }; // end of class Core::Editor
 } // end of namespace Core
+
+Q_DECLARE_METATYPE(Core::Editor *)
 
 #endif // EDITOR_H

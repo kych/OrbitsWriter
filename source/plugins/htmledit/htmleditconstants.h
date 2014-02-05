@@ -31,9 +31,8 @@ const char CONTEXT_HTMLSOURCEEDITOR[] = "HtmlSourceEditor Context";
 const char CONTEXT_HTMLVISUALEDITOR[] = "HtmlVisualEditor Context";
 
 // IDs
-const char ID_HTMLEDITORFACTORY[]          = "HtmlEditorFactory ID";
-const char ID_HTMLSOURCEEDITORFACTORY[]    = "HtmlSourceEditorFactory ID";
-const char ID_HTMLVISUALEDITORFACTORY[]    = "HtmlVisualEditorFactory ID";
+const char ID_HTMLEDITOR[]            = "HtmlEditor ID";
+const char ID_HTMLEDITORFACTORY[]     = "HtmlEditorFactory ID";
 
 } // end of namespace HtmlEdit::Constants
 } // end of namespace HtmlEdit
