@@ -35,6 +35,9 @@ public:
     explicit HtmlVisualEdit(QWidget *parent = 0);
 
     void mergeFormatOnWordOrSelection(const QTextCharFormat &format);
+
+    void setHtmlSource(const QString &source);
+    QString toHtmlSource() const;
 }; // end of class HtmlEdit::HtmlVisualEdit
 
 } // end of namespace HtmlEdit

@@ -62,7 +62,7 @@ void HtmlEditWidgetPrivate::editWidgetChanged(int index)
         gCore->updateAdditionalContexts(
                     Core::Context(Constants::CONTEXT_HTMLVISUALEDITOR),
                     Core::Context(Constants::CONTEXT_HTMLSOURCEEDITOR));
-        m_sourceEdit->setHtmlSource(m_visualEdit->toHtml());
+        m_sourceEdit->setHtmlSource(m_visualEdit->toHtmlSource());
         break;
     }
     case IDX_VISUALEDIT:
@@ -70,7 +70,7 @@ void HtmlEditWidgetPrivate::editWidgetChanged(int index)
         gCore->updateAdditionalContexts
                 (Core::Context(Constants::CONTEXT_HTMLSOURCEEDITOR),
                  Core::Context(Constants::CONTEXT_HTMLVISUALEDITOR));
-        m_visualEdit->setHtml(m_sourceEdit->htmlSource());
+        m_visualEdit->setHtmlSource(m_sourceEdit->htmlSource());
         break;
     }
     }
