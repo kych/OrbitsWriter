@@ -52,7 +52,9 @@ HEADERS += \
     editorsystem/editorfactory.h \
     editorsystem/editormanager_p.h \
     plugindialog.h \
-    coreconstants.h
+    coreconstants.h \
+    documentsystem/documentmanager.h \
+    documentsystem/documentmanager_p.h
 
 SOURCES += \
     mainwindow.cpp \
@@ -68,7 +70,8 @@ SOURCES += \
     editorsystem/editor.cpp \
     editorsystem/editormanager.cpp \
     editorsystem/editorfactory.cpp \
-    plugindialog.cpp
+    plugindialog.cpp \
+    documentsystem/documentmanager.cpp
 
 RESOURCES += \
     resources/resources.qrc

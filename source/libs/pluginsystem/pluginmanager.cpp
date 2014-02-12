@@ -23,7 +23,6 @@
 #include <QDir>
 #include <QEventLoop>
 #include <QFileInfoList>
-#include <QMutex>
 #include <QTime>
 
 #include "plugincollection.h"

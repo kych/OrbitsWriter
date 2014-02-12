@@ -22,6 +22,8 @@
 #ifndef SINGLETON_H
 #define SINGLETON_H
 
+#include <QMutex>
+
 #define GET_INSTANCE(ClassName)                \
 ClassName *ClassName::m_instance = 0;          \
 ClassName *ClassName::instance()               \

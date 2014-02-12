@@ -19,7 +19,10 @@
  *
  *-------------------------------------------------*/
 
+#include <QDebug>
 #include <QTextFrame>
+
+#include <core/documentsystem/documentmanager.h>
 
 #include "htmlvisualedit.h"
 
@@ -29,6 +32,11 @@ namespace HtmlEdit
 HtmlVisualEdit::HtmlVisualEdit(QWidget *parent) :
     QTextEdit(parent)
 {
+    // document
+    connect(gDocumentManager, SIGNAL(documentCreated(QTextDocument*)),
+            this, SLOT(onDocumentCreated(QTextDocument*)));
+
+    // UI
     QFont font;
     font.setFamily(font.defaultFamily());
     font.setPointSizeF(11);
@@ -64,6 +72,11 @@ QString HtmlVisualEdit::toHtmlSource() const
         }
     }
     return toHtml();
+}
+
+void HtmlVisualEdit::onDocumentCreated(QTextDocument *document)
+{
+    setDocument(document);
 }
 
 } // end of namespace HtmlEdit

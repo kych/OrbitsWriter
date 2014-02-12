@@ -23,7 +23,6 @@
 #include <QDebug>
 #include <QMenuBar>
 #include <QToolBar>
-#include <QMutex>
 #include <QSettings>
 
 #include <commons/settingsmanager.h>

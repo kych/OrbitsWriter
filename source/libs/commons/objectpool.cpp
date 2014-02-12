@@ -20,7 +20,6 @@
  *-------------------------------------------------*/
 
 #include <QDebug>
-#include <QMutex>
 
 #include "objectpool.h"
 

@@ -19,8 +19,6 @@
  *
  *-------------------------------------------------*/
 
-#include <QMutex>
-
 #include <commons/objectpool.h>
 #include <commons/settingsmanager.h>
 

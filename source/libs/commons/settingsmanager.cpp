@@ -19,8 +19,6 @@
  *
  *-------------------------------------------------*/
 
-#include <QMutex>
-
 #include "settingsmanager.h"
 
 /*!

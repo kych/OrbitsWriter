@@ -35,6 +35,8 @@
 #include "appcore_p.h"
 #include "coreconstants.h"
 #include "corelistener.h"
+#include "documentsystem/documentmanager.h"
+#include "documentsystem/documentmanager_p.h"
 #include "editorsystem/editor.h"
 #include "editorsystem/editormanager.h"
 #include "mainwindow.h"
@@ -90,7 +92,7 @@ void MainWindow::prepareToShow()
     readSettings();
     gCore->d->updateContext();
 
-//    appDocumentManager->createDocument();
+    gDocumentManager->d->initialize();
 
     gEditorManager->initialize();
 
@@ -118,6 +120,11 @@ void MainWindow::closeEvent(QCloseEvent *event)
     emit gCore->coreAboutToClose();
     writeSettings();
     event->accept();
+}
+
+void MainWindow::newDocument()
+{
+    gDocumentManager->createDocument();
 }
 
 void MainWindow::showAboutDialog()
@@ -255,7 +262,7 @@ void MainWindow::registerDefaultActions()
     cmd->setDefaultKeySequence(QKeySequence::New);
     fileMenu->addAction(cmd, Constants::G_FILE_NEW);
     toolBar->addAction(cmd, Constants::GT_FILE);
-    // connect(m_newAction, SIGNAL(triggered()), this, SLOT(newFile()));
+    connect(m_newDocAction, SIGNAL(triggered()), this, SLOT(newDocument()));
 
     // Open Action
     icon = QIcon::fromTheme(QLatin1String("document-open"), QIcon(QLatin1String(ICON_OPENDOC)));

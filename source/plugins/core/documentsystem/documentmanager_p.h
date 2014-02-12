@@ -1,6 +1,6 @@
 /*-------------------------------------------------
  *
- * OrbitsWriter - An Offline Blog Writer
+ * OrbitsWriter - an Offline Blog Writer
  *
  * Copyright (C) 2013 devbean@galaxyworld.org
  *
@@ -19,22 +19,34 @@
  *
  *-------------------------------------------------*/
 
-#include "singleton.h"
+#ifndef DOCUMENTMANAGER_P_H
+#define DOCUMENTMANAGER_P_H
 
-/*!
-  \macro GET_INSTANCE(ClassName)
-  This macto expands the singleton instance getter for
-  \a ClassName and the instance pointer name should be
-  declared by DECLARE_SINGLETON(ClassName).
+#include <QObject>
+#include <QList>
+#include <QTextDocument>
 
-  The class use this macro must have a default constructor.
- */
+namespace Core {
 
-/*!
-  \macro DECLARE_SINGLETON(ClassName)
-  This macto expands a singleton instance with \a ClassName and
-  a getter function which should be implemented
-  by GET_INSTANCE(ClassName).
+class DocumentManager;
 
-  It will also disable the copy constructor and assignment operator.
- */
+namespace Internal {
+
+class DocumentManagerPrivate : public QObject
+{
+    Q_OBJECT
+public:
+    explicit DocumentManagerPrivate(Core::DocumentManager * documentManager);
+    ~DocumentManagerPrivate();
+
+    void initialize();
+
+    QList<QTextDocument *> docList;
+
+private:
+    Core::DocumentManager *q;
+}; // end of class Core::Internal::DocumentManagerPrivate
+} // end of namespace Core::Internal
+} // end of namespace Core
+
+#endif // DOCUMENTMANAGER_P_H

@@ -19,30 +19,49 @@
  *
  *-------------------------------------------------*/
 
-#ifndef HTMLVISUALEDIT_H
-#define HTMLVISUALEDIT_H
+#ifndef DOCUMENTMANAGER_H
+#define DOCUMENTMANAGER_H
 
-#include <QTextEdit>
+#include <QObject>
 
-#include "htmledit_global.h"
+#include <commons/singleton.h>
 
-namespace HtmlEdit {
+#include "core/core_global.h"
 
-class HTMLEDIT_EXPORT HtmlVisualEdit : public QTextEdit
+#define gDocumentManager (Core::DocumentManager::instance())
+
+QT_BEGIN_NAMESPACE
+class QTextDocument;
+QT_END_NAMESPACE
+
+namespace Core {
+
+class MainWindow;
+
+namespace Internal {
+class DocumentManagerPrivate;
+}
+
+class CORE_EXPORT DocumentManager : public QObject
 {
     Q_OBJECT
+    DECLARE_SINGLETON(DocumentManager)
 public:
-    explicit HtmlVisualEdit(QWidget *parent = 0);
+    QTextDocument * createDocument();
+    QTextDocument * currentDocument() const;
 
-    void mergeFormatOnWordOrSelection(const QTextCharFormat &format);
+signals:
+    void documentCreated(QTextDocument *document);
 
-    void setHtmlSource(const QString &source);
-    QString toHtmlSource() const;
+private:
+    explicit DocumentManager(QObject *parent = 0);
+    ~DocumentManager();
 
-private slots:
-    void onDocumentCreated(QTextDocument *document);
-}; // end of class HtmlEdit::HtmlVisualEdit
+    Internal::DocumentManagerPrivate *d;
+    friend class Internal::DocumentManagerPrivate;
+    friend class MainWindow;
+}; // end of class Core::DocumentManager
 
-} // end of namespace HtmlEdit
+} // end of namespace Core
 
-#endif // HTMLVISUALEDIT_H
+#endif // DOCUMENTMANAGER_H
