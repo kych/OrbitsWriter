@@ -36,9 +36,6 @@ public:
 
     void mergeFormatOnWordOrSelection(const QTextCharFormat &format);
 
-    void setHtmlSource(const QString &source);
-    QString toHtmlSource() const;
-
 private slots:
     void onDocumentCreated(QTextDocument *document);
 }; // end of class HtmlEdit::HtmlVisualEdit

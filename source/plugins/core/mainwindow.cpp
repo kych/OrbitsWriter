@@ -92,8 +92,6 @@ void MainWindow::prepareToShow()
     readSettings();
     gCore->d->updateContext();
 
-    gDocumentManager->d->initialize();
-
     gEditorManager->initialize();
 
     Editor *mainEditor = gEditorManager->currentEditor();
@@ -102,6 +100,9 @@ void MainWindow::prepareToShow()
     //TODO: move these code to editor manager?
     gCore->addWidgetContext(mainEditor);
     gCore->updateAdditionalContexts(Context(), mainEditor->context());
+
+    // initialize document after editor initialied
+    gDocumentManager->d->initialize();
 
     emit gCore->coreAboutToOpen();
     show();

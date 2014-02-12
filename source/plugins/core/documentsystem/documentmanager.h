@@ -50,6 +50,8 @@ public:
     QTextDocument * createDocument();
     QTextDocument * currentDocument() const;
 
+    QString toHtmlSource() const;
+
 signals:
     void documentCreated(QTextDocument *document);
 

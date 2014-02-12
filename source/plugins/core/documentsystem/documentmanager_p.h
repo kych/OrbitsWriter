@@ -41,6 +41,8 @@ public:
 
     void initialize();
 
+    QString toHtmlSource() const;
+
     QList<QTextDocument *> docList;
 
 private:

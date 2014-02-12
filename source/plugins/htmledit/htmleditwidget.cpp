@@ -26,6 +26,7 @@
 
 #include <core/appcore.h>
 #include <core/context.h>
+#include <core/documentsystem/documentmanager.h>
 
 #include "htmleditconstants.h"
 #include "htmleditwidget.h"
@@ -62,7 +63,7 @@ void HtmlEditWidgetPrivate::editWidgetChanged(int index)
         gCore->updateAdditionalContexts(
                     Core::Context(Constants::CONTEXT_HTMLVISUALEDITOR),
                     Core::Context(Constants::CONTEXT_HTMLSOURCEEDITOR));
-        m_sourceEdit->setHtmlSource(m_visualEdit->toHtmlSource());
+        m_sourceEdit->setPlainText(gDocumentManager->toHtmlSource());
         break;
     }
     case IDX_VISUALEDIT:
@@ -70,7 +71,7 @@ void HtmlEditWidgetPrivate::editWidgetChanged(int index)
         gCore->updateAdditionalContexts
                 (Core::Context(Constants::CONTEXT_HTMLSOURCEEDITOR),
                  Core::Context(Constants::CONTEXT_HTMLVISUALEDITOR));
-        m_visualEdit->setHtmlSource(m_sourceEdit->htmlSource());
+        m_visualEdit->setHtml(m_sourceEdit->toPlainText());
         break;
     }
     }
@@ -120,7 +121,7 @@ HtmlEditWidget::~HtmlEditWidget()
 
 HtmlSourceEdit *HtmlEditWidget::sourceEdit() const
 {
-    return  d->m_sourceEdit;
+    return d->m_sourceEdit;
 }
 
 HtmlVisualEdit *HtmlEditWidget::visualEdit() const

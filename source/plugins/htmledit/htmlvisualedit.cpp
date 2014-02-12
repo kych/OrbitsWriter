@@ -20,7 +20,6 @@
  *-------------------------------------------------*/
 
 #include <QDebug>
-#include <QTextFrame>
 
 #include <core/documentsystem/documentmanager.h>
 
@@ -51,27 +50,6 @@ void HtmlVisualEdit::mergeFormatOnWordOrSelection(const QTextCharFormat &format)
     }
     cursor.mergeCharFormat(format);
     mergeCurrentCharFormat(format);
-}
-
-void HtmlVisualEdit::setHtmlSource(const QString &source)
-{
-    setHtml(source);
-}
-
-QString HtmlVisualEdit::toHtmlSource() const
-{
-    QTextDocument *currentDocument = document();
-    QTextFrame *root = currentDocument->rootFrame();
-    for (QTextFrame::iterator it = root->begin(); !(it.atEnd()); ++it) {
-        QTextFrame *childFrame = it.currentFrame();
-        QTextBlock childBlock = it.currentBlock();
-        if (childFrame) {
-//            processFrame(frameElement, childFrame);
-        } else if (childBlock.isValid()) {
-//            processBlock(frameElement, childBlock);
-        }
-    }
-    return toHtml();
 }
 
 void HtmlVisualEdit::onDocumentCreated(QTextDocument *document)

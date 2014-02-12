@@ -27,20 +27,11 @@ namespace HtmlEdit
 HtmlSourceEdit::HtmlSourceEdit(QWidget *parent) :
     QPlainTextEdit(parent)
 {
+    // UI
     QFont font("Courier New");
     font.setStyleHint(QFont::Monospace);
     font.setPointSizeF(11);
     setFont(font);
-}
-
-void HtmlSourceEdit::setHtmlSource(const QString &source)
-{
-    setPlainText(source);
-}
-
-QString HtmlSourceEdit::htmlSource() const
-{
-    return toPlainText();
 }
 
 } // end of namespace HtmlEdit
