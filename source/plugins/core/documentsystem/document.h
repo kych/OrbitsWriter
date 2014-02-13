@@ -19,34 +19,31 @@
  *
  *-------------------------------------------------*/
 
-#ifndef DOCUMENTMANAGER_P_H
-#define DOCUMENTMANAGER_P_H
+#ifndef DOCUMENT_H
+#define DOCUMENT_H
 
 #include <QObject>
-#include <QList>
 
 namespace Core {
 
-class Document;
-class DocumentManager;
-
 namespace Internal {
+class DocumentPrivate;
+}
 
-class DocumentManagerPrivate : public QObject
+class Document : public QObject
 {
     Q_OBJECT
 public:
-    explicit DocumentManagerPrivate(Core::DocumentManager * documentManager);
-    ~DocumentManagerPrivate();
+    explicit Document(QObject *parent = 0);
+    ~Document();
 
-    void initialize();
-
-    QList<Document *> docList;
+    QString text() const;
 
 private:
-    Core::DocumentManager *q;
-}; // end of class Core::Internal::DocumentManagerPrivate
-} // end of namespace Core::Internal
+    Internal::DocumentPrivate *d;
+    friend class Internal::DocumentPrivate;
+}; // end of class Core::Document
+
 } // end of namespace Core
 
-#endif // DOCUMENTMANAGER_P_H
+#endif // DOCUMENT_H

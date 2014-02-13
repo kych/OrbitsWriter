@@ -23,6 +23,7 @@
 #include <QTextDocument>
 #include <QTextFrame>
 
+#include "document.h"
 #include "documentmanager.h"
 #include "documentmanager_p.h"
 
@@ -36,9 +37,9 @@ GET_INSTANCE(DocumentManager)
 /*!
   Creates a new document then return it.
  */
-QTextDocument *DocumentManager::createDocument()
+Document *DocumentManager::createDocument()
 {
-    QTextDocument *doc = new QTextDocument(this);
+    Document *doc = new Document(this);
     d->docList.prepend(doc);
     emit documentCreated(doc);
     return doc;
@@ -47,17 +48,9 @@ QTextDocument *DocumentManager::createDocument()
 /*!
   Return current document.
  */
-QTextDocument *DocumentManager::currentDocument() const
+Document *DocumentManager::currentDocument() const
 {
     return d->docList.first();
-}
-
-/*!
-  Return HTML source of this document.
- */
-QString DocumentManager::toHtmlSource() const
-{
-    return d->toHtmlSource();
 }
 
 DocumentManager::DocumentManager(QObject *parent) :
@@ -85,21 +78,4 @@ DocumentManagerPrivate::~DocumentManagerPrivate()
 void DocumentManagerPrivate::initialize()
 {
     q->createDocument();
-}
-
-QString DocumentManagerPrivate::toHtmlSource() const
-{
-    QTextDocument *currentDocument = q->currentDocument();
-    qDebug() << currentDocument;
-    QTextFrame *root = currentDocument->rootFrame();
-    for (QTextFrame::iterator it = root->begin(); !(it.atEnd()); ++it) {
-        QTextFrame *childFrame = it.currentFrame();
-        QTextBlock childBlock = it.currentBlock();
-        if (childFrame) {
-//            processFrame(frameElement, childFrame);
-        } else if (childBlock.isValid()) {
-//            processBlock(frameElement, childBlock);
-        }
-    }
-    return currentDocument->toHtml();
 }

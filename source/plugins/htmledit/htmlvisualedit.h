@@ -22,22 +22,17 @@
 #ifndef HTMLVISUALEDIT_H
 #define HTMLVISUALEDIT_H
 
-#include <QTextEdit>
+#include <QWebView>
 
 #include "htmledit_global.h"
 
 namespace HtmlEdit {
 
-class HTMLEDIT_EXPORT HtmlVisualEdit : public QTextEdit
+class HTMLEDIT_EXPORT HtmlVisualEdit : public QWebView
 {
     Q_OBJECT
 public:
     explicit HtmlVisualEdit(QWidget *parent = 0);
-
-    void mergeFormatOnWordOrSelection(const QTextCharFormat &format);
-
-private slots:
-    void onDocumentCreated(QTextDocument *document);
 }; // end of class HtmlEdit::HtmlVisualEdit
 
 } // end of namespace HtmlEdit

@@ -23,8 +23,8 @@ TEMPLATE = lib
 TARGET   = Formatting
 DEFINES += FORMATTING_LIBRARY
 
-QT      += core gui
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+QT      += core gui webkit
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets webkitwidgets
 
 include(../../plugin.pri)
 include(formatting_dependencies.pri)

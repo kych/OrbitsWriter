@@ -29,32 +29,12 @@ namespace HtmlEdit
 {
 
 HtmlVisualEdit::HtmlVisualEdit(QWidget *parent) :
-    QTextEdit(parent)
+    QWebView(parent)
 {
-    // document
-    connect(gDocumentManager, SIGNAL(documentCreated(QTextDocument*)),
-            this, SLOT(onDocumentCreated(QTextDocument*)));
-
     // UI
     QFont font;
-    font.setFamily(font.defaultFamily());
     font.setPointSizeF(11);
     setFont(font);
-}
-
-void HtmlVisualEdit::mergeFormatOnWordOrSelection(const QTextCharFormat &format)
-{
-    QTextCursor cursor = textCursor();
-    if (!cursor.hasSelection()) {
-        cursor.select(QTextCursor::WordUnderCursor);
-    }
-    cursor.mergeCharFormat(format);
-    mergeCurrentCharFormat(format);
-}
-
-void HtmlVisualEdit::onDocumentCreated(QTextDocument *document)
-{
-    setDocument(document);
 }
 
 } // end of namespace HtmlEdit

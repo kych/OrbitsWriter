@@ -19,34 +19,24 @@
  *
  *-------------------------------------------------*/
 
-#ifndef DOCUMENTMANAGER_P_H
-#define DOCUMENTMANAGER_P_H
+#include "document.h"
+#include "document_p.h"
 
-#include <QObject>
-#include <QList>
+using namespace Core;
+using namespace Core::Internal;
 
-namespace Core {
-
-class Document;
-class DocumentManager;
-
-namespace Internal {
-
-class DocumentManagerPrivate : public QObject
+Document::Document(QObject *parent) :
+    QObject(parent),
+    d(new Internal::DocumentPrivate)
 {
-    Q_OBJECT
-public:
-    explicit DocumentManagerPrivate(Core::DocumentManager * documentManager);
-    ~DocumentManagerPrivate();
+}
 
-    void initialize();
+Document::~Document()
+{
+    delete d;
+}
 
-    QList<Document *> docList;
-
-private:
-    Core::DocumentManager *q;
-}; // end of class Core::Internal::DocumentManagerPrivate
-} // end of namespace Core::Internal
-} // end of namespace Core
-
-#endif // DOCUMENTMANAGER_P_H
+QString Document::text() const
+{
+    return d->content;
+}

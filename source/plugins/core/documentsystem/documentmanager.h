@@ -30,12 +30,9 @@
 
 #define gDocumentManager (Core::DocumentManager::instance())
 
-QT_BEGIN_NAMESPACE
-class QTextDocument;
-QT_END_NAMESPACE
-
 namespace Core {
 
+class Document;
 class MainWindow;
 
 namespace Internal {
@@ -47,13 +44,11 @@ class CORE_EXPORT DocumentManager : public QObject
     Q_OBJECT
     DECLARE_SINGLETON(DocumentManager)
 public:
-    QTextDocument * createDocument();
-    QTextDocument * currentDocument() const;
-
-    QString toHtmlSource() const;
+    Document * createDocument();
+    Document * currentDocument() const;
 
 signals:
-    void documentCreated(QTextDocument *document);
+    void documentCreated(Document *document);
 
 private:
     explicit DocumentManager(QObject *parent = 0);
