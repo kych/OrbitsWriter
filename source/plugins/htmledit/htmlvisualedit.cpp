@@ -31,6 +31,8 @@ namespace HtmlEdit
 HtmlVisualEdit::HtmlVisualEdit(QWidget *parent) :
     QWebView(parent)
 {
+    page()->setContentEditable(true);
+
     // UI
     QFont font;
     font.setPointSizeF(11);

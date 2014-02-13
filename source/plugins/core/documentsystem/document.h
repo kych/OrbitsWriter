@@ -24,13 +24,15 @@
 
 #include <QObject>
 
+#include "core/core_global.h"
+
 namespace Core {
 
 namespace Internal {
 class DocumentPrivate;
 }
 
-class Document : public QObject
+class CORE_EXPORT Document : public QObject
 {
     Q_OBJECT
 public:
