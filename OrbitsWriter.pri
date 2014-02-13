@@ -2,7 +2,7 @@
 #
 # OrbitsWriter - an Offline Blog Writer
 #
-# Copyright (C) 2012 devbean@galaxyworld.org
+# Copyright (C) 2013 devbean@galaxyworld.org
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -19,11 +19,12 @@
 #
 #-------------------------------------------------
 
-!isEmpty(ORBITSWRITER_PRI_INCLUDED): error("OrbitsWriter.pri already included")
+!isEmpty(ORBITSWRITER_PRI_INCLUDED): error("orbitswriter.pri already included")
 ORBITSWRITER_PRI_INCLUDED = 1
 
-APPLICATION_NAME    = OrbitsWriter
-APPLICATION_VERSION = 0.0.1
+APPLICATION_NAME     = OrbitsWriter
+APPLICATION_VERSION  = 0.0.1
+APPLICATION_REVISION = $$system(git log -n 1 --pretty="format:%h")
 
 isEqual(QT_MAJOR_VERSION, 5) {
 
@@ -114,7 +115,9 @@ isEmpty(BUILD_TREE) {
 }
 
 INCLUDEPATH += \
-    $$BUILD_TREE/source/application # for <application/Version>
+    $$BUILD_TREE/source/application \ # for <application/version.h>
+    $$SOURCE_TREE/source/libs \
+    $$SOURCE_TREE/source/plugins
 
 CONFIG += depend_includepath c++11
 
@@ -143,8 +146,6 @@ win32-msvc* {
 } else {
     QMAKE_CXXFLAGS += -std=c++0x
 }
-
-CONFIG(debug, debug|release):DEFINES += _DEBUG_
 
 greaterThan(QT_MAJOR_VERSION, 4) {
     QT += widgets

@@ -1,0 +1,17 @@
+<RCC>
+    <qresource prefix="/img">
+        <file alias="about">images/about_32.png</file>
+        <file alias="copy">images/copy_32.png</file>
+        <file alias="cut">images/cut_32.png</file>
+        <file alias="doc_new">images/docnew_32.png</file>
+        <file alias="doc_open">images/docopen_32.png</file>
+        <file alias="help">images/help_32.png</file>
+        <file alias="options">images/options_32.png</file>
+        <file alias="paste">images/paste_32.png</file>
+        <file alias="redo">images/redo_32.png</file>
+        <file alias="save">images/save_32.png</file>
+        <file alias="save_as">images/saveas_32.png</file>
+        <file alias="undo">images/undo_32.png</file>
+        <file alias="app">images/app_128.png</file>
+    </qresource>
+</RCC>

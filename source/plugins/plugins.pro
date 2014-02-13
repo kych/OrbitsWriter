@@ -2,7 +2,7 @@
 #
 # OrbitsWriter - an Offline Blog Writer
 #
-# Copyright (C) 2012 devbean@galaxyworld.org
+# Copyright (C) 2013 devbean@galaxyworld.org
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -19,6 +19,21 @@
 #
 #-------------------------------------------------
 
+# USE .subdir AND .depends !
+# OTHERWISE PLUGINS WILL BUILD IN WRONG ORDER (DIRECTORIES ARE COMPILED IN PARALLEL)
+
 TEMPLATE = subdirs
 CONFIG  += ordered
-SUBDIRS  =
+SUBDIRS  = \
+    plugin_core \
+    plugin_htmledit \
+    plugin_formatting
+
+plugin_core.subdir = core
+
+plugin_htmledit.subdir = htmledit
+plugin_htmledit.depends = plugin_core
+
+plugin_formatting.subdir = formatting
+plugin_formatting.depends = plugin_core
+plugin_formatting.depends += plugin_htmledit

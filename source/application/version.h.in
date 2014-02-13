@@ -2,7 +2,7 @@
  *
  * OrbitsWriter - an Offline Blog Writer
  *
- * Copyright (C) 2012 devbean@galaxyworld.org
+ * Copyright (C) 2013 devbean@galaxyworld.org
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,7 +22,7 @@
 #ifndef VERSION_H
 #define VERSION_H
 
-namespace Application
+namespace OrbitsWriter
 {
 
 #define STRINGIFY_INTERNAL(x) #x
@@ -35,17 +35,12 @@ namespace Application
 #define VERSION_MINOR $$replace(APPLICATION_VERSION, "^\\d+\\.(\\d+)\\.\\d+(-.*)?$", \\1)
 #define VERSION_PATCH $$replace(APPLICATION_VERSION, "^\\d+\\.\\d+\\.(\\d+)(-.*)?$", \\1)
 
-const char * const VERSION_LONG        = VERSION_STR;
-const char * const NAME                = \"$${APPLICATION_NAME}\";
-const char * const ORGANIZATION        = \"GalaxyWorld\";
-const char * const ORGANIZATION_DOMAIN = \"GalaxyWorld.Org\";
-const char * const YEAR                = \"2012\";
-
-#ifdef REVISION
-const char * const REVISION_STR        = STRINGIFY(REVISION);
-#else
-const char * const REVISION_STR        = \"\";
-#endif
+const char * const VERSION_LONG         = VERSION_STR;
+const char * const APPLICATION_NAME     = \"$${APPLICATION_NAME}\";
+const char * const ORGANIZATION         = \"GalaxyWorld\";
+const char * const ORGANIZATION_DOMAIN  = \"GalaxyWorld.Org\";
+const char * const YEAR                 = \"2013\";
+const char * const APPLICATION_REVISION = \"$${APPLICATION_REVISION}\";
 
 // changes the path where the settings are saved to
 #ifdef SETTINGSVARIANT
@@ -59,6 +54,6 @@ const char * const SETTINGSVARIANT_STR      = \"GalaxyWorld\";
 #undef STRINGIFY
 #undef STRINGIFY_INTERNAL
 
-} // end of namespace Application
+} // end of namespace OrbitsWriter
 
 #endif // VERSION_H

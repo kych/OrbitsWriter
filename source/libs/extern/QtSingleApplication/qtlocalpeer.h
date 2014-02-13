@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2012 Digia Plc and/or its subsidiary(-ies).
+** Copyright (C) 2013 Digia Plc and/or its subsidiary(-ies).
 ** Contact: http://www.qt-project.org/legal
 **
 ** This file is part of Qt Creator.
@@ -33,7 +33,7 @@
 #include <QLocalSocket>
 #include <QDir>
 
-namespace Extern {
+namespace ExternLib {
 
 class QtLocalPeer : public QObject
 {
@@ -62,4 +62,4 @@ private:
     static const char* ack;
 };
 
-} // namespace Extern
+} // namespace ExternLib

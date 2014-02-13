@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2012 Digia Plc and/or its subsidiary(-ies).
+** Copyright (C) 2013 Digia Plc and/or its subsidiary(-ies).
 ** Contact: http://www.qt-project.org/legal
 **
 ** This file is part of Qt Creator.
@@ -29,7 +29,7 @@
 
 #include "qtlockedfile.h"
 
-namespace Extern {
+namespace ExternLib {
 
 /*!
     \class QtLockedFile
@@ -155,4 +155,4 @@ QtLockedFile::LockMode QtLockedFile::lockMode() const
     Destroys the \e QtLockedFile object. If any locks were held, they are released.
 */
 
-} // namespace Extern
+} // namespace ExternLibExternLib

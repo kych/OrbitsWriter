@@ -1,0 +1,13 @@
+<RCC>
+    <qresource prefix="/img">
+        <file alias="align_center">aligncenter_32.png</file>
+        <file alias="align_justify">alignfill_32.png</file>
+        <file alias="align_left">alignleft_32.png</file>
+        <file alias="align_right">alignright_32.png</file>
+        <file alias="bold">bold_32.png</file>
+        <file alias="italic">italic_32.png</file>
+        <file alias="strike">strike_32.png</file>
+        <file alias="underline">underline_32.png</file>
+        <file alias="font">font_32.png</file>
+    </qresource>
+</RCC>
