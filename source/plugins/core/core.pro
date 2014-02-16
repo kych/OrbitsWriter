@@ -32,7 +32,6 @@ PRECOMPILED_HEADER = $$PWD/core_pch.h
 
 HEADERS += \
     mainwindow.h \
-    core_global.h \
     core_pch.h \
     coreplugin.h \
     id.h \
@@ -56,7 +55,8 @@ HEADERS += \
     documentsystem/documentmanager.h \
     documentsystem/documentmanager_p.h \
     documentsystem/document.h \
-    documentsystem/document_p.h
+    documentsystem/document_p.h \
+    core_export.h
 
 SOURCES += \
     mainwindow.cpp \

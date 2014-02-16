@@ -191,8 +191,8 @@ void MainWindow::registerDefaultContainers()
     editMenu->menu()->setTitle(tr("&Edit"));
     editMenu->appendActionGroup(Constants::G_EDIT_UNDOREDO);
     editMenu->appendActionGroup(Constants::G_EDIT_COPYPASTE);
-////    editMenu->appendActionGroup(Constants::P_EDIT_ADVANCED);
-////    editMenu->appendActionGroup(Constants::P_EDIT_FIND);
+//    editMenu->appendActionGroup(Constants::P_EDIT_ADVANCED);
+//    editMenu->appendActionGroup(Constants::P_EDIT_FIND);
     editMenu->appendActionGroup(Constants::G_EDIT_OTHER);
 
     // Format Menu

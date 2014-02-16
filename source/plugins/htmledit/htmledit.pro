@@ -30,7 +30,6 @@ include(../../plugin.pri)
 include(htmledit_dependencies.pri)
 
 HEADERS += \
-    htmledit_global.h \
     htmleditplugin.h \
     htmleditwidget.h \
     htmleditconstants.h \
@@ -38,7 +37,8 @@ HEADERS += \
     htmlvisualedit.h \
     htmleditor.h \
     htmleditorfactory.h \
-    editoraction.h
+    editoraction.h \
+    htmledit_export.h
 
 SOURCES += \
     htmleditplugin.cpp \

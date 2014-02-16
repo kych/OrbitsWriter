@@ -24,7 +24,7 @@
 
 #include <core/editorsystem/editor.h>
 
-#include "htmledit_global.h"
+#include "htmledit_export.h"
 
 namespace HtmlEdit {
 

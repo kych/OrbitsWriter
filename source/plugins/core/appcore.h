@@ -26,7 +26,7 @@
 
 #include <commons/singleton.h>
 
-#include "core_global.h"
+#include "core_export.h"
 
 #define gCore (Core::AppCore::instance())
 

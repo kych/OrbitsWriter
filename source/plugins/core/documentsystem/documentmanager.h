@@ -26,7 +26,7 @@
 
 #include <commons/singleton.h>
 
-#include "core/core_global.h"
+#include "core/core_export.h"
 
 #define gDocumentManager (Core::DocumentManager::instance())
 
@@ -48,7 +48,7 @@ public:
     Document * currentDocument() const;
 
 signals:
-    void documentCreated(Document *document);
+    void documentCreated(Core::Document *document);
 
 private:
     explicit DocumentManager(QObject *parent = 0);

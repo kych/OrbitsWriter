@@ -24,12 +24,21 @@
 
 #include <QString>
 
+QT_BEGIN_NAMESPACE
+class QTextDocument;
+QT_END_NAMESPACE
+
 namespace Core {
+
 namespace Internal {
 
 class DocumentPrivate
 {
 public:
+    DocumentPrivate();
+    ~DocumentPrivate();
+
+    QTextDocument *textDocument;
     QString content;
 }; // end of class Core::Internal::DocumentPrivate
 

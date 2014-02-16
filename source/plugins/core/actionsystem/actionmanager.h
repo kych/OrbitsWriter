@@ -27,7 +27,7 @@
 #include <commons/singleton.h>
 
 #include "core/actionsystem/command.h"
-#include "core/core_global.h"
+#include "core/core_export.h"
 
 #define gActionManager (Core::ActionManager::instance())
 

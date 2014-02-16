@@ -24,7 +24,7 @@
 
 #include <QMainWindow>
 
-#include "core/core_global.h"
+#include "core/core_export.h"
 
 namespace Core {
 

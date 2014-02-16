@@ -63,7 +63,7 @@ void HtmlEditWidgetPrivate::editWidgetChanged(int index)
         gCore->updateAdditionalContexts(
                     Core::Context(Constants::CONTEXT_HTMLVISUALEDITOR),
                     Core::Context(Constants::CONTEXT_HTMLSOURCEEDITOR));
-        //m_sourceEdit->setPlainText(gDocumentManager->toHtmlSource());
+        m_sourceEdit->setHtmlSource(m_visualEdit->toHtmlSource());
         break;
     }
     case IDX_VISUALEDIT:
@@ -71,7 +71,7 @@ void HtmlEditWidgetPrivate::editWidgetChanged(int index)
         gCore->updateAdditionalContexts
                 (Core::Context(Constants::CONTEXT_HTMLSOURCEEDITOR),
                  Core::Context(Constants::CONTEXT_HTMLVISUALEDITOR));
-        //m_visualEdit->setHtml(m_sourceEdit->toPlainText());
+        m_visualEdit->setHtml(m_sourceEdit->htmlSource());
         break;
     }
     }

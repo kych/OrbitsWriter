@@ -25,7 +25,7 @@
 #include <QObject>
 
 #include "core/editorsystem/editor.h"
-#include "core/core_global.h"
+#include "core/core_export.h"
 
 namespace Core {
 

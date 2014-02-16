@@ -24,7 +24,11 @@
 
 #include <QObject>
 
-#include "core/core_global.h"
+#include "core/core_export.h"
+
+QT_BEGIN_NAMESPACE
+class QTextDocument;
+QT_END_NAMESPACE
 
 namespace Core {
 
@@ -40,6 +44,7 @@ public:
     ~Document();
 
     QString text() const;
+    QTextDocument * document() const;
 
 private:
     Internal::DocumentPrivate *d;

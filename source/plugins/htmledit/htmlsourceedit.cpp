@@ -34,4 +34,14 @@ HtmlSourceEdit::HtmlSourceEdit(QWidget *parent) :
     setFont(font);
 }
 
+void HtmlSourceEdit::setHtmlSource(const QString &source)
+{
+    setPlainText(source);
+}
+
+QString HtmlSourceEdit::htmlSource() const
+{
+    return toPlainText();
+}
+
 } // end of namespace HtmlEdit

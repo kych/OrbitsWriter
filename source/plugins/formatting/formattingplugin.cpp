@@ -103,7 +103,7 @@ public:
             break;
         }
         }
-        //visualEdit->mergeFormatOnWordOrSelection(fmt);
+        visualEdit->mergeFormatOnWordOrSelection(fmt);
     }
 
     bool hasSourceEditorAction()
@@ -131,7 +131,7 @@ public:
 
     void doActionOnVisualEditor(HtmlEdit::HtmlVisualEdit *visualEdit)
     {
-        //visualEdit->setAlignment(m_alignment);
+        visualEdit->setAlignment(m_alignment);
     }
 
     bool hasSourceEditorAction()

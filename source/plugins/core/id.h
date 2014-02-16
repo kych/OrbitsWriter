@@ -25,7 +25,7 @@
 #include <QMetaType>
 #include <QString>
 
-#include "core_global.h"
+#include "core_export.h"
 
 namespace Core {
 

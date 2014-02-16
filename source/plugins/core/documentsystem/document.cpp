@@ -19,11 +19,15 @@
  *
  *-------------------------------------------------*/
 
+#include <QTextDocument>
+
 #include "document.h"
 #include "document_p.h"
 
 using namespace Core;
 using namespace Core::Internal;
+
+// ========== Core::Internal::Document ========== //
 
 Document::Document(QObject *parent) :
     QObject(parent),
@@ -39,4 +43,21 @@ Document::~Document()
 QString Document::text() const
 {
     return d->content;
+}
+
+QTextDocument *Document::document() const
+{
+    return d->textDocument;
+}
+
+// ========== Core::Internal::DocumentPrivate ========== //
+
+DocumentPrivate::DocumentPrivate() :
+    textDocument(new QTextDocument)
+{
+}
+
+DocumentPrivate::~DocumentPrivate()
+{
+    delete textDocument;
 }

@@ -24,7 +24,7 @@
 
 #include <QPlainTextEdit>
 
-#include "htmledit_global.h"
+#include "htmledit_export.h"
 
 namespace HtmlEdit {
 
@@ -33,6 +33,9 @@ class HTMLEDIT_EXPORT HtmlSourceEdit : public QPlainTextEdit
     Q_OBJECT
 public:
     explicit HtmlSourceEdit(QWidget *parent = 0);
+
+    void setHtmlSource(const QString &source);
+    QString htmlSource() const;
 }; // end of class HtmlEdit::HtmlSourceEdit
 
 } // end of namespace HtmlEdit
