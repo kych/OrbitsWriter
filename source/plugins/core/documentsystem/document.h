@@ -43,7 +43,7 @@ public:
     explicit Document(QObject *parent = 0);
     ~Document();
 
-    QString text() const;
+    QString toHtmlSource(bool format = false) const;
     QTextDocument * document() const;
 
 private:

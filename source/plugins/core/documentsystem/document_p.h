@@ -22,10 +22,13 @@
 #ifndef DOCUMENT_P_H
 #define DOCUMENT_P_H
 
-#include <QString>
+#include <QtGlobal>
 
 QT_BEGIN_NAMESPACE
+class QTextBlock;
 class QTextDocument;
+class QTextFragment;
+class QTextFrame;
 QT_END_NAMESPACE
 
 namespace Core {
@@ -38,8 +41,15 @@ public:
     DocumentPrivate();
     ~DocumentPrivate();
 
+    QString toHtml() const;
+    QString formatHtml(const QString &html) const;
+
+    void processFrame(QTextFrame *parentFrame, QTextFrame *childFrame) const;
+    QString processBlock(QTextFrame *parentFrame, QTextBlock currentBlock) const;
+    QString processFragment(QTextFragment fragment) const;
+
     QTextDocument *textDocument;
-    QString content;
+    QString html;
 }; // end of class Core::Internal::DocumentPrivate
 
 } // end of namespace Core::Internal
