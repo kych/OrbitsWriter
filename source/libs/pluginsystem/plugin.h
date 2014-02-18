@@ -26,7 +26,7 @@
 #if QT_VERSION >= 0x050000
 #    include <QtPlugin>
 #endif
-#include "pluginsystem/pluginsystem_global.h"
+#include "pluginsystem/pluginsystem_export.h"
 
 QT_BEGIN_NAMESPACE
 class QString;

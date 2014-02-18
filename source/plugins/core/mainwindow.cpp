@@ -298,6 +298,7 @@ void MainWindow::registerDefaultActions()
     // Exit Action
     icon = QIcon::fromTheme(QLatin1String("application-exit"));
     m_exitAction = new QAction(icon, tr("E&xit"), this);
+    m_exitAction->setMenuRole(QAction::QuitRole);
     cmd = gActionManager->registerAction(m_exitAction, Constants::ID_EXIT, globalContext);
     cmd->setDefaultKeySequence(QKeySequence(tr("Ctrl+Q")));
     fileMenu->addAction(cmd, Constants::G_FILE_OTHER);
@@ -355,6 +356,7 @@ void MainWindow::registerDefaultActions()
     // Option Action
     icon = QIcon(QLatin1String(ICON_OPTION));
     tmpAction = new QAction(icon, tr("&Option..."), this);
+    tmpAction->setMenuRole(QAction::PreferencesRole);
     cmd = gActionManager->registerAction(tmpAction, Constants::ID_OPTION, globalContext);
     toolsMenu->addAction(cmd, Constants::G_TOOLS_OPTION);
 
@@ -368,6 +370,7 @@ void MainWindow::registerDefaultActions()
     // About Action
     icon = QIcon(QLatin1String(ICON_ABOUT));
     tmpAction = new QAction(icon, tr("&About Orbits Writer..."), this);
+    tmpAction->setMenuRole(QAction::AboutRole);
     cmd = gActionManager->registerAction(tmpAction, Constants::ID_ABOUT, globalContext);
     helpMenu->addAction(cmd, Constants::G_HELP_ABOUT);
     connect(tmpAction, SIGNAL(triggered()), this, SLOT(showAboutDialog()));

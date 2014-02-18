@@ -24,7 +24,7 @@
 
 #include <QWidget>
 
-#include "pluginsystem_global.h"
+#include "pluginsystem_export.h"
 
 QT_BEGIN_NAMESPACE
 class QPushButton;

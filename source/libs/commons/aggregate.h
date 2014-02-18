@@ -27,7 +27,7 @@
 #include <QHash>
 #include <QReadWriteLock>
 
-#include "commons/commons_global.h"
+#include "commons/commons_export.h"
 
 namespace Commons
 {

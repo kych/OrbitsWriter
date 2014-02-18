@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2013 Digia Plc and/or its subsidiary(-ies).
+** Copyright (C) 2014 Digia Plc and/or its subsidiary(-ies).
 ** Contact: http://www.qt-project.org/legal
 **
 ** This file is part of Qt Creator.
@@ -49,7 +49,7 @@ static QString errorCodeToString(DWORD errorCode)
     if (data != 0)
         LocalFree(data);
 
-    if (result.endsWith('\n'))
+    if (result.endsWith(QLatin1Char('\n')))
         result.truncate(result.length() - 1);
 
     return result;
@@ -127,7 +127,7 @@ bool QtLockedFile::lock(LockMode mode, bool block)
             if (gotMutex)
                 ReleaseMutex(m_mutex_hnd);
             return false;
-	}
+    }
         if (res != WAIT_OBJECT_0) {
             if (gotMutex)
                 ReleaseMutex(m_mutex_hnd);
@@ -167,6 +167,7 @@ bool QtLockedFile::unlock()
     }
 
     m_lock_mode = QtLockedFile::NoLock;
+    remove();
     return true;
 }
 
@@ -192,4 +193,4 @@ QtLockedFile::~QtLockedFile()
     }
 }
 
-} // namespace ExternLibExternLib
+} // namespace ExternLib

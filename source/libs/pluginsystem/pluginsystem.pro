@@ -36,7 +36,7 @@ HEADERS += \
     plugin.h \
     plugin_p.h \
     plugincollection.h \
-    pluginsystem_global.h \
+    pluginsystem_export.h \
     pluginview.h
 
 SOURCES += \

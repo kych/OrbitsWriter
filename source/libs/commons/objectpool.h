@@ -26,7 +26,7 @@
 #include <QReadWriteLock>
 
 #include "commons/aggregate.h"
-#include "commons/commons_global.h"
+#include "commons/commons_export.h"
 #include "commons/singleton.h"
 
 #define gObjectPool (Commons::ObjectPool::instance())

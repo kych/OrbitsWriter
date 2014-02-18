@@ -19,8 +19,8 @@
  *
  *-------------------------------------------------*/
 
-#ifndef PLUGINSYSTEM_GLOBAL_H
-#define PLUGINSYSTEM_GLOBAL_H
+#ifndef PLUGINSYSTEM_EXPORT_H
+#define PLUGINSYSTEM_EXPORT_H
 
 #include <QtCore/QtGlobal>
 
@@ -30,4 +30,4 @@
 #  define PLUGINSYSTEM_EXPORT Q_DECL_IMPORT
 #endif
 
-#endif // PLUGINSYSTEM_GLOBAL_H
+#endif // PLUGINSYSTEM_EXPORT_H

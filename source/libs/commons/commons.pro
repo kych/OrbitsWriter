@@ -28,15 +28,13 @@ include(commons_dependencies.pri)
 
 HEADERS += \
     aggregate.h \
-    application.h \
-    commons_global.h \
+    commons_export.h \
     objectpool.h \
     settingsmanager.h \
     singleton.h
 
 SOURCES += \
     aggregate.cpp \
-    application.cpp \
     objectpool.cpp \
     settingsmanager.cpp \
     singleton.cpp

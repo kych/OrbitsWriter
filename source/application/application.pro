@@ -26,6 +26,7 @@ TARGET   = $$APPLICATION_TARGET
 DESTDIR  = $$APPLICATION_BIN_PATH
 
 include(../rpath.pri)
+include(../libs/extern/qtsingleapplication/qtsingleapplication.pri)
 
 QT      *= core gui
 

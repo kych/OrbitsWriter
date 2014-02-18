@@ -19,24 +19,15 @@
  *
  *-------------------------------------------------*/
 
-#ifndef APPLICATION_H
-#define APPLICATION_H
+#ifndef COMMONS_EXPORT_H
+#define COMMONS_EXPORT_H
 
-#include <QObject>
+#include <QtCore/QtGlobal>
 
-#include "../extern/qtsingleapplication/qtsingleapplication.h"
-#include "commons_global.h"
+#if defined(COMMONS_LIBRARY)
+#  define COMMONS_EXPORT Q_DECL_EXPORT
+#else
+#  define COMMONS_EXPORT Q_DECL_IMPORT
+#endif
 
-namespace Commons
-{
-
-class COMMONS_EXPORT Application : public ExternLib::QtSingleApplication
-{
-    Q_OBJECT
-public:
-    Application(const QString &id, int &argc, char **argv);
-}; // end of class Commons::Application
-
-} // end of namespace Commons
-
-#endif // APPLICATION_H
+#endif // COMMONS_EXPORT_H

@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2013 Digia Plc and/or its subsidiary(-ies).
+** Copyright (C) 2014 Digia Plc and/or its subsidiary(-ies).
 ** Contact: http://www.qt-project.org/legal
 **
 ** This file is part of Qt Creator.
@@ -27,7 +27,7 @@
 **
 ****************************************************************************/
 
-#include "qtlockedfile.h"
+#include <qtlockedfile.h>
 
 #include <QLocalServer>
 #include <QLocalSocket>
@@ -42,12 +42,13 @@ class QtLocalPeer : public QObject
 public:
     explicit QtLocalPeer(QObject *parent = 0, const QString &appId = QString());
     bool isClient();
-    bool sendMessage(const QString &message, int timeout);
+    bool sendMessage(const QString &message, int timeout, bool block);
     QString applicationId() const
         { return id; }
+    static QString appSessionId(const QString &appId);
 
 Q_SIGNALS:
-    void messageReceived(const QString &message);
+    void messageReceived(const QString &message, QObject *socket);
 
 protected Q_SLOTS:
     void receiveConnection();
@@ -57,9 +58,6 @@ protected:
     QString socketName;
     QLocalServer* server;
     QtLockedFile lockFile;
-
-private:
-    static const char* ack;
 };
 
 } // namespace ExternLib

@@ -24,7 +24,7 @@
 
 #include <QString>
 
-#include "pluginsystem/pluginsystem_global.h"
+#include "pluginsystem/pluginsystem_export.h"
 
 QT_BEGIN_NAMESPACE
 template<typename K, typename V> class QHash;

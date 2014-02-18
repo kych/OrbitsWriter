@@ -24,7 +24,7 @@
 
 #include <QSettings>
 
-#include "commons/commons_global.h"
+#include "commons/commons_export.h"
 #include "commons/singleton.h"
 
 #define gSettingsManager (Commons::SettingsManager::instance())

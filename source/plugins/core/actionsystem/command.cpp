@@ -205,9 +205,9 @@ static QString __msgActionWarning(QAction *newAction, int k, QAction *oldAction)
 // ========== Core::Internal::AbstractCommand ========== //
 
 AbstractCommand::AbstractCommand(Id id) :
+    m_attributes(0),
     m_id(id),
-    m_isKeyInitialized(false),
-    m_attributes(0)
+    m_isKeyInitialized(false)
 {
 }
 

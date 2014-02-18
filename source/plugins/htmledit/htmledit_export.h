@@ -19,8 +19,8 @@
  *
  *-------------------------------------------------*/
 
-#ifndef HTMLEDIT_GLOBAL_H
-#define HTMLEDIT_GLOBAL_H
+#ifndef HTMLEDIT_EXPORT_H
+#define HTMLEDIT_EXPORT_H
 
 #include <QtCore/QtGlobal>
 
@@ -30,4 +30,4 @@
 #  define HTMLEDIT_EXPORT Q_DECL_IMPORT
 #endif
 
-#endif // HTMLEDIT_GLOBAL_H
+#endif // HTMLEDIT_EXPORT_H

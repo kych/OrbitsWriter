@@ -19,8 +19,8 @@
  *
  *-------------------------------------------------*/
 
-#ifndef CORE_GLOBAL_H
-#define CORE_GLOBAL_H
+#ifndef CORE_EXPORT_H
+#define CORE_EXPORT_H
 
 #include <QtCore/QtGlobal>
 
@@ -30,4 +30,4 @@
 #  define CORE_EXPORT Q_DECL_IMPORT
 #endif
 
-#endif // CORE_GLOBAL_H
+#endif // CORE_EXPORT_H

@@ -25,7 +25,7 @@
 #include <QDir>
 #include <QSettings>
 
-#include <commons/application.h>
+#include "../libs/extern/QtSingleApplication/QtSingleApplication"
 #include <commons/settingsmanager.h>
 #include <pluginsystem/pluginmanager.h>
 #include <pluginsystem/pluginspec.h>
@@ -46,6 +46,9 @@ static inline QStringList getPluginPaths()
     QStringList rc;
     // Figure out root:  Up one from 'bin'
     QDir rootDir = QCoreApplication::applicationDirPath();
+#if defined(Q_OS_MAC)
+    rootDir.cdUp();
+#endif
     const QString rootDirPath = rootDir.canonicalPath();
 #if !defined(Q_OS_MAC)
     // 1) "plugins" (Win/Linux)
@@ -115,7 +118,10 @@ int main(int argc, char** argv)
 #ifdef QT_NO_DEBUG
     qInstallMessageHandler(logMessageOutput);
 #endif
-    Application app(QLatin1String(OrbitsWriter::APPLICATION_NAME), argc, argv);
+    ExternLib::QtSingleApplication app((QLatin1String(OrbitsWriter::APPLICATION_NAME)), argc, argv);
+    app.setOrganizationName(QLatin1String(OrbitsWriter::ORGANIZATION));
+    app.setApplicationName(QLatin1String(OrbitsWriter::APPLICATION_NAME));
+    app.setApplicationVersion(QLatin1String(OrbitsWriter::VERSION_LONG));
 
     // <<<<<<<<<< settings
     // Must be done before any QSettings class is created
