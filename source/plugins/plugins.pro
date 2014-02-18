@@ -36,4 +36,3 @@ plugin_htmledit.depends = plugin_core
 
 plugin_formatting.subdir = formatting
 plugin_formatting.depends = plugin_core
-plugin_formatting.depends += plugin_htmledit
