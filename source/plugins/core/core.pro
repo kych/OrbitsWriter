@@ -56,7 +56,9 @@ HEADERS += \
     documentsystem/documentmanager_p.h \
     documentsystem/document.h \
     documentsystem/document_p.h \
-    core_export.h
+    core_export.h \
+    documentsystem/documentcharstyle.h \
+    documentsystem/documentparagraphstyle.h
 
 SOURCES += \
     mainwindow.cpp \
@@ -74,7 +76,9 @@ SOURCES += \
     editorsystem/editorfactory.cpp \
     plugindialog.cpp \
     documentsystem/documentmanager.cpp \
-    documentsystem/document.cpp
+    documentsystem/document.cpp \
+    documentsystem/documentcharstyle.cpp \
+    documentsystem/documentparagraphstyle.cpp
 
 RESOURCES += \
     resources/resources.qrc
